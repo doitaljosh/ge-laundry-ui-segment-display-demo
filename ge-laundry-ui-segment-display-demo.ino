@@ -18,6 +18,8 @@ const byte digit0Addr = 0x06;
 const byte digit1Addr = 0x08;
 const byte digit2Addr = 0x0a;
 
+#define IGNORE(x) (void)(x)
+
 const unsigned char characterTable[75] = 
 {
 /*  0     1     2     3     4     5     6     7     8     9                 */
@@ -87,35 +89,28 @@ void writeToAllDigits(byte dig1, byte dig2, byte dig3, int period)
   
 }
 
-void setBrightness(byte intensity)
+void ctrlDisplay(int ctx, byte value)
 {
   
   strobe(0);
   
-  writeByte(0x80 | intensity);
-  
-  strobe(1);
-  
-}  
+  switch(ctx) {
+    // Display off
+    case 0:
+      IGNORE(value);
+      writeByte(0x80 & ~0x08);
+      break;
+    // Display on
+    case 1:
+      IGNORE(value);
+      writeByte(0x80 | 0x08);
+      break;
+    // Set brightness
+    case 2:
+      writeByte(0x80 | value);
+      break;
+  }
 
-void displayOn(void)
-{
-  
-  strobe(0);
-  
-  writeByte(0x80 | 0x08);
-  
-  strobe(1);
-   
-}  
-
-void displayOff(void)
-{
-  
-  strobe(0);
-  
-  writeByte(0x80 & ~0x08);
-  
   strobe(1);
   
 }
@@ -201,9 +196,9 @@ void setup()
   digitalWrite(clk, HIGH);
   digitalWrite(dat, HIGH);
   
-  displayOff();
-  displayOn();
-  setBrightness(4 | 0x08);
+  ctrlDisplay(0, 0);
+  ctrlDisplay(1, 0);
+  ctrlDisplay(2, (4 | 0x08));
   
 }  
 
