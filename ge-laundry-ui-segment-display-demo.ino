@@ -6,7 +6,7 @@
  * 
  * Part number for reference: WH22X29549
  * 
- * This code just counts from 0-F in hexadecimal on all three digits.
+ * This code just scrolls "Hello world" across all three digits.
  */
 
 const int stb1 = 10; // Strobe for shift register 1
@@ -18,7 +18,7 @@ const byte digit0Addr = 0x06;
 const byte digit1Addr = 0x08;
 const byte digit2Addr = 0x0a;
 
-const unsigned char characterTable[74] = 
+const unsigned char characterTable[75] = 
 {
 /*  0     1     2     3     4     5     6     7     8     9                 */
     0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 
@@ -29,13 +29,15 @@ const unsigned char characterTable[74] =
 /*  Y     Z                                                                 */
     0x6E, 0x5B, 
 /*  a     b     c     d     e     f     g     h     i     j     k     l     */
-    0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71, 0x3D, 0x76, 0x30, 0x1E, 0x75, 0x38,
+    0x77, 0x7C, 0x39, 0x5E, 0x7B, 0x71, 0x3D, 0x76, 0x30, 0x1E, 0x75, 0x38,
 /*  m     n     o     p     q     r     s     t     u     v     w     x     */
     0x55, 0x54, 0x5C, 0x73, 0x67, 0x50, 0x6D, 0x78, 0x3E, 0x1C, 0x1D, 0x64,
 /*  y     z                                                                 */
     0x6E, 0x5B,
 /*  [     ]     -     _     ‾     segA  segB  segC  segD  segE  segF  segG  */
-    0x39, 0x0F, 0x40, 0x08, 0x01, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40
+    0x39, 0x0F, 0x40, 0x08, 0x01, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40,
+/*  blank                                                                   */
+    0x00    
 };
 
 void cycleClock(void)
@@ -54,7 +56,7 @@ void strobe(boolean state)
 
 }
 
-void writeToDisplay(byte addr, byte data, boolean ledState)
+void writeToSingleDigit(byte addr, byte data, boolean ledState)
 {
   
   strobe(0); 
@@ -64,6 +66,24 @@ void writeToDisplay(byte addr, byte data, boolean ledState)
   writeBit(ledState);
   
   strobe(1);
+  
+}
+
+
+void writeToAllDigits(byte dig1, byte dig2, byte dig3, int period)
+{
+  
+  writeToSingleDigit(digit0Addr, dig1, LOW);
+  writeToSingleDigit(digit1Addr, dig2, LOW);
+  writeToSingleDigit(digit2Addr, dig3, LOW);
+    
+  delay(period);
+    
+  writeToSingleDigit(digit0Addr, dig1, HIGH);
+  writeToSingleDigit(digit1Addr, dig2, HIGH);
+  writeToSingleDigit(digit2Addr, dig3, HIGH);
+    
+  delay(period);
   
 }
 
@@ -122,8 +142,6 @@ void writeByte(byte addr)
       
 }
 
-
-
 void writeBit(boolean state)
 {
   
@@ -137,43 +155,38 @@ void writeBit(boolean state)
   }
 }
 
-void count(byte start, byte end, int period)
+void helloWorld(int period)
 {
 
-  byte Digit0 = start;
-  byte Digit1 = start;
-  byte Digit2 = start;
+  byte H = 17;
+  byte e = 40;
+  byte l = 47;
+  byte o = 50;
+  byte w = 58;
+  byte r = 53;
+  byte d = 39;
+
+  byte space = 74;
   
-  while (1) {
-    
-    writeToDisplay(digit0Addr, Digit0, LOW);
-    writeToDisplay(digit1Addr, Digit1, LOW);
-    writeToDisplay(digit2Addr, Digit2, LOW);
-    
-    delay(period);
-    
-    Digit0++;
-    Digit1++;
-    Digit2++;
-    
-    writeToDisplay(digit0Addr, Digit0, HIGH);
-    writeToDisplay(digit1Addr, Digit1, HIGH);
-    writeToDisplay(digit2Addr, Digit2, HIGH);
-    
-    delay(period);
-    
-    Digit0++;
-    Digit1++;
-    Digit2++;
-    
-    if(Digit0 >= end) {
-      
-      Digit0 = start;
-      Digit1 = start;
-      Digit2 = start;
-      
-    }
-  }
+  // This is a really crude way of scrolling text, but this will do until I
+  // can write a function to process and scroll strings automatically.
+  writeToAllDigits(space, space, H, period);
+  writeToAllDigits(space, H, e, period);
+  writeToAllDigits(H, e, l, period);
+  writeToAllDigits(e, l, l, period);
+  writeToAllDigits(l, l, o, period);
+  writeToAllDigits(l, o, space, period);
+  writeToAllDigits(o, space, w, period);
+  writeToAllDigits(space, w, o, period);
+  writeToAllDigits(w, o, r, period);
+  writeToAllDigits(o, r, l, period);
+  writeToAllDigits(r, l, d, period);
+  writeToAllDigits(l, d, space, period);
+  writeToAllDigits(d, space, space, period);
+  writeToAllDigits(space, space, space, period);
+  
+  delay(500);
+  
 }
 
 void setup()
@@ -196,7 +209,7 @@ void setup()
 
 void loop()
 {
-  // Count in hexadecimal from 0-16 on all three digits
-  count(0, 16, 1000);
+  // Scroll "Hello world" across all three digits with a 200ms delay between frames.
+  helloWorld(200);
   
 }
