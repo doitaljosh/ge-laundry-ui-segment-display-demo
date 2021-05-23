@@ -1,0 +1,8 @@
+C:\Users\doita\OneDrive\Documents\PSoC Creator\GEA-Hacking\laundry-captouch-demo.cydsn\laundry-captouch-demo.cyprj|ba828c08-5a67-4468-af8d-f6283a074c65
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|9490e104-4676-470e-b9af-deac63ebfea8
+C:\Users\doita\OneDrive\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|ce665e78-01fd-4348-a774-67b08f0d4b1f
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|95454f59-d71c-4beb-91d0-8a10535b61ad
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|3416892e-c8e8-4cec-bb43-7de20898b1c4
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|7975a722-819c-4ed8-9f22-920b45de4325
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\dev\psoc4\PSoC4AnalogDevice\psoc4arch.cydsn\psoc4arch.cyprj|24904ba5-f54a-4d98-a448-064d2193a249
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|c0cde375-c0e4-489b-866d-769801e130c7

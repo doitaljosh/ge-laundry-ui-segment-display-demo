@@ -1,0 +1,418 @@
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfT2Cni.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"SsdCharacterTable.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	characterTable
+  20              		.section	.rodata
+  21              		.align	2
+  22              		.type	characterTable, %object
+  23              		.size	characterTable, 75
+  24              	characterTable:
+  25 0000 3F       		.byte	63
+  26 0001 06       		.byte	6
+  27 0002 5B       		.byte	91
+  28 0003 4F       		.byte	79
+  29 0004 66       		.byte	102
+  30 0005 6D       		.byte	109
+  31 0006 7D       		.byte	125
+  32 0007 07       		.byte	7
+  33 0008 7F       		.byte	127
+  34 0009 6F       		.byte	111
+  35 000a 77       		.byte	119
+  36 000b 7C       		.byte	124
+  37 000c 39       		.byte	57
+  38 000d 5E       		.byte	94
+  39 000e 79       		.byte	121
+  40 000f 71       		.byte	113
+  41 0010 3D       		.byte	61
+  42 0011 76       		.byte	118
+  43 0012 30       		.byte	48
+  44 0013 1E       		.byte	30
+  45 0014 75       		.byte	117
+  46 0015 38       		.byte	56
+  47 0016 55       		.byte	85
+  48 0017 54       		.byte	84
+  49 0018 5C       		.byte	92
+  50 0019 73       		.byte	115
+  51 001a 67       		.byte	103
+  52 001b 50       		.byte	80
+  53 001c 6D       		.byte	109
+  54 001d 78       		.byte	120
+  55 001e 3E       		.byte	62
+  56 001f 1C       		.byte	28
+  57 0020 1D       		.byte	29
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfT2Cni.s 			page 2
+
+
+  58 0021 64       		.byte	100
+  59 0022 6E       		.byte	110
+  60 0023 5B       		.byte	91
+  61 0024 77       		.byte	119
+  62 0025 7C       		.byte	124
+  63 0026 39       		.byte	57
+  64 0027 5E       		.byte	94
+  65 0028 7B       		.byte	123
+  66 0029 71       		.byte	113
+  67 002a 3D       		.byte	61
+  68 002b 76       		.byte	118
+  69 002c 30       		.byte	48
+  70 002d 1E       		.byte	30
+  71 002e 75       		.byte	117
+  72 002f 38       		.byte	56
+  73 0030 55       		.byte	85
+  74 0031 54       		.byte	84
+  75 0032 5C       		.byte	92
+  76 0033 73       		.byte	115
+  77 0034 67       		.byte	103
+  78 0035 50       		.byte	80
+  79 0036 6D       		.byte	109
+  80 0037 78       		.byte	120
+  81 0038 3E       		.byte	62
+  82 0039 1C       		.byte	28
+  83 003a 1D       		.byte	29
+  84 003b 64       		.byte	100
+  85 003c 6E       		.byte	110
+  86 003d 5B       		.byte	91
+  87 003e 39       		.byte	57
+  88 003f 0F       		.byte	15
+  89 0040 40       		.byte	64
+  90 0041 08       		.byte	8
+  91 0042 01       		.byte	1
+  92 0043 01       		.byte	1
+  93 0044 02       		.byte	2
+  94 0045 04       		.byte	4
+  95 0046 08       		.byte	8
+  96 0047 10       		.byte	16
+  97 0048 20       		.byte	32
+  98 0049 40       		.byte	64
+  99 004a 00       		.byte	0
+ 100              		.text
+ 101              	.Letext0:
+ 102              		.file 1 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 103              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 104              		.file 3 "SsdCharacterTable.c"
+ 105              		.section	.debug_info,"",%progbits
+ 106              	.Ldebug_info0:
+ 107 0000 A8000000 		.4byte	0xa8
+ 108 0004 0400     		.2byte	0x4
+ 109 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 110 000a 04       		.byte	0x4
+ 111 000b 01       		.uleb128 0x1
+ 112 000c 0D010000 		.4byte	.LASF12
+ 113 0010 0C       		.byte	0xc
+ 114 0011 F0000000 		.4byte	.LASF13
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfT2Cni.s 			page 3
+
+
+ 115 0015 4C000000 		.4byte	.LASF14
+ 116 0019 00000000 		.4byte	.Ldebug_line0
+ 117 001d 02       		.uleb128 0x2
+ 118 001e 01       		.byte	0x1
+ 119 001f 06       		.byte	0x6
+ 120 0020 9F010000 		.4byte	.LASF0
+ 121 0024 03       		.uleb128 0x3
+ 122 0025 00000000 		.4byte	.LASF9
+ 123 0029 01       		.byte	0x1
+ 124 002a 1D       		.byte	0x1d
+ 125 002b 2F000000 		.4byte	0x2f
+ 126 002f 02       		.uleb128 0x2
+ 127 0030 01       		.byte	0x1
+ 128 0031 08       		.byte	0x8
+ 129 0032 19000000 		.4byte	.LASF1
+ 130 0036 02       		.uleb128 0x2
+ 131 0037 02       		.byte	0x2
+ 132 0038 05       		.byte	0x5
+ 133 0039 E6000000 		.4byte	.LASF2
+ 134 003d 02       		.uleb128 0x2
+ 135 003e 02       		.byte	0x2
+ 136 003f 07       		.byte	0x7
+ 137 0040 39000000 		.4byte	.LASF3
+ 138 0044 02       		.uleb128 0x2
+ 139 0045 04       		.byte	0x4
+ 140 0046 05       		.byte	0x5
+ 141 0047 04010000 		.4byte	.LASF4
+ 142 004b 02       		.uleb128 0x2
+ 143 004c 04       		.byte	0x4
+ 144 004d 07       		.byte	0x7
+ 145 004e 27000000 		.4byte	.LASF5
+ 146 0052 02       		.uleb128 0x2
+ 147 0053 08       		.byte	0x8
+ 148 0054 05       		.byte	0x5
+ 149 0055 D8000000 		.4byte	.LASF6
+ 150 0059 02       		.uleb128 0x2
+ 151 005a 08       		.byte	0x8
+ 152 005b 07       		.byte	0x7
+ 153 005c B0000000 		.4byte	.LASF7
+ 154 0060 04       		.uleb128 0x4
+ 155 0061 04       		.byte	0x4
+ 156 0062 05       		.byte	0x5
+ 157 0063 696E7400 		.ascii	"int\000"
+ 158 0067 02       		.uleb128 0x2
+ 159 0068 04       		.byte	0x4
+ 160 0069 07       		.byte	0x7
+ 161 006a A3000000 		.4byte	.LASF8
+ 162 006e 03       		.uleb128 0x3
+ 163 006f C7000000 		.4byte	.LASF10
+ 164 0073 02       		.byte	0x2
+ 165 0074 18       		.byte	0x18
+ 166 0075 24000000 		.4byte	0x24
+ 167 0079 05       		.uleb128 0x5
+ 168 007a 90000000 		.4byte	0x90
+ 169 007e 89000000 		.4byte	0x89
+ 170 0082 06       		.uleb128 0x6
+ 171 0083 89000000 		.4byte	0x89
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfT2Cni.s 			page 4
+
+
+ 172 0087 4A       		.byte	0x4a
+ 173 0088 00       		.byte	0
+ 174 0089 02       		.uleb128 0x2
+ 175 008a 04       		.byte	0x4
+ 176 008b 07       		.byte	0x7
+ 177 008c CF000000 		.4byte	.LASF11
+ 178 0090 07       		.uleb128 0x7
+ 179 0091 6E000000 		.4byte	0x6e
+ 180 0095 08       		.uleb128 0x8
+ 181 0096 0A000000 		.4byte	.LASF15
+ 182 009a 03       		.byte	0x3
+ 183 009b 10       		.byte	0x10
+ 184 009c A6000000 		.4byte	0xa6
+ 185 00a0 05       		.uleb128 0x5
+ 186 00a1 03       		.byte	0x3
+ 187 00a2 00000000 		.4byte	characterTable
+ 188 00a6 07       		.uleb128 0x7
+ 189 00a7 79000000 		.4byte	0x79
+ 190 00ab 00       		.byte	0
+ 191              		.section	.debug_abbrev,"",%progbits
+ 192              	.Ldebug_abbrev0:
+ 193 0000 01       		.uleb128 0x1
+ 194 0001 11       		.uleb128 0x11
+ 195 0002 01       		.byte	0x1
+ 196 0003 25       		.uleb128 0x25
+ 197 0004 0E       		.uleb128 0xe
+ 198 0005 13       		.uleb128 0x13
+ 199 0006 0B       		.uleb128 0xb
+ 200 0007 03       		.uleb128 0x3
+ 201 0008 0E       		.uleb128 0xe
+ 202 0009 1B       		.uleb128 0x1b
+ 203 000a 0E       		.uleb128 0xe
+ 204 000b 10       		.uleb128 0x10
+ 205 000c 17       		.uleb128 0x17
+ 206 000d 00       		.byte	0
+ 207 000e 00       		.byte	0
+ 208 000f 02       		.uleb128 0x2
+ 209 0010 24       		.uleb128 0x24
+ 210 0011 00       		.byte	0
+ 211 0012 0B       		.uleb128 0xb
+ 212 0013 0B       		.uleb128 0xb
+ 213 0014 3E       		.uleb128 0x3e
+ 214 0015 0B       		.uleb128 0xb
+ 215 0016 03       		.uleb128 0x3
+ 216 0017 0E       		.uleb128 0xe
+ 217 0018 00       		.byte	0
+ 218 0019 00       		.byte	0
+ 219 001a 03       		.uleb128 0x3
+ 220 001b 16       		.uleb128 0x16
+ 221 001c 00       		.byte	0
+ 222 001d 03       		.uleb128 0x3
+ 223 001e 0E       		.uleb128 0xe
+ 224 001f 3A       		.uleb128 0x3a
+ 225 0020 0B       		.uleb128 0xb
+ 226 0021 3B       		.uleb128 0x3b
+ 227 0022 0B       		.uleb128 0xb
+ 228 0023 49       		.uleb128 0x49
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfT2Cni.s 			page 5
+
+
+ 229 0024 13       		.uleb128 0x13
+ 230 0025 00       		.byte	0
+ 231 0026 00       		.byte	0
+ 232 0027 04       		.uleb128 0x4
+ 233 0028 24       		.uleb128 0x24
+ 234 0029 00       		.byte	0
+ 235 002a 0B       		.uleb128 0xb
+ 236 002b 0B       		.uleb128 0xb
+ 237 002c 3E       		.uleb128 0x3e
+ 238 002d 0B       		.uleb128 0xb
+ 239 002e 03       		.uleb128 0x3
+ 240 002f 08       		.uleb128 0x8
+ 241 0030 00       		.byte	0
+ 242 0031 00       		.byte	0
+ 243 0032 05       		.uleb128 0x5
+ 244 0033 01       		.uleb128 0x1
+ 245 0034 01       		.byte	0x1
+ 246 0035 49       		.uleb128 0x49
+ 247 0036 13       		.uleb128 0x13
+ 248 0037 01       		.uleb128 0x1
+ 249 0038 13       		.uleb128 0x13
+ 250 0039 00       		.byte	0
+ 251 003a 00       		.byte	0
+ 252 003b 06       		.uleb128 0x6
+ 253 003c 21       		.uleb128 0x21
+ 254 003d 00       		.byte	0
+ 255 003e 49       		.uleb128 0x49
+ 256 003f 13       		.uleb128 0x13
+ 257 0040 2F       		.uleb128 0x2f
+ 258 0041 0B       		.uleb128 0xb
+ 259 0042 00       		.byte	0
+ 260 0043 00       		.byte	0
+ 261 0044 07       		.uleb128 0x7
+ 262 0045 26       		.uleb128 0x26
+ 263 0046 00       		.byte	0
+ 264 0047 49       		.uleb128 0x49
+ 265 0048 13       		.uleb128 0x13
+ 266 0049 00       		.byte	0
+ 267 004a 00       		.byte	0
+ 268 004b 08       		.uleb128 0x8
+ 269 004c 34       		.uleb128 0x34
+ 270 004d 00       		.byte	0
+ 271 004e 03       		.uleb128 0x3
+ 272 004f 0E       		.uleb128 0xe
+ 273 0050 3A       		.uleb128 0x3a
+ 274 0051 0B       		.uleb128 0xb
+ 275 0052 3B       		.uleb128 0x3b
+ 276 0053 0B       		.uleb128 0xb
+ 277 0054 49       		.uleb128 0x49
+ 278 0055 13       		.uleb128 0x13
+ 279 0056 3F       		.uleb128 0x3f
+ 280 0057 19       		.uleb128 0x19
+ 281 0058 02       		.uleb128 0x2
+ 282 0059 18       		.uleb128 0x18
+ 283 005a 00       		.byte	0
+ 284 005b 00       		.byte	0
+ 285 005c 00       		.byte	0
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfT2Cni.s 			page 6
+
+
+ 286              		.section	.debug_aranges,"",%progbits
+ 287 0000 14000000 		.4byte	0x14
+ 288 0004 0200     		.2byte	0x2
+ 289 0006 00000000 		.4byte	.Ldebug_info0
+ 290 000a 04       		.byte	0x4
+ 291 000b 00       		.byte	0
+ 292 000c 0000     		.2byte	0
+ 293 000e 0000     		.2byte	0
+ 294 0010 00000000 		.4byte	0
+ 295 0014 00000000 		.4byte	0
+ 296              		.section	.debug_line,"",%progbits
+ 297              	.Ldebug_line0:
+ 298 0000 2D010000 		.section	.debug_str,"MS",%progbits,1
+ 298      02002701 
+ 298      00000201 
+ 298      FB0E0D00 
+ 298      01010101 
+ 299              	.LASF9:
+ 300 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 300      6E74385F 
+ 300      7400
+ 301              	.LASF15:
+ 302 000a 63686172 		.ascii	"characterTable\000"
+ 302      61637465 
+ 302      72546162 
+ 302      6C6500
+ 303              	.LASF1:
+ 304 0019 756E7369 		.ascii	"unsigned char\000"
+ 304      676E6564 
+ 304      20636861 
+ 304      7200
+ 305              	.LASF5:
+ 306 0027 6C6F6E67 		.ascii	"long unsigned int\000"
+ 306      20756E73 
+ 306      69676E65 
+ 306      6420696E 
+ 306      7400
+ 307              	.LASF3:
+ 308 0039 73686F72 		.ascii	"short unsigned int\000"
+ 308      7420756E 
+ 308      7369676E 
+ 308      65642069 
+ 308      6E7400
+ 309              	.LASF14:
+ 310 004c 433A5C55 		.ascii	"C:\\Users\\doita\\OneDrive\\Documents\\PSoC Creator"
+ 310      73657273 
+ 310      5C646F69 
+ 310      74615C4F 
+ 310      6E654472 
+ 311 007a 5C474541 		.ascii	"\\GEA-Hacking\\laundry-captouch-demo.cydsn\000"
+ 311      2D486163 
+ 311      6B696E67 
+ 311      5C6C6175 
+ 311      6E647279 
+ 312              	.LASF8:
+ 313 00a3 756E7369 		.ascii	"unsigned int\000"
+ 313      676E6564 
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfT2Cni.s 			page 7
+
+
+ 313      20696E74 
+ 313      00
+ 314              	.LASF7:
+ 315 00b0 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 315      206C6F6E 
+ 315      6720756E 
+ 315      7369676E 
+ 315      65642069 
+ 316              	.LASF10:
+ 317 00c7 75696E74 		.ascii	"uint8_t\000"
+ 317      385F7400 
+ 318              	.LASF11:
+ 319 00cf 73697A65 		.ascii	"sizetype\000"
+ 319      74797065 
+ 319      00
+ 320              	.LASF6:
+ 321 00d8 6C6F6E67 		.ascii	"long long int\000"
+ 321      206C6F6E 
+ 321      6720696E 
+ 321      7400
+ 322              	.LASF2:
+ 323 00e6 73686F72 		.ascii	"short int\000"
+ 323      7420696E 
+ 323      7400
+ 324              	.LASF13:
+ 325 00f0 53736443 		.ascii	"SsdCharacterTable.c\000"
+ 325      68617261 
+ 325      63746572 
+ 325      5461626C 
+ 325      652E6300 
+ 326              	.LASF4:
+ 327 0104 6C6F6E67 		.ascii	"long int\000"
+ 327      20696E74 
+ 327      00
+ 328              	.LASF12:
+ 329 010d 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 329      43313120 
+ 329      352E342E 
+ 329      31203230 
+ 329      31363036 
+ 330 0140 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 330      20726576 
+ 330      6973696F 
+ 330      6E203233 
+ 330      37373135 
+ 331 0173 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 331      67202D66 
+ 331      66756E63 
+ 331      74696F6E 
+ 331      2D736563 
+ 332              	.LASF0:
+ 333 019f 7369676E 		.ascii	"signed char\000"
+ 333      65642063 
+ 333      68617200 
+ 334              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
