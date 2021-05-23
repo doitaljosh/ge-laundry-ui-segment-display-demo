@@ -17,24 +17,6 @@
 #include "Display.h"
 #include <project.h>
 
-bool curState = 0;
-
-void HeartbeatLed_Blink(int period) {
-    
-    HeartbeatLed_Write(1);
-    CyDelay(period);
-    HeartbeatLed_Write(0);
-    CyDelay(period);
-    
-}
-
-void HeartbeatLed_Toggle(void) {
-    
-    curState = !curState;
-    HeartbeatLed_Write(curState);
-    
-}
-
 void helloWorld(int period)
 {
 
@@ -64,8 +46,6 @@ void helloWorld(int period)
   writeToAllDigits(l, d, space, period);
   writeToAllDigits(d, space, space, period);
   writeToAllDigits(space, space, space, period);
-
-  HeartbeatLed_Toggle();
   
   CyDelay(500);
   

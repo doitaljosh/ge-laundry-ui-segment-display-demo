@@ -12,6 +12,24 @@ const uint8_t digit0Addr = 0x06;
 const uint8_t digit1Addr = 0x08;
 const uint8_t digit2Addr = 0x0a;
 
+bool curState = 0;
+
+void HeartbeatLed_Blink(int period) {
+    
+    HeartbeatLed_Write(1);
+    CyDelay(period);
+    HeartbeatLed_Write(0);
+    CyDelay(period);
+    
+}
+
+void HeartbeatLed_Toggle(void) {
+    
+    curState = !curState;
+    HeartbeatLed_Write(curState);
+    
+}
+
 void cycleClock(void)
 {
   
@@ -81,7 +99,7 @@ void writeToAllDigits(uint8_t dig1, uint8_t dig2, uint8_t dig3, int period)
 {
   
   writeToSingleDigit(digit0Addr, dig1, LOW);
-  writeToSingleDigit(digit1Addr, dig2, HIGH);
+  writeToSingleDigit(digit1Addr, dig2, LOW);
   writeToSingleDigit(digit2Addr, dig3, LOW);
     
   CyDelay(period);
@@ -91,13 +109,15 @@ void writeToAllDigits(uint8_t dig1, uint8_t dig2, uint8_t dig3, int period)
   writeToSingleDigit(digit2Addr, dig3, HIGH);
     
   CyDelay(period);
+
+  HeartbeatLed_Toggle();
   
 }
 
 void ctrlDisplay(int ctx, uint8_t value)
 {
   
-  strobe(0);
+  strobe(LOW);
   
   switch(ctx) {
     // Display off
@@ -116,7 +136,7 @@ void ctrlDisplay(int ctx, uint8_t value)
       break;
   }
 
-  strobe(1);
+  strobe(HIGH);
   
 }
 

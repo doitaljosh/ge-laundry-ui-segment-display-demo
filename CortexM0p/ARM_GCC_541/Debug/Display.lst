@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 1
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 1
 
 
    1              		.syntax unified
@@ -19,13 +19,13 @@ ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 1
   16              		.text
   17              	.Ltext0:
   18              		.cfi_sections	.debug_frame
-  19              		.section	.text.cycleClock,"ax",%progbits
+  19              		.section	.text.HeartbeatLed_Blink,"ax",%progbits
   20              		.align	2
-  21              		.global	cycleClock
+  21              		.global	HeartbeatLed_Blink
   22              		.code	16
   23              		.thumb_func
-  24              		.type	cycleClock, %function
-  25              	cycleClock:
+  24              		.type	HeartbeatLed_Blink, %function
+  25              	HeartbeatLed_Blink:
   26              	.LFB33:
   27              		.file 1 "Display.c"
    1:Display.c     **** /* ========================================
@@ -42,1960 +42,2216 @@ ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 1
   12:Display.c     **** const uint8_t digit1Addr = 0x08;
   13:Display.c     **** const uint8_t digit2Addr = 0x0a;
   14:Display.c     **** 
-  15:Display.c     **** void cycleClock(void)
-  16:Display.c     **** {
-  28              		.loc 1 16 0
+  15:Display.c     **** bool curState = 0;
+  16:Display.c     **** 
+  17:Display.c     **** void HeartbeatLed_Blink(int period) {
+  28              		.loc 1 17 0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
-  32 0000 10B5     		push	{r4, lr}
-  33              		.cfi_def_cfa_offset 8
-  34              		.cfi_offset 4, -8
-  35              		.cfi_offset 14, -4
-  17:Display.c     ****   
-  18:Display.c     ****   SegDispClock_Write(LOW);  
-  36              		.loc 1 18 0
-  37 0002 0020     		movs	r0, #0
-  38 0004 FFF7FEFF 		bl	SegDispClock_Write
-  39              	.LVL0:
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 2
+  32              	.LVL0:
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  37 0002 0400     		movs	r4, r0
+  18:Display.c     ****     
+  19:Display.c     ****     HeartbeatLed_Write(1);
+  38              		.loc 1 19 0
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 2
 
 
-  19:Display.c     ****   SegDispClock_Write(HIGH); 
-  40              		.loc 1 19 0
-  41 0008 0120     		movs	r0, #1
-  42 000a FFF7FEFF 		bl	SegDispClock_Write
-  43              	.LVL1:
-  20:Display.c     ****   
-  21:Display.c     **** }
-  44              		.loc 1 21 0
-  45              		@ sp needed
-  46 000e 10BD     		pop	{r4, pc}
-  47              		.cfi_endproc
-  48              	.LFE33:
-  49              		.size	cycleClock, .-cycleClock
-  50              		.section	.text.strobe,"ax",%progbits
-  51              		.align	2
-  52              		.global	strobe
-  53              		.code	16
-  54              		.thumb_func
-  55              		.type	strobe, %function
-  56              	strobe:
-  57              	.LFB34:
-  22:Display.c     **** 
-  23:Display.c     **** void strobe(bool state)
-  24:Display.c     **** {
-  58              		.loc 1 24 0
-  59              		.cfi_startproc
-  60              		@ args = 0, pretend = 0, frame = 0
-  61              		@ frame_needed = 0, uses_anonymous_args = 0
-  62              	.LVL2:
-  63 0000 10B5     		push	{r4, lr}
-  64              		.cfi_def_cfa_offset 8
-  65              		.cfi_offset 4, -8
-  66              		.cfi_offset 14, -4
-  25:Display.c     ****   
-  26:Display.c     ****   SegDispStb1_Write(state);
-  67              		.loc 1 26 0
-  68 0002 FFF7FEFF 		bl	SegDispStb1_Write
-  69              	.LVL3:
-  27:Display.c     ****   //SegDispStb2_Write(state);
-  28:Display.c     **** 
-  29:Display.c     **** }
-  70              		.loc 1 29 0
-  71              		@ sp needed
-  72 0006 10BD     		pop	{r4, pc}
-  73              		.cfi_endproc
-  74              	.LFE34:
-  75              		.size	strobe, .-strobe
-  76              		.section	.text.writeByte,"ax",%progbits
-  77              		.align	2
-  78              		.global	writeByte
-  79              		.code	16
-  80              		.thumb_func
-  81              		.type	writeByte, %function
-  82              	writeByte:
-  83              	.LFB35:
-  30:Display.c     **** 
-  31:Display.c     **** void writeByte(uint8_t addr)
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 3
+  39 0004 0120     		movs	r0, #1
+  40              	.LVL1:
+  41 0006 FFF7FEFF 		bl	HeartbeatLed_Write
+  42              	.LVL2:
+  20:Display.c     ****     CyDelay(period);
+  43              		.loc 1 20 0
+  44 000a 2000     		movs	r0, r4
+  45 000c FFF7FEFF 		bl	CyDelay
+  46              	.LVL3:
+  21:Display.c     ****     HeartbeatLed_Write(0);
+  47              		.loc 1 21 0
+  48 0010 0020     		movs	r0, #0
+  49 0012 FFF7FEFF 		bl	HeartbeatLed_Write
+  50              	.LVL4:
+  22:Display.c     ****     CyDelay(period);
+  51              		.loc 1 22 0
+  52 0016 2000     		movs	r0, r4
+  53 0018 FFF7FEFF 		bl	CyDelay
+  54              	.LVL5:
+  23:Display.c     ****     
+  24:Display.c     **** }
+  55              		.loc 1 24 0
+  56              		@ sp needed
+  57              	.LVL6:
+  58 001c 10BD     		pop	{r4, pc}
+  59              		.cfi_endproc
+  60              	.LFE33:
+  61              		.size	HeartbeatLed_Blink, .-HeartbeatLed_Blink
+  62 001e C046     		.section	.text.HeartbeatLed_Toggle,"ax",%progbits
+  63              		.align	2
+  64              		.global	HeartbeatLed_Toggle
+  65              		.code	16
+  66              		.thumb_func
+  67              		.type	HeartbeatLed_Toggle, %function
+  68              	HeartbeatLed_Toggle:
+  69              	.LFB34:
+  25:Display.c     **** 
+  26:Display.c     **** void HeartbeatLed_Toggle(void) {
+  70              		.loc 1 26 0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74 0000 10B5     		push	{r4, lr}
+  75              		.cfi_def_cfa_offset 8
+  76              		.cfi_offset 4, -8
+  77              		.cfi_offset 14, -4
+  27:Display.c     ****     
+  28:Display.c     ****     curState = !curState;
+  78              		.loc 1 28 0
+  79 0002 044A     		ldr	r2, .L3
+  80 0004 1078     		ldrb	r0, [r2]
+  81 0006 0123     		movs	r3, #1
+  82 0008 5840     		eors	r0, r3
+  83 000a C0B2     		uxtb	r0, r0
+  84 000c 1070     		strb	r0, [r2]
+  29:Display.c     ****     HeartbeatLed_Write(curState);
+  85              		.loc 1 29 0
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 3
 
 
-  32:Display.c     **** {
-  84              		.loc 1 32 0
-  85              		.cfi_startproc
-  86              		@ args = 0, pretend = 0, frame = 0
-  87              		@ frame_needed = 0, uses_anonymous_args = 0
-  88              	.LVL4:
-  89 0000 10B5     		push	{r4, lr}
-  90              		.cfi_def_cfa_offset 8
-  91              		.cfi_offset 4, -8
-  92              		.cfi_offset 14, -4
-  93 0002 0400     		movs	r4, r0
-  33:Display.c     ****   
-  34:Display.c     ****       SegDispData_Write(addr & 1);
-  94              		.loc 1 34 0
-  95 0004 0120     		movs	r0, #1
-  96              	.LVL5:
-  97 0006 2040     		ands	r0, r4
-  98 0008 FFF7FEFF 		bl	SegDispData_Write
-  99              	.LVL6:
-  35:Display.c     ****       cycleClock();
- 100              		.loc 1 35 0
- 101 000c FFF7FEFF 		bl	cycleClock
- 102              	.LVL7:
-  36:Display.c     ****       SegDispData_Write(addr & 2);
- 103              		.loc 1 36 0
- 104 0010 0220     		movs	r0, #2
- 105 0012 2040     		ands	r0, r4
- 106 0014 FFF7FEFF 		bl	SegDispData_Write
- 107              	.LVL8:
-  37:Display.c     ****       cycleClock();
- 108              		.loc 1 37 0
- 109 0018 FFF7FEFF 		bl	cycleClock
- 110              	.LVL9:
-  38:Display.c     ****       SegDispData_Write(addr & 4);
- 111              		.loc 1 38 0
- 112 001c 0420     		movs	r0, #4
- 113 001e 2040     		ands	r0, r4
- 114 0020 FFF7FEFF 		bl	SegDispData_Write
- 115              	.LVL10:
-  39:Display.c     ****       cycleClock(); 
- 116              		.loc 1 39 0
- 117 0024 FFF7FEFF 		bl	cycleClock
- 118              	.LVL11:
-  40:Display.c     ****       SegDispData_Write(addr & 8);
- 119              		.loc 1 40 0
- 120 0028 0820     		movs	r0, #8
- 121 002a 2040     		ands	r0, r4
- 122 002c FFF7FEFF 		bl	SegDispData_Write
- 123              	.LVL12:
-  41:Display.c     ****       cycleClock();
- 124              		.loc 1 41 0
- 125 0030 FFF7FEFF 		bl	cycleClock
- 126              	.LVL13:
-  42:Display.c     ****       SegDispData_Write(addr & 16);
- 127              		.loc 1 42 0
- 128 0034 1020     		movs	r0, #16
- 129 0036 2040     		ands	r0, r4
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 4
+  86 000e FFF7FEFF 		bl	HeartbeatLed_Write
+  87              	.LVL7:
+  30:Display.c     ****     
+  31:Display.c     **** }
+  88              		.loc 1 31 0
+  89              		@ sp needed
+  90 0012 10BD     		pop	{r4, pc}
+  91              	.L4:
+  92              		.align	2
+  93              	.L3:
+  94 0014 00000000 		.word	.LANCHOR0
+  95              		.cfi_endproc
+  96              	.LFE34:
+  97              		.size	HeartbeatLed_Toggle, .-HeartbeatLed_Toggle
+  98              		.section	.text.cycleClock,"ax",%progbits
+  99              		.align	2
+ 100              		.global	cycleClock
+ 101              		.code	16
+ 102              		.thumb_func
+ 103              		.type	cycleClock, %function
+ 104              	cycleClock:
+ 105              	.LFB35:
+  32:Display.c     **** 
+  33:Display.c     **** void cycleClock(void)
+  34:Display.c     **** {
+ 106              		.loc 1 34 0
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 0
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110 0000 10B5     		push	{r4, lr}
+ 111              		.cfi_def_cfa_offset 8
+ 112              		.cfi_offset 4, -8
+ 113              		.cfi_offset 14, -4
+  35:Display.c     ****   
+  36:Display.c     ****   SegDispClock_Write(LOW);  
+ 114              		.loc 1 36 0
+ 115 0002 0020     		movs	r0, #0
+ 116 0004 FFF7FEFF 		bl	SegDispClock_Write
+ 117              	.LVL8:
+  37:Display.c     ****   SegDispClock_Write(HIGH); 
+ 118              		.loc 1 37 0
+ 119 0008 0120     		movs	r0, #1
+ 120 000a FFF7FEFF 		bl	SegDispClock_Write
+ 121              	.LVL9:
+  38:Display.c     ****   
+  39:Display.c     **** }
+ 122              		.loc 1 39 0
+ 123              		@ sp needed
+ 124 000e 10BD     		pop	{r4, pc}
+ 125              		.cfi_endproc
+ 126              	.LFE35:
+ 127              		.size	cycleClock, .-cycleClock
+ 128              		.section	.text.strobe,"ax",%progbits
+ 129              		.align	2
+ 130              		.global	strobe
+ 131              		.code	16
+ 132              		.thumb_func
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 4
 
 
- 130 0038 FFF7FEFF 		bl	SegDispData_Write
- 131              	.LVL14:
-  43:Display.c     ****       cycleClock();
- 132              		.loc 1 43 0
- 133 003c FFF7FEFF 		bl	cycleClock
- 134              	.LVL15:
-  44:Display.c     ****       SegDispData_Write(addr & 32);
- 135              		.loc 1 44 0
- 136 0040 2020     		movs	r0, #32
- 137 0042 2040     		ands	r0, r4
- 138 0044 FFF7FEFF 		bl	SegDispData_Write
- 139              	.LVL16:
-  45:Display.c     ****       cycleClock();
- 140              		.loc 1 45 0
- 141 0048 FFF7FEFF 		bl	cycleClock
- 142              	.LVL17:
-  46:Display.c     ****       SegDispData_Write(addr & 64);
- 143              		.loc 1 46 0
- 144 004c 4020     		movs	r0, #64
- 145 004e 2040     		ands	r0, r4
- 146 0050 FFF7FEFF 		bl	SegDispData_Write
- 147              	.LVL18:
-  47:Display.c     ****       cycleClock();
+ 133              		.type	strobe, %function
+ 134              	strobe:
+ 135              	.LFB36:
+  40:Display.c     **** 
+  41:Display.c     **** void strobe(bool state)
+  42:Display.c     **** {
+ 136              		.loc 1 42 0
+ 137              		.cfi_startproc
+ 138              		@ args = 0, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140              	.LVL10:
+ 141 0000 10B5     		push	{r4, lr}
+ 142              		.cfi_def_cfa_offset 8
+ 143              		.cfi_offset 4, -8
+ 144              		.cfi_offset 14, -4
+  43:Display.c     ****   
+  44:Display.c     ****   SegDispStb1_Write(state);
+ 145              		.loc 1 44 0
+ 146 0002 FFF7FEFF 		bl	SegDispStb1_Write
+ 147              	.LVL11:
+  45:Display.c     ****   //SegDispStb2_Write(state);
+  46:Display.c     **** 
+  47:Display.c     **** }
  148              		.loc 1 47 0
- 149 0054 FFF7FEFF 		bl	cycleClock
- 150              	.LVL19:
-  48:Display.c     ****       SegDispData_Write(addr & 128);
- 151              		.loc 1 48 0
- 152 0058 7F23     		movs	r3, #127
- 153 005a 2000     		movs	r0, r4
- 154 005c 9843     		bics	r0, r3
- 155 005e FFF7FEFF 		bl	SegDispData_Write
- 156              	.LVL20:
-  49:Display.c     ****       cycleClock();
- 157              		.loc 1 49 0
- 158 0062 FFF7FEFF 		bl	cycleClock
- 159              	.LVL21:
-  50:Display.c     ****       
-  51:Display.c     **** }
- 160              		.loc 1 51 0
- 161              		@ sp needed
- 162 0066 10BD     		pop	{r4, pc}
- 163              		.cfi_endproc
- 164              	.LFE35:
- 165              		.size	writeByte, .-writeByte
- 166              		.section	.text.writeBit,"ax",%progbits
- 167              		.align	2
- 168              		.global	writeBit
- 169              		.code	16
- 170              		.thumb_func
- 171              		.type	writeBit, %function
- 172              	writeBit:
- 173              	.LFB36:
-  52:Display.c     **** 
-  53:Display.c     **** void writeBit(bool state)
-  54:Display.c     **** {
- 174              		.loc 1 54 0
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 5
+ 149              		@ sp needed
+ 150 0006 10BD     		pop	{r4, pc}
+ 151              		.cfi_endproc
+ 152              	.LFE36:
+ 153              		.size	strobe, .-strobe
+ 154              		.section	.text.writeByte,"ax",%progbits
+ 155              		.align	2
+ 156              		.global	writeByte
+ 157              		.code	16
+ 158              		.thumb_func
+ 159              		.type	writeByte, %function
+ 160              	writeByte:
+ 161              	.LFB37:
+  48:Display.c     **** 
+  49:Display.c     **** void writeByte(uint8_t addr)
+  50:Display.c     **** {
+ 162              		.loc 1 50 0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 0, uses_anonymous_args = 0
+ 166              	.LVL12:
+ 167 0000 10B5     		push	{r4, lr}
+ 168              		.cfi_def_cfa_offset 8
+ 169              		.cfi_offset 4, -8
+ 170              		.cfi_offset 14, -4
+ 171 0002 0400     		movs	r4, r0
+  51:Display.c     ****   
+  52:Display.c     ****       SegDispData_Write(addr & 1);
+ 172              		.loc 1 52 0
+ 173 0004 0120     		movs	r0, #1
+ 174              	.LVL13:
+ 175 0006 2040     		ands	r0, r4
+ 176 0008 FFF7FEFF 		bl	SegDispData_Write
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 5
 
 
- 175              		.cfi_startproc
- 176              		@ args = 0, pretend = 0, frame = 0
- 177              		@ frame_needed = 0, uses_anonymous_args = 0
- 178              	.LVL22:
- 179 0000 10B5     		push	{r4, lr}
- 180              		.cfi_def_cfa_offset 8
- 181              		.cfi_offset 4, -8
- 182              		.cfi_offset 14, -4
-  55:Display.c     ****   
-  56:Display.c     ****   SegDispData_Write(state);  
- 183              		.loc 1 56 0
- 184 0002 FFF7FEFF 		bl	SegDispData_Write
- 185              	.LVL23:
-  57:Display.c     **** 
-  58:Display.c     ****   // Clock 8 times to shift to first bit
-  59:Display.c     ****   for (int i=0; i>7; i++) { 
-  60:Display.c     **** 
-  61:Display.c     ****     cycleClock();
-  62:Display.c     ****     
-  63:Display.c     ****   }
-  64:Display.c     **** }
- 186              		.loc 1 64 0
- 187              		@ sp needed
- 188 0006 10BD     		pop	{r4, pc}
- 189              		.cfi_endproc
- 190              	.LFE36:
- 191              		.size	writeBit, .-writeBit
- 192              		.section	.text.writeToSingleDigit,"ax",%progbits
- 193              		.align	2
- 194              		.global	writeToSingleDigit
- 195              		.code	16
- 196              		.thumb_func
- 197              		.type	writeToSingleDigit, %function
- 198              	writeToSingleDigit:
- 199              	.LFB37:
-  65:Display.c     **** 
-  66:Display.c     **** void writeToSingleDigit(uint8_t addr, uint8_t data, bool ledState)
-  67:Display.c     **** {
- 200              		.loc 1 67 0
- 201              		.cfi_startproc
- 202              		@ args = 0, pretend = 0, frame = 0
- 203              		@ frame_needed = 0, uses_anonymous_args = 0
- 204              	.LVL24:
- 205 0000 70B5     		push	{r4, r5, r6, lr}
- 206              		.cfi_def_cfa_offset 16
- 207              		.cfi_offset 4, -16
- 208              		.cfi_offset 5, -12
- 209              		.cfi_offset 6, -8
- 210              		.cfi_offset 14, -4
- 211 0002 0400     		movs	r4, r0
- 212 0004 0E00     		movs	r6, r1
- 213 0006 1500     		movs	r5, r2
-  68:Display.c     ****   
-  69:Display.c     ****   strobe(LOW); 
- 214              		.loc 1 69 0
- 215 0008 0020     		movs	r0, #0
- 216              	.LVL25:
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 6
+ 177              	.LVL14:
+  53:Display.c     ****       cycleClock();
+ 178              		.loc 1 53 0
+ 179 000c FFF7FEFF 		bl	cycleClock
+ 180              	.LVL15:
+  54:Display.c     ****       SegDispData_Write(addr & 2);
+ 181              		.loc 1 54 0
+ 182 0010 0220     		movs	r0, #2
+ 183 0012 2040     		ands	r0, r4
+ 184 0014 FFF7FEFF 		bl	SegDispData_Write
+ 185              	.LVL16:
+  55:Display.c     ****       cycleClock();
+ 186              		.loc 1 55 0
+ 187 0018 FFF7FEFF 		bl	cycleClock
+ 188              	.LVL17:
+  56:Display.c     ****       SegDispData_Write(addr & 4);
+ 189              		.loc 1 56 0
+ 190 001c 0420     		movs	r0, #4
+ 191 001e 2040     		ands	r0, r4
+ 192 0020 FFF7FEFF 		bl	SegDispData_Write
+ 193              	.LVL18:
+  57:Display.c     ****       cycleClock(); 
+ 194              		.loc 1 57 0
+ 195 0024 FFF7FEFF 		bl	cycleClock
+ 196              	.LVL19:
+  58:Display.c     ****       SegDispData_Write(addr & 8);
+ 197              		.loc 1 58 0
+ 198 0028 0820     		movs	r0, #8
+ 199 002a 2040     		ands	r0, r4
+ 200 002c FFF7FEFF 		bl	SegDispData_Write
+ 201              	.LVL20:
+  59:Display.c     ****       cycleClock();
+ 202              		.loc 1 59 0
+ 203 0030 FFF7FEFF 		bl	cycleClock
+ 204              	.LVL21:
+  60:Display.c     ****       SegDispData_Write(addr & 16);
+ 205              		.loc 1 60 0
+ 206 0034 1020     		movs	r0, #16
+ 207 0036 2040     		ands	r0, r4
+ 208 0038 FFF7FEFF 		bl	SegDispData_Write
+ 209              	.LVL22:
+  61:Display.c     ****       cycleClock();
+ 210              		.loc 1 61 0
+ 211 003c FFF7FEFF 		bl	cycleClock
+ 212              	.LVL23:
+  62:Display.c     ****       SegDispData_Write(addr & 32);
+ 213              		.loc 1 62 0
+ 214 0040 2020     		movs	r0, #32
+ 215 0042 2040     		ands	r0, r4
+ 216 0044 FFF7FEFF 		bl	SegDispData_Write
+ 217              	.LVL24:
+  63:Display.c     ****       cycleClock();
+ 218              		.loc 1 63 0
+ 219 0048 FFF7FEFF 		bl	cycleClock
+ 220              	.LVL25:
+  64:Display.c     ****       SegDispData_Write(addr & 64);
+ 221              		.loc 1 64 0
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 6
 
 
- 217 000a FFF7FEFF 		bl	strobe
- 218              	.LVL26:
-  70:Display.c     ****   
-  71:Display.c     ****   writeByte(0xC0 | addr);    //addr = 00H to 0DH
- 219              		.loc 1 71 0
- 220 000e 4020     		movs	r0, #64
- 221 0010 4042     		rsbs	r0, r0, #0
- 222 0012 0443     		orrs	r4, r0
- 223 0014 E0B2     		uxtb	r0, r4
- 224 0016 FFF7FEFF 		bl	writeByte
- 225              	.LVL27:
-  72:Display.c     ****   writeByte(characterTable[data]);
- 226              		.loc 1 72 0
- 227 001a 054B     		ldr	r3, .L6
- 228 001c 985D     		ldrb	r0, [r3, r6]
- 229 001e FFF7FEFF 		bl	writeByte
- 230              	.LVL28:
-  73:Display.c     ****   writeBit(ledState);
- 231              		.loc 1 73 0
- 232 0022 2800     		movs	r0, r5
- 233 0024 FFF7FEFF 		bl	writeBit
- 234              	.LVL29:
-  74:Display.c     ****   
-  75:Display.c     ****   strobe(HIGH);
- 235              		.loc 1 75 0
- 236 0028 0120     		movs	r0, #1
- 237 002a FFF7FEFF 		bl	strobe
- 238              	.LVL30:
-  76:Display.c     ****   
-  77:Display.c     **** }
- 239              		.loc 1 77 0
- 240              		@ sp needed
- 241 002e 70BD     		pop	{r4, r5, r6, pc}
- 242              	.L7:
- 243              		.align	2
- 244              	.L6:
- 245 0030 00000000 		.word	characterTable
- 246              		.cfi_endproc
- 247              	.LFE37:
- 248              		.size	writeToSingleDigit, .-writeToSingleDigit
- 249              		.section	.text.writeToAllDigits,"ax",%progbits
- 250              		.align	2
- 251              		.global	writeToAllDigits
- 252              		.code	16
- 253              		.thumb_func
- 254              		.type	writeToAllDigits, %function
- 255              	writeToAllDigits:
- 256              	.LFB38:
+ 222 004c 4020     		movs	r0, #64
+ 223 004e 2040     		ands	r0, r4
+ 224 0050 FFF7FEFF 		bl	SegDispData_Write
+ 225              	.LVL26:
+  65:Display.c     ****       cycleClock();
+ 226              		.loc 1 65 0
+ 227 0054 FFF7FEFF 		bl	cycleClock
+ 228              	.LVL27:
+  66:Display.c     ****       SegDispData_Write(addr & 128);
+ 229              		.loc 1 66 0
+ 230 0058 7F23     		movs	r3, #127
+ 231 005a 2000     		movs	r0, r4
+ 232 005c 9843     		bics	r0, r3
+ 233 005e FFF7FEFF 		bl	SegDispData_Write
+ 234              	.LVL28:
+  67:Display.c     ****       cycleClock();
+ 235              		.loc 1 67 0
+ 236 0062 FFF7FEFF 		bl	cycleClock
+ 237              	.LVL29:
+  68:Display.c     ****       
+  69:Display.c     **** }
+ 238              		.loc 1 69 0
+ 239              		@ sp needed
+ 240 0066 10BD     		pop	{r4, pc}
+ 241              		.cfi_endproc
+ 242              	.LFE37:
+ 243              		.size	writeByte, .-writeByte
+ 244              		.section	.text.writeBit,"ax",%progbits
+ 245              		.align	2
+ 246              		.global	writeBit
+ 247              		.code	16
+ 248              		.thumb_func
+ 249              		.type	writeBit, %function
+ 250              	writeBit:
+ 251              	.LFB38:
+  70:Display.c     **** 
+  71:Display.c     **** void writeBit(bool state)
+  72:Display.c     **** {
+ 252              		.loc 1 72 0
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 256              	.LVL30:
+ 257 0000 10B5     		push	{r4, lr}
+ 258              		.cfi_def_cfa_offset 8
+ 259              		.cfi_offset 4, -8
+ 260              		.cfi_offset 14, -4
+  73:Display.c     ****   
+  74:Display.c     ****   SegDispData_Write(state);  
+ 261              		.loc 1 74 0
+ 262 0002 FFF7FEFF 		bl	SegDispData_Write
+ 263              	.LVL31:
+  75:Display.c     **** 
+  76:Display.c     ****   // Clock 8 times to shift to first bit
+  77:Display.c     ****   for (int i=0; i>7; i++) { 
   78:Display.c     **** 
-  79:Display.c     **** 
-  80:Display.c     **** void writeToAllDigits(uint8_t dig1, uint8_t dig2, uint8_t dig3, int period)
-  81:Display.c     **** {
- 257              		.loc 1 81 0
- 258              		.cfi_startproc
- 259              		@ args = 0, pretend = 0, frame = 0
- 260              		@ frame_needed = 0, uses_anonymous_args = 0
- 261              	.LVL31:
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 7
+  79:Display.c     ****     cycleClock();
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 7
 
 
- 262 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
- 263              		.cfi_def_cfa_offset 24
- 264              		.cfi_offset 3, -24
- 265              		.cfi_offset 4, -20
- 266              		.cfi_offset 5, -16
- 267              		.cfi_offset 6, -12
- 268              		.cfi_offset 7, -8
- 269              		.cfi_offset 14, -4
- 270 0002 0700     		movs	r7, r0
- 271 0004 0E00     		movs	r6, r1
- 272 0006 1500     		movs	r5, r2
- 273 0008 1C00     		movs	r4, r3
-  82:Display.c     ****   
-  83:Display.c     ****   writeToSingleDigit(digit0Addr, dig1, LOW);
- 274              		.loc 1 83 0
- 275 000a 0022     		movs	r2, #0
- 276              	.LVL32:
- 277 000c 0100     		movs	r1, r0
- 278              	.LVL33:
- 279 000e 0620     		movs	r0, #6
- 280              	.LVL34:
- 281 0010 FFF7FEFF 		bl	writeToSingleDigit
- 282              	.LVL35:
-  84:Display.c     ****   writeToSingleDigit(digit1Addr, dig2, HIGH);
- 283              		.loc 1 84 0
- 284 0014 0122     		movs	r2, #1
- 285 0016 3100     		movs	r1, r6
- 286 0018 0820     		movs	r0, #8
- 287 001a FFF7FEFF 		bl	writeToSingleDigit
- 288              	.LVL36:
-  85:Display.c     ****   writeToSingleDigit(digit2Addr, dig3, LOW);
- 289              		.loc 1 85 0
- 290 001e 0022     		movs	r2, #0
- 291 0020 2900     		movs	r1, r5
- 292 0022 0A20     		movs	r0, #10
- 293 0024 FFF7FEFF 		bl	writeToSingleDigit
- 294              	.LVL37:
-  86:Display.c     ****     
-  87:Display.c     ****   CyDelay(period);
- 295              		.loc 1 87 0
- 296 0028 2000     		movs	r0, r4
- 297 002a FFF7FEFF 		bl	CyDelay
- 298              	.LVL38:
-  88:Display.c     ****     
-  89:Display.c     ****   writeToSingleDigit(digit0Addr, dig1, HIGH);
- 299              		.loc 1 89 0
- 300 002e 0122     		movs	r2, #1
- 301 0030 3900     		movs	r1, r7
- 302 0032 0620     		movs	r0, #6
- 303 0034 FFF7FEFF 		bl	writeToSingleDigit
- 304              	.LVL39:
-  90:Display.c     ****   writeToSingleDigit(digit1Addr, dig2, HIGH);
- 305              		.loc 1 90 0
- 306 0038 0122     		movs	r2, #1
- 307 003a 3100     		movs	r1, r6
- 308 003c 0820     		movs	r0, #8
- 309 003e FFF7FEFF 		bl	writeToSingleDigit
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 8
+  80:Display.c     ****     
+  81:Display.c     ****   }
+  82:Display.c     **** }
+ 264              		.loc 1 82 0
+ 265              		@ sp needed
+ 266 0006 10BD     		pop	{r4, pc}
+ 267              		.cfi_endproc
+ 268              	.LFE38:
+ 269              		.size	writeBit, .-writeBit
+ 270              		.section	.text.writeToSingleDigit,"ax",%progbits
+ 271              		.align	2
+ 272              		.global	writeToSingleDigit
+ 273              		.code	16
+ 274              		.thumb_func
+ 275              		.type	writeToSingleDigit, %function
+ 276              	writeToSingleDigit:
+ 277              	.LFB39:
+  83:Display.c     **** 
+  84:Display.c     **** void writeToSingleDigit(uint8_t addr, uint8_t data, bool ledState)
+  85:Display.c     **** {
+ 278              		.loc 1 85 0
+ 279              		.cfi_startproc
+ 280              		@ args = 0, pretend = 0, frame = 0
+ 281              		@ frame_needed = 0, uses_anonymous_args = 0
+ 282              	.LVL32:
+ 283 0000 70B5     		push	{r4, r5, r6, lr}
+ 284              		.cfi_def_cfa_offset 16
+ 285              		.cfi_offset 4, -16
+ 286              		.cfi_offset 5, -12
+ 287              		.cfi_offset 6, -8
+ 288              		.cfi_offset 14, -4
+ 289 0002 0400     		movs	r4, r0
+ 290 0004 0E00     		movs	r6, r1
+ 291 0006 1500     		movs	r5, r2
+  86:Display.c     ****   
+  87:Display.c     ****   strobe(LOW); 
+ 292              		.loc 1 87 0
+ 293 0008 0020     		movs	r0, #0
+ 294              	.LVL33:
+ 295 000a FFF7FEFF 		bl	strobe
+ 296              	.LVL34:
+  88:Display.c     ****   
+  89:Display.c     ****   writeByte(0xC0 | addr);    //addr = 00H to 0DH
+ 297              		.loc 1 89 0
+ 298 000e 4020     		movs	r0, #64
+ 299 0010 4042     		rsbs	r0, r0, #0
+ 300 0012 0443     		orrs	r4, r0
+ 301 0014 E0B2     		uxtb	r0, r4
+ 302 0016 FFF7FEFF 		bl	writeByte
+ 303              	.LVL35:
+  90:Display.c     ****   writeByte(characterTable[data]);
+ 304              		.loc 1 90 0
+ 305 001a 054B     		ldr	r3, .L10
+ 306 001c 985D     		ldrb	r0, [r3, r6]
+ 307 001e FFF7FEFF 		bl	writeByte
+ 308              	.LVL36:
+  91:Display.c     ****   writeBit(ledState);
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 8
 
 
- 310              	.LVL40:
-  91:Display.c     ****   writeToSingleDigit(digit2Addr, dig3, HIGH);
- 311              		.loc 1 91 0
- 312 0042 0122     		movs	r2, #1
- 313 0044 2900     		movs	r1, r5
- 314 0046 0A20     		movs	r0, #10
- 315 0048 FFF7FEFF 		bl	writeToSingleDigit
- 316              	.LVL41:
-  92:Display.c     ****     
-  93:Display.c     ****   CyDelay(period);
- 317              		.loc 1 93 0
- 318 004c 2000     		movs	r0, r4
- 319 004e FFF7FEFF 		bl	CyDelay
- 320              	.LVL42:
+ 309              		.loc 1 91 0
+ 310 0022 2800     		movs	r0, r5
+ 311 0024 FFF7FEFF 		bl	writeBit
+ 312              	.LVL37:
+  92:Display.c     ****   
+  93:Display.c     ****   strobe(HIGH);
+ 313              		.loc 1 93 0
+ 314 0028 0120     		movs	r0, #1
+ 315 002a FFF7FEFF 		bl	strobe
+ 316              	.LVL38:
   94:Display.c     ****   
   95:Display.c     **** }
- 321              		.loc 1 95 0
- 322              		@ sp needed
- 323              	.LVL43:
- 324 0052 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
- 325              		.cfi_endproc
- 326              	.LFE38:
- 327              		.size	writeToAllDigits, .-writeToAllDigits
- 328              		.section	.text.ctrlDisplay,"ax",%progbits
- 329              		.align	2
- 330              		.global	ctrlDisplay
- 331              		.code	16
- 332              		.thumb_func
- 333              		.type	ctrlDisplay, %function
- 334              	ctrlDisplay:
- 335              	.LFB39:
+ 317              		.loc 1 95 0
+ 318              		@ sp needed
+ 319 002e 70BD     		pop	{r4, r5, r6, pc}
+ 320              	.L11:
+ 321              		.align	2
+ 322              	.L10:
+ 323 0030 00000000 		.word	characterTable
+ 324              		.cfi_endproc
+ 325              	.LFE39:
+ 326              		.size	writeToSingleDigit, .-writeToSingleDigit
+ 327              		.section	.text.writeToAllDigits,"ax",%progbits
+ 328              		.align	2
+ 329              		.global	writeToAllDigits
+ 330              		.code	16
+ 331              		.thumb_func
+ 332              		.type	writeToAllDigits, %function
+ 333              	writeToAllDigits:
+ 334              	.LFB40:
   96:Display.c     **** 
-  97:Display.c     **** void ctrlDisplay(int ctx, uint8_t value)
-  98:Display.c     **** {
- 336              		.loc 1 98 0
- 337              		.cfi_startproc
- 338              		@ args = 0, pretend = 0, frame = 0
- 339              		@ frame_needed = 0, uses_anonymous_args = 0
- 340              	.LVL44:
- 341 0000 70B5     		push	{r4, r5, r6, lr}
- 342              		.cfi_def_cfa_offset 16
- 343              		.cfi_offset 4, -16
- 344              		.cfi_offset 5, -12
- 345              		.cfi_offset 6, -8
- 346              		.cfi_offset 14, -4
- 347 0002 0400     		movs	r4, r0
- 348 0004 0D00     		movs	r5, r1
-  99:Display.c     ****   
- 100:Display.c     ****   strobe(0);
- 349              		.loc 1 100 0
- 350 0006 0020     		movs	r0, #0
- 351              	.LVL45:
- 352 0008 FFF7FEFF 		bl	strobe
- 353              	.LVL46:
- 101:Display.c     ****   
- 102:Display.c     ****   switch(ctx) {
- 354              		.loc 1 102 0
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 9
+  97:Display.c     **** 
+  98:Display.c     **** void writeToAllDigits(uint8_t dig1, uint8_t dig2, uint8_t dig3, int period)
+  99:Display.c     **** {
+ 335              		.loc 1 99 0
+ 336              		.cfi_startproc
+ 337              		@ args = 0, pretend = 0, frame = 0
+ 338              		@ frame_needed = 0, uses_anonymous_args = 0
+ 339              	.LVL39:
+ 340 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 341              		.cfi_def_cfa_offset 24
+ 342              		.cfi_offset 3, -24
+ 343              		.cfi_offset 4, -20
+ 344              		.cfi_offset 5, -16
+ 345              		.cfi_offset 6, -12
+ 346              		.cfi_offset 7, -8
+ 347              		.cfi_offset 14, -4
+ 348 0002 0700     		movs	r7, r0
+ 349 0004 0E00     		movs	r6, r1
+ 350 0006 1500     		movs	r5, r2
+ 351 0008 1C00     		movs	r4, r3
+ 100:Display.c     ****   
+ 101:Display.c     ****   writeToSingleDigit(digit0Addr, dig1, LOW);
+ 352              		.loc 1 101 0
+ 353 000a 0022     		movs	r2, #0
+ 354              	.LVL40:
+ 355 000c 0100     		movs	r1, r0
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 9
 
 
- 355 000c 012C     		cmp	r4, #1
- 356 000e 07D0     		beq	.L11
- 357 0010 022C     		cmp	r4, #2
- 358 0012 09D0     		beq	.L12
- 359 0014 002C     		cmp	r4, #0
- 360 0016 0DD1     		bne	.L10
- 103:Display.c     ****     // Display off
- 104:Display.c     ****     case 0:
- 105:Display.c     ****       IGNORE(value);
- 106:Display.c     ****       writeByte(0x80 & ~0x08);
- 361              		.loc 1 106 0
- 362 0018 8020     		movs	r0, #128
- 363 001a FFF7FEFF 		bl	writeByte
- 364              	.LVL47:
- 107:Display.c     ****       break;
- 365              		.loc 1 107 0
- 366 001e 09E0     		b	.L10
- 367              	.L11:
- 108:Display.c     ****     // Display on
- 109:Display.c     ****     case 1:
- 110:Display.c     ****       IGNORE(value);
- 111:Display.c     ****       writeByte(0x80 | 0x08);
- 368              		.loc 1 111 0
- 369 0020 8820     		movs	r0, #136
- 370 0022 FFF7FEFF 		bl	writeByte
- 371              	.LVL48:
- 112:Display.c     ****       break;
- 372              		.loc 1 112 0
- 373 0026 05E0     		b	.L10
- 374              	.L12:
- 113:Display.c     ****     // Set brightness
- 114:Display.c     ****     case 2:
- 115:Display.c     ****       writeByte(0x80 | value);
- 375              		.loc 1 115 0
- 376 0028 8020     		movs	r0, #128
- 377 002a 4042     		rsbs	r0, r0, #0
- 378 002c 0543     		orrs	r5, r0
- 379 002e E8B2     		uxtb	r0, r5
- 380 0030 FFF7FEFF 		bl	writeByte
- 381              	.LVL49:
- 382              	.L10:
- 116:Display.c     ****       break;
- 117:Display.c     ****   }
- 118:Display.c     **** 
- 119:Display.c     ****   strobe(1);
- 383              		.loc 1 119 0
- 384 0034 0120     		movs	r0, #1
- 385 0036 FFF7FEFF 		bl	strobe
- 386              	.LVL50:
- 120:Display.c     ****   
- 121:Display.c     **** }
- 387              		.loc 1 121 0
- 388              		@ sp needed
- 389              	.LVL51:
- 390 003a 70BD     		pop	{r4, r5, r6, pc}
- 391              		.cfi_endproc
- 392              	.LFE39:
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 10
+ 356              	.LVL41:
+ 357 000e 0620     		movs	r0, #6
+ 358              	.LVL42:
+ 359 0010 FFF7FEFF 		bl	writeToSingleDigit
+ 360              	.LVL43:
+ 102:Display.c     ****   writeToSingleDigit(digit1Addr, dig2, LOW);
+ 361              		.loc 1 102 0
+ 362 0014 0022     		movs	r2, #0
+ 363 0016 3100     		movs	r1, r6
+ 364 0018 0820     		movs	r0, #8
+ 365 001a FFF7FEFF 		bl	writeToSingleDigit
+ 366              	.LVL44:
+ 103:Display.c     ****   writeToSingleDigit(digit2Addr, dig3, LOW);
+ 367              		.loc 1 103 0
+ 368 001e 0022     		movs	r2, #0
+ 369 0020 2900     		movs	r1, r5
+ 370 0022 0A20     		movs	r0, #10
+ 371 0024 FFF7FEFF 		bl	writeToSingleDigit
+ 372              	.LVL45:
+ 104:Display.c     ****     
+ 105:Display.c     ****   CyDelay(period);
+ 373              		.loc 1 105 0
+ 374 0028 2000     		movs	r0, r4
+ 375 002a FFF7FEFF 		bl	CyDelay
+ 376              	.LVL46:
+ 106:Display.c     ****     
+ 107:Display.c     ****   writeToSingleDigit(digit0Addr, dig1, HIGH);
+ 377              		.loc 1 107 0
+ 378 002e 0122     		movs	r2, #1
+ 379 0030 3900     		movs	r1, r7
+ 380 0032 0620     		movs	r0, #6
+ 381 0034 FFF7FEFF 		bl	writeToSingleDigit
+ 382              	.LVL47:
+ 108:Display.c     ****   writeToSingleDigit(digit1Addr, dig2, HIGH);
+ 383              		.loc 1 108 0
+ 384 0038 0122     		movs	r2, #1
+ 385 003a 3100     		movs	r1, r6
+ 386 003c 0820     		movs	r0, #8
+ 387 003e FFF7FEFF 		bl	writeToSingleDigit
+ 388              	.LVL48:
+ 109:Display.c     ****   writeToSingleDigit(digit2Addr, dig3, HIGH);
+ 389              		.loc 1 109 0
+ 390 0042 0122     		movs	r2, #1
+ 391 0044 2900     		movs	r1, r5
+ 392 0046 0A20     		movs	r0, #10
+ 393 0048 FFF7FEFF 		bl	writeToSingleDigit
+ 394              	.LVL49:
+ 110:Display.c     ****     
+ 111:Display.c     ****   CyDelay(period);
+ 395              		.loc 1 111 0
+ 396 004c 2000     		movs	r0, r4
+ 397 004e FFF7FEFF 		bl	CyDelay
+ 398              	.LVL50:
+ 112:Display.c     **** 
+ 113:Display.c     ****   HeartbeatLed_Toggle();
+ 399              		.loc 1 113 0
+ 400 0052 FFF7FEFF 		bl	HeartbeatLed_Toggle
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 10
 
 
- 393              		.size	ctrlDisplay, .-ctrlDisplay
- 394              		.global	digit2Addr
- 395              		.global	digit1Addr
- 396              		.global	digit0Addr
- 397              		.section	.rodata
- 398              		.type	digit2Addr, %object
- 399              		.size	digit2Addr, 1
- 400              	digit2Addr:
- 401 0000 0A       		.byte	10
- 402              		.type	digit1Addr, %object
- 403              		.size	digit1Addr, 1
- 404              	digit1Addr:
- 405 0001 08       		.byte	8
- 406              		.type	digit0Addr, %object
- 407              		.size	digit0Addr, 1
- 408              	digit0Addr:
- 409 0002 06       		.byte	6
- 410              		.text
- 411              	.Letext0:
- 412              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
- 413              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
- 414              		.file 4 "Generated_Source\\PSoC4/cytypes.h"
- 415              		.file 5 "SsdCharacterTable.h"
- 416              		.file 6 "Generated_Source\\PSoC4/SegDispClock.h"
- 417              		.file 7 "Generated_Source\\PSoC4/SegDispStb1.h"
- 418              		.file 8 "Generated_Source\\PSoC4/SegDispData.h"
- 419              		.file 9 "Generated_Source\\PSoC4/CyLib.h"
- 420              		.section	.debug_info,"",%progbits
- 421              	.Ldebug_info0:
- 422 0000 39050000 		.4byte	0x539
- 423 0004 0400     		.2byte	0x4
- 424 0006 00000000 		.4byte	.Ldebug_abbrev0
- 425 000a 04       		.byte	0x4
- 426 000b 01       		.uleb128 0x1
- 427 000c F6010000 		.4byte	.LASF42
- 428 0010 0C       		.byte	0xc
- 429 0011 C8010000 		.4byte	.LASF43
- 430 0015 C4000000 		.4byte	.LASF44
- 431 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 432 001d 00000000 		.4byte	0
- 433 0021 00000000 		.4byte	.Ldebug_line0
- 434 0025 02       		.uleb128 0x2
- 435 0026 01       		.byte	0x1
- 436 0027 06       		.byte	0x6
- 437 0028 93000000 		.4byte	.LASF0
- 438 002c 03       		.uleb128 0x3
- 439 002d 2C000000 		.4byte	.LASF9
- 440 0031 02       		.byte	0x2
- 441 0032 1D       		.byte	0x1d
- 442 0033 37000000 		.4byte	0x37
- 443 0037 02       		.uleb128 0x2
- 444 0038 01       		.byte	0x1
- 445 0039 08       		.byte	0x8
- 446 003a 9F000000 		.4byte	.LASF1
- 447 003e 02       		.uleb128 0x2
- 448 003f 02       		.byte	0x2
- 449 0040 05       		.byte	0x5
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 11
+ 401              	.LVL51:
+ 114:Display.c     ****   
+ 115:Display.c     **** }
+ 402              		.loc 1 115 0
+ 403              		@ sp needed
+ 404              	.LVL52:
+ 405 0056 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 406              		.cfi_endproc
+ 407              	.LFE40:
+ 408              		.size	writeToAllDigits, .-writeToAllDigits
+ 409              		.section	.text.ctrlDisplay,"ax",%progbits
+ 410              		.align	2
+ 411              		.global	ctrlDisplay
+ 412              		.code	16
+ 413              		.thumb_func
+ 414              		.type	ctrlDisplay, %function
+ 415              	ctrlDisplay:
+ 416              	.LFB41:
+ 116:Display.c     **** 
+ 117:Display.c     **** void ctrlDisplay(int ctx, uint8_t value)
+ 118:Display.c     **** {
+ 417              		.loc 1 118 0
+ 418              		.cfi_startproc
+ 419              		@ args = 0, pretend = 0, frame = 0
+ 420              		@ frame_needed = 0, uses_anonymous_args = 0
+ 421              	.LVL53:
+ 422 0000 70B5     		push	{r4, r5, r6, lr}
+ 423              		.cfi_def_cfa_offset 16
+ 424              		.cfi_offset 4, -16
+ 425              		.cfi_offset 5, -12
+ 426              		.cfi_offset 6, -8
+ 427              		.cfi_offset 14, -4
+ 428 0002 0400     		movs	r4, r0
+ 429 0004 0D00     		movs	r5, r1
+ 119:Display.c     ****   
+ 120:Display.c     ****   strobe(LOW);
+ 430              		.loc 1 120 0
+ 431 0006 0020     		movs	r0, #0
+ 432              	.LVL54:
+ 433 0008 FFF7FEFF 		bl	strobe
+ 434              	.LVL55:
+ 121:Display.c     ****   
+ 122:Display.c     ****   switch(ctx) {
+ 435              		.loc 1 122 0
+ 436 000c 012C     		cmp	r4, #1
+ 437 000e 07D0     		beq	.L15
+ 438 0010 022C     		cmp	r4, #2
+ 439 0012 09D0     		beq	.L16
+ 440 0014 002C     		cmp	r4, #0
+ 441 0016 0DD1     		bne	.L14
+ 123:Display.c     ****     // Display off
+ 124:Display.c     ****     case 0:
+ 125:Display.c     ****       IGNORE(value);
+ 126:Display.c     ****       writeByte(0x80 & ~0x08);
+ 442              		.loc 1 126 0
+ 443 0018 8020     		movs	r0, #128
+ 444 001a FFF7FEFF 		bl	writeByte
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 11
 
 
- 450 0041 38010000 		.4byte	.LASF2
- 451 0045 02       		.uleb128 0x2
- 452 0046 02       		.byte	0x2
- 453 0047 07       		.byte	0x7
- 454 0048 88020000 		.4byte	.LASF3
- 455 004c 02       		.uleb128 0x2
- 456 004d 04       		.byte	0x4
- 457 004e 05       		.byte	0x5
- 458 004f E1010000 		.4byte	.LASF4
- 459 0053 02       		.uleb128 0x2
- 460 0054 04       		.byte	0x4
- 461 0055 07       		.byte	0x7
- 462 0056 AD000000 		.4byte	.LASF5
- 463 005a 02       		.uleb128 0x2
- 464 005b 08       		.byte	0x8
- 465 005c 05       		.byte	0x5
- 466 005d 00000000 		.4byte	.LASF6
- 467 0061 02       		.uleb128 0x2
- 468 0062 08       		.byte	0x8
- 469 0063 07       		.byte	0x7
- 470 0064 75010000 		.4byte	.LASF7
- 471 0068 04       		.uleb128 0x4
- 472 0069 04       		.byte	0x4
- 473 006a 05       		.byte	0x5
- 474 006b 696E7400 		.ascii	"int\000"
- 475 006f 02       		.uleb128 0x2
- 476 0070 04       		.byte	0x4
- 477 0071 07       		.byte	0x7
- 478 0072 55010000 		.4byte	.LASF8
- 479 0076 03       		.uleb128 0x3
- 480 0077 8C010000 		.4byte	.LASF10
- 481 007b 03       		.byte	0x3
- 482 007c 18       		.byte	0x18
- 483 007d 2C000000 		.4byte	0x2c
- 484 0081 05       		.uleb128 0x5
- 485 0082 82000000 		.4byte	.LASF11
- 486 0086 04       		.byte	0x4
- 487 0087 FC01     		.2byte	0x1fc
- 488 0089 37000000 		.4byte	0x37
- 489 008d 02       		.uleb128 0x2
- 490 008e 04       		.byte	0x4
- 491 008f 04       		.byte	0x4
- 492 0090 88000000 		.4byte	.LASF12
- 493 0094 02       		.uleb128 0x2
- 494 0095 08       		.byte	0x8
- 495 0096 04       		.byte	0x4
- 496 0097 7B000000 		.4byte	.LASF13
- 497 009b 02       		.uleb128 0x2
- 498 009c 01       		.byte	0x1
- 499 009d 08       		.byte	0x8
- 500 009e B9010000 		.4byte	.LASF14
- 501 00a2 02       		.uleb128 0x2
- 502 00a3 08       		.byte	0x8
- 503 00a4 04       		.byte	0x4
- 504 00a5 EA010000 		.4byte	.LASF15
- 505 00a9 02       		.uleb128 0x2
- 506 00aa 04       		.byte	0x4
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 12
+ 445              	.LVL56:
+ 127:Display.c     ****       break;
+ 446              		.loc 1 127 0
+ 447 001e 09E0     		b	.L14
+ 448              	.L15:
+ 128:Display.c     ****     // Display on
+ 129:Display.c     ****     case 1:
+ 130:Display.c     ****       IGNORE(value);
+ 131:Display.c     ****       writeByte(0x80 | 0x08);
+ 449              		.loc 1 131 0
+ 450 0020 8820     		movs	r0, #136
+ 451 0022 FFF7FEFF 		bl	writeByte
+ 452              	.LVL57:
+ 132:Display.c     ****       break;
+ 453              		.loc 1 132 0
+ 454 0026 05E0     		b	.L14
+ 455              	.L16:
+ 133:Display.c     ****     // Set brightness
+ 134:Display.c     ****     case 2:
+ 135:Display.c     ****       writeByte(0x80 | value);
+ 456              		.loc 1 135 0
+ 457 0028 8020     		movs	r0, #128
+ 458 002a 4042     		rsbs	r0, r0, #0
+ 459 002c 0543     		orrs	r5, r0
+ 460 002e E8B2     		uxtb	r0, r5
+ 461 0030 FFF7FEFF 		bl	writeByte
+ 462              	.LVL58:
+ 463              	.L14:
+ 136:Display.c     ****       break;
+ 137:Display.c     ****   }
+ 138:Display.c     **** 
+ 139:Display.c     ****   strobe(HIGH);
+ 464              		.loc 1 139 0
+ 465 0034 0120     		movs	r0, #1
+ 466 0036 FFF7FEFF 		bl	strobe
+ 467              	.LVL59:
+ 140:Display.c     ****   
+ 141:Display.c     **** }
+ 468              		.loc 1 141 0
+ 469              		@ sp needed
+ 470              	.LVL60:
+ 471 003a 70BD     		pop	{r4, r5, r6, pc}
+ 472              		.cfi_endproc
+ 473              	.LFE41:
+ 474              		.size	ctrlDisplay, .-ctrlDisplay
+ 475              		.global	curState
+ 476              		.global	digit2Addr
+ 477              		.global	digit1Addr
+ 478              		.global	digit0Addr
+ 479              		.section	.rodata
+ 480              		.type	digit2Addr, %object
+ 481              		.size	digit2Addr, 1
+ 482              	digit2Addr:
+ 483 0000 0A       		.byte	10
+ 484              		.type	digit1Addr, %object
+ 485              		.size	digit1Addr, 1
+ 486              	digit1Addr:
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 12
 
 
- 507 00ab 07       		.byte	0x7
- 508 00ac A5010000 		.4byte	.LASF16
- 509 00b0 06       		.uleb128 0x6
- 510 00b1 42000000 		.4byte	.LASF17
- 511 00b5 01       		.byte	0x1
- 512 00b6 0F       		.byte	0xf
- 513 00b7 00000000 		.4byte	.LFB33
- 514 00bb 10000000 		.4byte	.LFE33-.LFB33
- 515 00bf 01       		.uleb128 0x1
- 516 00c0 9C       		.byte	0x9c
- 517 00c1 E8000000 		.4byte	0xe8
- 518 00c5 07       		.uleb128 0x7
- 519 00c6 08000000 		.4byte	.LVL0
- 520 00ca 10050000 		.4byte	0x510
- 521 00ce D8000000 		.4byte	0xd8
- 522 00d2 08       		.uleb128 0x8
- 523 00d3 01       		.uleb128 0x1
- 524 00d4 50       		.byte	0x50
- 525 00d5 01       		.uleb128 0x1
- 526 00d6 30       		.byte	0x30
- 527 00d7 00       		.byte	0
- 528 00d8 09       		.uleb128 0x9
- 529 00d9 0E000000 		.4byte	.LVL1
- 530 00dd 10050000 		.4byte	0x510
- 531 00e1 08       		.uleb128 0x8
- 532 00e2 01       		.uleb128 0x1
- 533 00e3 50       		.byte	0x50
- 534 00e4 01       		.uleb128 0x1
- 535 00e5 31       		.byte	0x31
- 536 00e6 00       		.byte	0
- 537 00e7 00       		.byte	0
- 538 00e8 06       		.uleb128 0x6
- 539 00e9 9B020000 		.4byte	.LASF18
- 540 00ed 01       		.byte	0x1
- 541 00ee 17       		.byte	0x17
- 542 00ef 00000000 		.4byte	.LFB34
- 543 00f3 08000000 		.4byte	.LFE34-.LFB34
- 544 00f7 01       		.uleb128 0x1
- 545 00f8 9C       		.byte	0x9c
- 546 00f9 16010000 		.4byte	0x116
- 547 00fd 0A       		.uleb128 0xa
- 548 00fe 36000000 		.4byte	.LASF21
- 549 0102 01       		.byte	0x1
- 550 0103 17       		.byte	0x17
- 551 0104 16010000 		.4byte	0x116
- 552 0108 00000000 		.4byte	.LLST0
- 553 010c 0B       		.uleb128 0xb
- 554 010d 06000000 		.4byte	.LVL3
- 555 0111 1B050000 		.4byte	0x51b
- 556 0115 00       		.byte	0
- 557 0116 02       		.uleb128 0x2
- 558 0117 01       		.byte	0x1
- 559 0118 02       		.byte	0x2
- 560 0119 3C000000 		.4byte	.LASF19
- 561 011d 06       		.uleb128 0x6
- 562 011e BE010000 		.4byte	.LASF20
- 563 0122 01       		.byte	0x1
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 13
+ 487 0001 08       		.byte	8
+ 488              		.type	digit0Addr, %object
+ 489              		.size	digit0Addr, 1
+ 490              	digit0Addr:
+ 491 0002 06       		.byte	6
+ 492              		.bss
+ 493              		.set	.LANCHOR0,. + 0
+ 494              		.type	curState, %object
+ 495              		.size	curState, 1
+ 496              	curState:
+ 497 0000 00       		.space	1
+ 498              		.text
+ 499              	.Letext0:
+ 500              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 501              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 502              		.file 4 "Generated_Source\\PSoC4/cytypes.h"
+ 503              		.file 5 "SsdCharacterTable.h"
+ 504              		.file 6 "Generated_Source\\PSoC4/HeartbeatLed.h"
+ 505              		.file 7 "Generated_Source\\PSoC4/CyLib.h"
+ 506              		.file 8 "Generated_Source\\PSoC4/SegDispClock.h"
+ 507              		.file 9 "Generated_Source\\PSoC4/SegDispStb1.h"
+ 508              		.file 10 "Generated_Source\\PSoC4/SegDispData.h"
+ 509              		.section	.debug_info,"",%progbits
+ 510              	.Ldebug_info0:
+ 511 0000 F0050000 		.4byte	0x5f0
+ 512 0004 0400     		.2byte	0x4
+ 513 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 514 000a 04       		.byte	0x4
+ 515 000b 01       		.uleb128 0x1
+ 516 000c 39020000 		.4byte	.LASF46
+ 517 0010 0C       		.byte	0xc
+ 518 0011 0B020000 		.4byte	.LASF47
+ 519 0015 EB000000 		.4byte	.LASF48
+ 520 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 521 001d 00000000 		.4byte	0
+ 522 0021 00000000 		.4byte	.Ldebug_line0
+ 523 0025 02       		.uleb128 0x2
+ 524 0026 01       		.byte	0x1
+ 525 0027 06       		.byte	0x6
+ 526 0028 A8000000 		.4byte	.LASF0
+ 527 002c 03       		.uleb128 0x3
+ 528 002d 2D000000 		.4byte	.LASF9
+ 529 0031 02       		.byte	0x2
+ 530 0032 1D       		.byte	0x1d
+ 531 0033 37000000 		.4byte	0x37
+ 532 0037 02       		.uleb128 0x2
+ 533 0038 01       		.byte	0x1
+ 534 0039 08       		.byte	0x8
+ 535 003a B4000000 		.4byte	.LASF1
+ 536 003e 02       		.uleb128 0x2
+ 537 003f 02       		.byte	0x2
+ 538 0040 05       		.byte	0x5
+ 539 0041 5F010000 		.4byte	.LASF2
+ 540 0045 02       		.uleb128 0x2
+ 541 0046 02       		.byte	0x2
+ 542 0047 07       		.byte	0x7
+ 543 0048 CB020000 		.4byte	.LASF3
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 13
 
 
- 564 0123 1F       		.byte	0x1f
- 565 0124 00000000 		.4byte	.LFB35
- 566 0128 68000000 		.4byte	.LFE35-.LFB35
- 567 012c 01       		.uleb128 0x1
- 568 012d 9C       		.byte	0x9c
- 569 012e 3D020000 		.4byte	0x23d
- 570 0132 0A       		.uleb128 0xa
- 571 0133 BF000000 		.4byte	.LASF22
- 572 0137 01       		.byte	0x1
- 573 0138 1F       		.byte	0x1f
- 574 0139 76000000 		.4byte	0x76
- 575 013d 21000000 		.4byte	.LLST1
- 576 0141 07       		.uleb128 0x7
- 577 0142 0C000000 		.4byte	.LVL6
- 578 0146 26050000 		.4byte	0x526
- 579 014a 57010000 		.4byte	0x157
- 580 014e 08       		.uleb128 0x8
- 581 014f 01       		.uleb128 0x1
- 582 0150 50       		.byte	0x50
- 583 0151 04       		.uleb128 0x4
- 584 0152 74       		.byte	0x74
- 585 0153 00       		.sleb128 0
- 586 0154 31       		.byte	0x31
- 587 0155 1A       		.byte	0x1a
- 588 0156 00       		.byte	0
- 589 0157 0B       		.uleb128 0xb
- 590 0158 10000000 		.4byte	.LVL7
- 591 015c B0000000 		.4byte	0xb0
- 592 0160 07       		.uleb128 0x7
- 593 0161 18000000 		.4byte	.LVL8
- 594 0165 26050000 		.4byte	0x526
- 595 0169 76010000 		.4byte	0x176
- 596 016d 08       		.uleb128 0x8
- 597 016e 01       		.uleb128 0x1
- 598 016f 50       		.byte	0x50
- 599 0170 04       		.uleb128 0x4
- 600 0171 74       		.byte	0x74
- 601 0172 00       		.sleb128 0
- 602 0173 32       		.byte	0x32
- 603 0174 1A       		.byte	0x1a
- 604 0175 00       		.byte	0
- 605 0176 0B       		.uleb128 0xb
- 606 0177 1C000000 		.4byte	.LVL9
- 607 017b B0000000 		.4byte	0xb0
- 608 017f 07       		.uleb128 0x7
- 609 0180 24000000 		.4byte	.LVL10
- 610 0184 26050000 		.4byte	0x526
- 611 0188 95010000 		.4byte	0x195
- 612 018c 08       		.uleb128 0x8
- 613 018d 01       		.uleb128 0x1
- 614 018e 50       		.byte	0x50
- 615 018f 04       		.uleb128 0x4
- 616 0190 74       		.byte	0x74
- 617 0191 00       		.sleb128 0
- 618 0192 34       		.byte	0x34
- 619 0193 1A       		.byte	0x1a
- 620 0194 00       		.byte	0
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 14
+ 544 004c 02       		.uleb128 0x2
+ 545 004d 04       		.byte	0x4
+ 546 004e 05       		.byte	0x5
+ 547 004f 24020000 		.4byte	.LASF4
+ 548 0053 02       		.uleb128 0x2
+ 549 0054 04       		.byte	0x4
+ 550 0055 07       		.byte	0x7
+ 551 0056 C2000000 		.4byte	.LASF5
+ 552 005a 02       		.uleb128 0x2
+ 553 005b 08       		.byte	0x8
+ 554 005c 05       		.byte	0x5
+ 555 005d 00000000 		.4byte	.LASF6
+ 556 0061 02       		.uleb128 0x2
+ 557 0062 08       		.byte	0x8
+ 558 0063 07       		.byte	0x7
+ 559 0064 AF010000 		.4byte	.LASF7
+ 560 0068 04       		.uleb128 0x4
+ 561 0069 04       		.byte	0x4
+ 562 006a 05       		.byte	0x5
+ 563 006b 696E7400 		.ascii	"int\000"
+ 564 006f 02       		.uleb128 0x2
+ 565 0070 04       		.byte	0x4
+ 566 0071 07       		.byte	0x7
+ 567 0072 8F010000 		.4byte	.LASF8
+ 568 0076 03       		.uleb128 0x3
+ 569 0077 C6010000 		.4byte	.LASF10
+ 570 007b 03       		.byte	0x3
+ 571 007c 18       		.byte	0x18
+ 572 007d 2C000000 		.4byte	0x2c
+ 573 0081 05       		.uleb128 0x5
+ 574 0082 91000000 		.4byte	.LASF11
+ 575 0086 04       		.byte	0x4
+ 576 0087 FC01     		.2byte	0x1fc
+ 577 0089 37000000 		.4byte	0x37
+ 578 008d 02       		.uleb128 0x2
+ 579 008e 04       		.byte	0x4
+ 580 008f 04       		.byte	0x4
+ 581 0090 9D000000 		.4byte	.LASF12
+ 582 0094 02       		.uleb128 0x2
+ 583 0095 08       		.byte	0x8
+ 584 0096 04       		.byte	0x4
+ 585 0097 8A000000 		.4byte	.LASF13
+ 586 009b 02       		.uleb128 0x2
+ 587 009c 01       		.byte	0x1
+ 588 009d 08       		.byte	0x8
+ 589 009e FC010000 		.4byte	.LASF14
+ 590 00a2 02       		.uleb128 0x2
+ 591 00a3 08       		.byte	0x8
+ 592 00a4 04       		.byte	0x4
+ 593 00a5 2D020000 		.4byte	.LASF15
+ 594 00a9 02       		.uleb128 0x2
+ 595 00aa 04       		.byte	0x4
+ 596 00ab 07       		.byte	0x7
+ 597 00ac E8010000 		.4byte	.LASF16
+ 598 00b0 06       		.uleb128 0x6
+ 599 00b1 69010000 		.4byte	.LASF17
+ 600 00b5 01       		.byte	0x1
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 14
 
 
- 621 0195 0B       		.uleb128 0xb
- 622 0196 28000000 		.4byte	.LVL11
- 623 019a B0000000 		.4byte	0xb0
- 624 019e 07       		.uleb128 0x7
- 625 019f 30000000 		.4byte	.LVL12
- 626 01a3 26050000 		.4byte	0x526
- 627 01a7 B4010000 		.4byte	0x1b4
- 628 01ab 08       		.uleb128 0x8
- 629 01ac 01       		.uleb128 0x1
- 630 01ad 50       		.byte	0x50
- 631 01ae 04       		.uleb128 0x4
- 632 01af 74       		.byte	0x74
- 633 01b0 00       		.sleb128 0
- 634 01b1 38       		.byte	0x38
- 635 01b2 1A       		.byte	0x1a
- 636 01b3 00       		.byte	0
- 637 01b4 0B       		.uleb128 0xb
- 638 01b5 34000000 		.4byte	.LVL13
- 639 01b9 B0000000 		.4byte	0xb0
- 640 01bd 07       		.uleb128 0x7
- 641 01be 3C000000 		.4byte	.LVL14
- 642 01c2 26050000 		.4byte	0x526
- 643 01c6 D3010000 		.4byte	0x1d3
- 644 01ca 08       		.uleb128 0x8
- 645 01cb 01       		.uleb128 0x1
- 646 01cc 50       		.byte	0x50
- 647 01cd 04       		.uleb128 0x4
- 648 01ce 74       		.byte	0x74
- 649 01cf 00       		.sleb128 0
- 650 01d0 40       		.byte	0x40
- 651 01d1 1A       		.byte	0x1a
- 652 01d2 00       		.byte	0
- 653 01d3 0B       		.uleb128 0xb
- 654 01d4 40000000 		.4byte	.LVL15
- 655 01d8 B0000000 		.4byte	0xb0
- 656 01dc 07       		.uleb128 0x7
- 657 01dd 48000000 		.4byte	.LVL16
- 658 01e1 26050000 		.4byte	0x526
- 659 01e5 F3010000 		.4byte	0x1f3
- 660 01e9 08       		.uleb128 0x8
- 661 01ea 01       		.uleb128 0x1
- 662 01eb 50       		.byte	0x50
- 663 01ec 05       		.uleb128 0x5
- 664 01ed 74       		.byte	0x74
- 665 01ee 00       		.sleb128 0
- 666 01ef 08       		.byte	0x8
- 667 01f0 20       		.byte	0x20
- 668 01f1 1A       		.byte	0x1a
- 669 01f2 00       		.byte	0
- 670 01f3 0B       		.uleb128 0xb
- 671 01f4 4C000000 		.4byte	.LVL17
- 672 01f8 B0000000 		.4byte	0xb0
- 673 01fc 07       		.uleb128 0x7
- 674 01fd 54000000 		.4byte	.LVL18
- 675 0201 26050000 		.4byte	0x526
- 676 0205 13020000 		.4byte	0x213
- 677 0209 08       		.uleb128 0x8
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 15
+ 601 00b6 11       		.byte	0x11
+ 602 00b7 00000000 		.4byte	.LFB33
+ 603 00bb 1E000000 		.4byte	.LFE33-.LFB33
+ 604 00bf 01       		.uleb128 0x1
+ 605 00c0 9C       		.byte	0x9c
+ 606 00c1 1F010000 		.4byte	0x11f
+ 607 00c5 07       		.uleb128 0x7
+ 608 00c6 62000000 		.4byte	.LASF21
+ 609 00ca 01       		.byte	0x1
+ 610 00cb 11       		.byte	0x11
+ 611 00cc 68000000 		.4byte	0x68
+ 612 00d0 00000000 		.4byte	.LLST0
+ 613 00d4 08       		.uleb128 0x8
+ 614 00d5 0A000000 		.4byte	.LVL2
+ 615 00d9 BC050000 		.4byte	0x5bc
+ 616 00dd E7000000 		.4byte	0xe7
+ 617 00e1 09       		.uleb128 0x9
+ 618 00e2 01       		.uleb128 0x1
+ 619 00e3 50       		.byte	0x50
+ 620 00e4 01       		.uleb128 0x1
+ 621 00e5 31       		.byte	0x31
+ 622 00e6 00       		.byte	0
+ 623 00e7 08       		.uleb128 0x8
+ 624 00e8 10000000 		.4byte	.LVL3
+ 625 00ec C7050000 		.4byte	0x5c7
+ 626 00f0 FB000000 		.4byte	0xfb
+ 627 00f4 09       		.uleb128 0x9
+ 628 00f5 01       		.uleb128 0x1
+ 629 00f6 50       		.byte	0x50
+ 630 00f7 02       		.uleb128 0x2
+ 631 00f8 74       		.byte	0x74
+ 632 00f9 00       		.sleb128 0
+ 633 00fa 00       		.byte	0
+ 634 00fb 08       		.uleb128 0x8
+ 635 00fc 16000000 		.4byte	.LVL4
+ 636 0100 BC050000 		.4byte	0x5bc
+ 637 0104 0E010000 		.4byte	0x10e
+ 638 0108 09       		.uleb128 0x9
+ 639 0109 01       		.uleb128 0x1
+ 640 010a 50       		.byte	0x50
+ 641 010b 01       		.uleb128 0x1
+ 642 010c 30       		.byte	0x30
+ 643 010d 00       		.byte	0
+ 644 010e 0A       		.uleb128 0xa
+ 645 010f 1C000000 		.4byte	.LVL5
+ 646 0113 C7050000 		.4byte	0x5c7
+ 647 0117 09       		.uleb128 0x9
+ 648 0118 01       		.uleb128 0x1
+ 649 0119 50       		.byte	0x50
+ 650 011a 02       		.uleb128 0x2
+ 651 011b 74       		.byte	0x74
+ 652 011c 00       		.sleb128 0
+ 653 011d 00       		.byte	0
+ 654 011e 00       		.byte	0
+ 655 011f 06       		.uleb128 0x6
+ 656 0120 37000000 		.4byte	.LASF18
+ 657 0124 01       		.byte	0x1
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 15
 
 
- 678 020a 01       		.uleb128 0x1
- 679 020b 50       		.byte	0x50
- 680 020c 05       		.uleb128 0x5
- 681 020d 74       		.byte	0x74
- 682 020e 00       		.sleb128 0
- 683 020f 08       		.byte	0x8
- 684 0210 40       		.byte	0x40
- 685 0211 1A       		.byte	0x1a
- 686 0212 00       		.byte	0
- 687 0213 0B       		.uleb128 0xb
- 688 0214 58000000 		.4byte	.LVL19
- 689 0218 B0000000 		.4byte	0xb0
- 690 021c 07       		.uleb128 0x7
- 691 021d 62000000 		.4byte	.LVL20
- 692 0221 26050000 		.4byte	0x526
- 693 0225 33020000 		.4byte	0x233
- 694 0229 08       		.uleb128 0x8
- 695 022a 01       		.uleb128 0x1
- 696 022b 50       		.byte	0x50
- 697 022c 05       		.uleb128 0x5
- 698 022d 74       		.byte	0x74
- 699 022e 00       		.sleb128 0
- 700 022f 09       		.byte	0x9
- 701 0230 80       		.byte	0x80
- 702 0231 1A       		.byte	0x1a
- 703 0232 00       		.byte	0
- 704 0233 0B       		.uleb128 0xb
- 705 0234 66000000 		.4byte	.LVL21
- 706 0238 B0000000 		.4byte	0xb0
- 707 023c 00       		.byte	0
- 708 023d 06       		.uleb128 0x6
- 709 023e 72000000 		.4byte	.LASF23
- 710 0242 01       		.byte	0x1
- 711 0243 35       		.byte	0x35
- 712 0244 00000000 		.4byte	.LFB36
- 713 0248 08000000 		.4byte	.LFE36-.LFB36
- 714 024c 01       		.uleb128 0x1
- 715 024d 9C       		.byte	0x9c
- 716 024e 6B020000 		.4byte	0x26b
- 717 0252 0A       		.uleb128 0xa
- 718 0253 36000000 		.4byte	.LASF21
- 719 0257 01       		.byte	0x1
- 720 0258 35       		.byte	0x35
- 721 0259 16010000 		.4byte	0x116
- 722 025d 42000000 		.4byte	.LLST2
- 723 0261 0B       		.uleb128 0xb
- 724 0262 06000000 		.4byte	.LVL23
- 725 0266 26050000 		.4byte	0x526
- 726 026a 00       		.byte	0
- 727 026b 06       		.uleb128 0x6
- 728 026c 42010000 		.4byte	.LASF24
- 729 0270 01       		.byte	0x1
- 730 0271 42       		.byte	0x42
- 731 0272 00000000 		.4byte	.LFB37
- 732 0276 34000000 		.4byte	.LFE37-.LFB37
- 733 027a 01       		.uleb128 0x1
- 734 027b 9C       		.byte	0x9c
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 16
+ 658 0125 1A       		.byte	0x1a
+ 659 0126 00000000 		.4byte	.LFB34
+ 660 012a 18000000 		.4byte	.LFE34-.LFB34
+ 661 012e 01       		.uleb128 0x1
+ 662 012f 9C       		.byte	0x9c
+ 663 0130 3E010000 		.4byte	0x13e
+ 664 0134 0B       		.uleb128 0xb
+ 665 0135 12000000 		.4byte	.LVL7
+ 666 0139 BC050000 		.4byte	0x5bc
+ 667 013d 00       		.byte	0
+ 668 013e 06       		.uleb128 0x6
+ 669 013f 51000000 		.4byte	.LASF19
+ 670 0143 01       		.byte	0x1
+ 671 0144 21       		.byte	0x21
+ 672 0145 00000000 		.4byte	.LFB35
+ 673 0149 10000000 		.4byte	.LFE35-.LFB35
+ 674 014d 01       		.uleb128 0x1
+ 675 014e 9C       		.byte	0x9c
+ 676 014f 76010000 		.4byte	0x176
+ 677 0153 08       		.uleb128 0x8
+ 678 0154 08000000 		.4byte	.LVL8
+ 679 0158 D2050000 		.4byte	0x5d2
+ 680 015c 66010000 		.4byte	0x166
+ 681 0160 09       		.uleb128 0x9
+ 682 0161 01       		.uleb128 0x1
+ 683 0162 50       		.byte	0x50
+ 684 0163 01       		.uleb128 0x1
+ 685 0164 30       		.byte	0x30
+ 686 0165 00       		.byte	0
+ 687 0166 0A       		.uleb128 0xa
+ 688 0167 0E000000 		.4byte	.LVL9
+ 689 016b D2050000 		.4byte	0x5d2
+ 690 016f 09       		.uleb128 0x9
+ 691 0170 01       		.uleb128 0x1
+ 692 0171 50       		.byte	0x50
+ 693 0172 01       		.uleb128 0x1
+ 694 0173 31       		.byte	0x31
+ 695 0174 00       		.byte	0
+ 696 0175 00       		.byte	0
+ 697 0176 06       		.uleb128 0x6
+ 698 0177 DE020000 		.4byte	.LASF20
+ 699 017b 01       		.byte	0x1
+ 700 017c 29       		.byte	0x29
+ 701 017d 00000000 		.4byte	.LFB36
+ 702 0181 08000000 		.4byte	.LFE36-.LFB36
+ 703 0185 01       		.uleb128 0x1
+ 704 0186 9C       		.byte	0x9c
+ 705 0187 A4010000 		.4byte	0x1a4
+ 706 018b 07       		.uleb128 0x7
+ 707 018c 97000000 		.4byte	.LASF22
+ 708 0190 01       		.byte	0x1
+ 709 0191 29       		.byte	0x29
+ 710 0192 A4010000 		.4byte	0x1a4
+ 711 0196 2C000000 		.4byte	.LLST1
+ 712 019a 0B       		.uleb128 0xb
+ 713 019b 06000000 		.4byte	.LVL11
+ 714 019f DD050000 		.4byte	0x5dd
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 16
 
 
- 735 027c 01030000 		.4byte	0x301
- 736 0280 0A       		.uleb128 0xa
- 737 0281 BF000000 		.4byte	.LASF22
- 738 0285 01       		.byte	0x1
- 739 0286 42       		.byte	0x42
- 740 0287 76000000 		.4byte	0x76
- 741 028b 63000000 		.4byte	.LLST3
- 742 028f 0A       		.uleb128 0xa
- 743 0290 8E000000 		.4byte	.LASF25
- 744 0294 01       		.byte	0x1
- 745 0295 42       		.byte	0x42
- 746 0296 76000000 		.4byte	0x76
- 747 029a 84000000 		.4byte	.LLST4
- 748 029e 0A       		.uleb128 0xa
- 749 029f 5A000000 		.4byte	.LASF26
- 750 02a3 01       		.byte	0x1
- 751 02a4 42       		.byte	0x42
- 752 02a5 16010000 		.4byte	0x116
- 753 02a9 A5000000 		.4byte	.LLST5
- 754 02ad 07       		.uleb128 0x7
- 755 02ae 0E000000 		.4byte	.LVL26
- 756 02b2 E8000000 		.4byte	0xe8
- 757 02b6 C0020000 		.4byte	0x2c0
- 758 02ba 08       		.uleb128 0x8
- 759 02bb 01       		.uleb128 0x1
- 760 02bc 50       		.byte	0x50
- 761 02bd 01       		.uleb128 0x1
- 762 02be 30       		.byte	0x30
- 763 02bf 00       		.byte	0
- 764 02c0 07       		.uleb128 0x7
- 765 02c1 1A000000 		.4byte	.LVL27
- 766 02c5 1D010000 		.4byte	0x11d
- 767 02c9 D4020000 		.4byte	0x2d4
- 768 02cd 08       		.uleb128 0x8
- 769 02ce 01       		.uleb128 0x1
- 770 02cf 50       		.byte	0x50
- 771 02d0 02       		.uleb128 0x2
- 772 02d1 74       		.byte	0x74
- 773 02d2 00       		.sleb128 0
- 774 02d3 00       		.byte	0
- 775 02d4 0B       		.uleb128 0xb
- 776 02d5 22000000 		.4byte	.LVL28
- 777 02d9 1D010000 		.4byte	0x11d
- 778 02dd 07       		.uleb128 0x7
- 779 02de 28000000 		.4byte	.LVL29
- 780 02e2 3D020000 		.4byte	0x23d
- 781 02e6 F1020000 		.4byte	0x2f1
- 782 02ea 08       		.uleb128 0x8
- 783 02eb 01       		.uleb128 0x1
- 784 02ec 50       		.byte	0x50
- 785 02ed 02       		.uleb128 0x2
- 786 02ee 75       		.byte	0x75
- 787 02ef 00       		.sleb128 0
- 788 02f0 00       		.byte	0
- 789 02f1 09       		.uleb128 0x9
- 790 02f2 2E000000 		.4byte	.LVL30
- 791 02f6 E8000000 		.4byte	0xe8
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 17
+ 715 01a3 00       		.byte	0
+ 716 01a4 02       		.uleb128 0x2
+ 717 01a5 01       		.byte	0x1
+ 718 01a6 02       		.byte	0x2
+ 719 01a7 4B000000 		.4byte	.LASF23
+ 720 01ab 06       		.uleb128 0x6
+ 721 01ac 01020000 		.4byte	.LASF24
+ 722 01b0 01       		.byte	0x1
+ 723 01b1 31       		.byte	0x31
+ 724 01b2 00000000 		.4byte	.LFB37
+ 725 01b6 68000000 		.4byte	.LFE37-.LFB37
+ 726 01ba 01       		.uleb128 0x1
+ 727 01bb 9C       		.byte	0x9c
+ 728 01bc CB020000 		.4byte	0x2cb
+ 729 01c0 07       		.uleb128 0x7
+ 730 01c1 E6000000 		.4byte	.LASF25
+ 731 01c5 01       		.byte	0x1
+ 732 01c6 31       		.byte	0x31
+ 733 01c7 76000000 		.4byte	0x76
+ 734 01cb 4D000000 		.4byte	.LLST2
+ 735 01cf 08       		.uleb128 0x8
+ 736 01d0 0C000000 		.4byte	.LVL14
+ 737 01d4 E8050000 		.4byte	0x5e8
+ 738 01d8 E5010000 		.4byte	0x1e5
+ 739 01dc 09       		.uleb128 0x9
+ 740 01dd 01       		.uleb128 0x1
+ 741 01de 50       		.byte	0x50
+ 742 01df 04       		.uleb128 0x4
+ 743 01e0 74       		.byte	0x74
+ 744 01e1 00       		.sleb128 0
+ 745 01e2 31       		.byte	0x31
+ 746 01e3 1A       		.byte	0x1a
+ 747 01e4 00       		.byte	0
+ 748 01e5 0B       		.uleb128 0xb
+ 749 01e6 10000000 		.4byte	.LVL15
+ 750 01ea 3E010000 		.4byte	0x13e
+ 751 01ee 08       		.uleb128 0x8
+ 752 01ef 18000000 		.4byte	.LVL16
+ 753 01f3 E8050000 		.4byte	0x5e8
+ 754 01f7 04020000 		.4byte	0x204
+ 755 01fb 09       		.uleb128 0x9
+ 756 01fc 01       		.uleb128 0x1
+ 757 01fd 50       		.byte	0x50
+ 758 01fe 04       		.uleb128 0x4
+ 759 01ff 74       		.byte	0x74
+ 760 0200 00       		.sleb128 0
+ 761 0201 32       		.byte	0x32
+ 762 0202 1A       		.byte	0x1a
+ 763 0203 00       		.byte	0
+ 764 0204 0B       		.uleb128 0xb
+ 765 0205 1C000000 		.4byte	.LVL17
+ 766 0209 3E010000 		.4byte	0x13e
+ 767 020d 08       		.uleb128 0x8
+ 768 020e 24000000 		.4byte	.LVL18
+ 769 0212 E8050000 		.4byte	0x5e8
+ 770 0216 23020000 		.4byte	0x223
+ 771 021a 09       		.uleb128 0x9
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 17
 
 
- 792 02fa 08       		.uleb128 0x8
- 793 02fb 01       		.uleb128 0x1
- 794 02fc 50       		.byte	0x50
- 795 02fd 01       		.uleb128 0x1
- 796 02fe 31       		.byte	0x31
- 797 02ff 00       		.byte	0
- 798 0300 00       		.byte	0
- 799 0301 06       		.uleb128 0x6
- 800 0302 94010000 		.4byte	.LASF27
- 801 0306 01       		.byte	0x1
- 802 0307 50       		.byte	0x50
- 803 0308 00000000 		.4byte	.LFB38
- 804 030c 54000000 		.4byte	.LFE38-.LFB38
- 805 0310 01       		.uleb128 0x1
- 806 0311 9C       		.byte	0x9c
- 807 0312 2B040000 		.4byte	0x42b
- 808 0316 0A       		.uleb128 0xa
- 809 0317 D2010000 		.4byte	.LASF28
- 810 031b 01       		.byte	0x1
- 811 031c 50       		.byte	0x50
- 812 031d 76000000 		.4byte	0x76
- 813 0321 C6000000 		.4byte	.LLST6
- 814 0325 0A       		.uleb128 0xa
- 815 0326 D7010000 		.4byte	.LASF29
- 816 032a 01       		.byte	0x1
- 817 032b 50       		.byte	0x50
- 818 032c 76000000 		.4byte	0x76
- 819 0330 E7000000 		.4byte	.LLST7
- 820 0334 0A       		.uleb128 0xa
- 821 0335 DC010000 		.4byte	.LASF30
- 822 0339 01       		.byte	0x1
- 823 033a 50       		.byte	0x50
- 824 033b 76000000 		.4byte	0x76
- 825 033f 08010000 		.4byte	.LLST8
- 826 0343 0A       		.uleb128 0xa
- 827 0344 53000000 		.4byte	.LASF31
- 828 0348 01       		.byte	0x1
- 829 0349 50       		.byte	0x50
- 830 034a 68000000 		.4byte	0x68
- 831 034e 29010000 		.4byte	.LLST9
- 832 0352 07       		.uleb128 0x7
- 833 0353 14000000 		.4byte	.LVL35
- 834 0357 6B020000 		.4byte	0x26b
- 835 035b 70030000 		.4byte	0x370
- 836 035f 08       		.uleb128 0x8
- 837 0360 01       		.uleb128 0x1
- 838 0361 50       		.byte	0x50
- 839 0362 01       		.uleb128 0x1
- 840 0363 36       		.byte	0x36
- 841 0364 08       		.uleb128 0x8
- 842 0365 01       		.uleb128 0x1
- 843 0366 51       		.byte	0x51
- 844 0367 02       		.uleb128 0x2
- 845 0368 77       		.byte	0x77
- 846 0369 00       		.sleb128 0
- 847 036a 08       		.uleb128 0x8
- 848 036b 01       		.uleb128 0x1
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 18
+ 772 021b 01       		.uleb128 0x1
+ 773 021c 50       		.byte	0x50
+ 774 021d 04       		.uleb128 0x4
+ 775 021e 74       		.byte	0x74
+ 776 021f 00       		.sleb128 0
+ 777 0220 34       		.byte	0x34
+ 778 0221 1A       		.byte	0x1a
+ 779 0222 00       		.byte	0
+ 780 0223 0B       		.uleb128 0xb
+ 781 0224 28000000 		.4byte	.LVL19
+ 782 0228 3E010000 		.4byte	0x13e
+ 783 022c 08       		.uleb128 0x8
+ 784 022d 30000000 		.4byte	.LVL20
+ 785 0231 E8050000 		.4byte	0x5e8
+ 786 0235 42020000 		.4byte	0x242
+ 787 0239 09       		.uleb128 0x9
+ 788 023a 01       		.uleb128 0x1
+ 789 023b 50       		.byte	0x50
+ 790 023c 04       		.uleb128 0x4
+ 791 023d 74       		.byte	0x74
+ 792 023e 00       		.sleb128 0
+ 793 023f 38       		.byte	0x38
+ 794 0240 1A       		.byte	0x1a
+ 795 0241 00       		.byte	0
+ 796 0242 0B       		.uleb128 0xb
+ 797 0243 34000000 		.4byte	.LVL21
+ 798 0247 3E010000 		.4byte	0x13e
+ 799 024b 08       		.uleb128 0x8
+ 800 024c 3C000000 		.4byte	.LVL22
+ 801 0250 E8050000 		.4byte	0x5e8
+ 802 0254 61020000 		.4byte	0x261
+ 803 0258 09       		.uleb128 0x9
+ 804 0259 01       		.uleb128 0x1
+ 805 025a 50       		.byte	0x50
+ 806 025b 04       		.uleb128 0x4
+ 807 025c 74       		.byte	0x74
+ 808 025d 00       		.sleb128 0
+ 809 025e 40       		.byte	0x40
+ 810 025f 1A       		.byte	0x1a
+ 811 0260 00       		.byte	0
+ 812 0261 0B       		.uleb128 0xb
+ 813 0262 40000000 		.4byte	.LVL23
+ 814 0266 3E010000 		.4byte	0x13e
+ 815 026a 08       		.uleb128 0x8
+ 816 026b 48000000 		.4byte	.LVL24
+ 817 026f E8050000 		.4byte	0x5e8
+ 818 0273 81020000 		.4byte	0x281
+ 819 0277 09       		.uleb128 0x9
+ 820 0278 01       		.uleb128 0x1
+ 821 0279 50       		.byte	0x50
+ 822 027a 05       		.uleb128 0x5
+ 823 027b 74       		.byte	0x74
+ 824 027c 00       		.sleb128 0
+ 825 027d 08       		.byte	0x8
+ 826 027e 20       		.byte	0x20
+ 827 027f 1A       		.byte	0x1a
+ 828 0280 00       		.byte	0
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 18
 
 
- 849 036c 52       		.byte	0x52
- 850 036d 01       		.uleb128 0x1
- 851 036e 30       		.byte	0x30
- 852 036f 00       		.byte	0
- 853 0370 07       		.uleb128 0x7
- 854 0371 1E000000 		.4byte	.LVL36
- 855 0375 6B020000 		.4byte	0x26b
- 856 0379 8E030000 		.4byte	0x38e
- 857 037d 08       		.uleb128 0x8
- 858 037e 01       		.uleb128 0x1
- 859 037f 50       		.byte	0x50
- 860 0380 01       		.uleb128 0x1
- 861 0381 38       		.byte	0x38
- 862 0382 08       		.uleb128 0x8
- 863 0383 01       		.uleb128 0x1
- 864 0384 51       		.byte	0x51
- 865 0385 02       		.uleb128 0x2
- 866 0386 76       		.byte	0x76
- 867 0387 00       		.sleb128 0
- 868 0388 08       		.uleb128 0x8
- 869 0389 01       		.uleb128 0x1
- 870 038a 52       		.byte	0x52
- 871 038b 01       		.uleb128 0x1
- 872 038c 31       		.byte	0x31
- 873 038d 00       		.byte	0
- 874 038e 07       		.uleb128 0x7
- 875 038f 28000000 		.4byte	.LVL37
- 876 0393 6B020000 		.4byte	0x26b
- 877 0397 AC030000 		.4byte	0x3ac
- 878 039b 08       		.uleb128 0x8
- 879 039c 01       		.uleb128 0x1
- 880 039d 50       		.byte	0x50
- 881 039e 01       		.uleb128 0x1
- 882 039f 3A       		.byte	0x3a
- 883 03a0 08       		.uleb128 0x8
- 884 03a1 01       		.uleb128 0x1
- 885 03a2 51       		.byte	0x51
- 886 03a3 02       		.uleb128 0x2
- 887 03a4 75       		.byte	0x75
- 888 03a5 00       		.sleb128 0
- 889 03a6 08       		.uleb128 0x8
- 890 03a7 01       		.uleb128 0x1
- 891 03a8 52       		.byte	0x52
- 892 03a9 01       		.uleb128 0x1
- 893 03aa 30       		.byte	0x30
- 894 03ab 00       		.byte	0
- 895 03ac 07       		.uleb128 0x7
- 896 03ad 2E000000 		.4byte	.LVL38
- 897 03b1 31050000 		.4byte	0x531
- 898 03b5 C0030000 		.4byte	0x3c0
- 899 03b9 08       		.uleb128 0x8
- 900 03ba 01       		.uleb128 0x1
- 901 03bb 50       		.byte	0x50
- 902 03bc 02       		.uleb128 0x2
- 903 03bd 74       		.byte	0x74
- 904 03be 00       		.sleb128 0
- 905 03bf 00       		.byte	0
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 19
+ 829 0281 0B       		.uleb128 0xb
+ 830 0282 4C000000 		.4byte	.LVL25
+ 831 0286 3E010000 		.4byte	0x13e
+ 832 028a 08       		.uleb128 0x8
+ 833 028b 54000000 		.4byte	.LVL26
+ 834 028f E8050000 		.4byte	0x5e8
+ 835 0293 A1020000 		.4byte	0x2a1
+ 836 0297 09       		.uleb128 0x9
+ 837 0298 01       		.uleb128 0x1
+ 838 0299 50       		.byte	0x50
+ 839 029a 05       		.uleb128 0x5
+ 840 029b 74       		.byte	0x74
+ 841 029c 00       		.sleb128 0
+ 842 029d 08       		.byte	0x8
+ 843 029e 40       		.byte	0x40
+ 844 029f 1A       		.byte	0x1a
+ 845 02a0 00       		.byte	0
+ 846 02a1 0B       		.uleb128 0xb
+ 847 02a2 58000000 		.4byte	.LVL27
+ 848 02a6 3E010000 		.4byte	0x13e
+ 849 02aa 08       		.uleb128 0x8
+ 850 02ab 62000000 		.4byte	.LVL28
+ 851 02af E8050000 		.4byte	0x5e8
+ 852 02b3 C1020000 		.4byte	0x2c1
+ 853 02b7 09       		.uleb128 0x9
+ 854 02b8 01       		.uleb128 0x1
+ 855 02b9 50       		.byte	0x50
+ 856 02ba 05       		.uleb128 0x5
+ 857 02bb 74       		.byte	0x74
+ 858 02bc 00       		.sleb128 0
+ 859 02bd 09       		.byte	0x9
+ 860 02be 80       		.byte	0x80
+ 861 02bf 1A       		.byte	0x1a
+ 862 02c0 00       		.byte	0
+ 863 02c1 0B       		.uleb128 0xb
+ 864 02c2 66000000 		.4byte	.LVL29
+ 865 02c6 3E010000 		.4byte	0x13e
+ 866 02ca 00       		.byte	0
+ 867 02cb 06       		.uleb128 0x6
+ 868 02cc 81000000 		.4byte	.LASF26
+ 869 02d0 01       		.byte	0x1
+ 870 02d1 47       		.byte	0x47
+ 871 02d2 00000000 		.4byte	.LFB38
+ 872 02d6 08000000 		.4byte	.LFE38-.LFB38
+ 873 02da 01       		.uleb128 0x1
+ 874 02db 9C       		.byte	0x9c
+ 875 02dc F9020000 		.4byte	0x2f9
+ 876 02e0 07       		.uleb128 0x7
+ 877 02e1 97000000 		.4byte	.LASF22
+ 878 02e5 01       		.byte	0x1
+ 879 02e6 47       		.byte	0x47
+ 880 02e7 A4010000 		.4byte	0x1a4
+ 881 02eb 6E000000 		.4byte	.LLST3
+ 882 02ef 0B       		.uleb128 0xb
+ 883 02f0 06000000 		.4byte	.LVL31
+ 884 02f4 E8050000 		.4byte	0x5e8
+ 885 02f8 00       		.byte	0
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 19
 
 
- 906 03c0 07       		.uleb128 0x7
- 907 03c1 38000000 		.4byte	.LVL39
- 908 03c5 6B020000 		.4byte	0x26b
- 909 03c9 DE030000 		.4byte	0x3de
- 910 03cd 08       		.uleb128 0x8
- 911 03ce 01       		.uleb128 0x1
- 912 03cf 50       		.byte	0x50
- 913 03d0 01       		.uleb128 0x1
- 914 03d1 36       		.byte	0x36
- 915 03d2 08       		.uleb128 0x8
- 916 03d3 01       		.uleb128 0x1
- 917 03d4 51       		.byte	0x51
- 918 03d5 02       		.uleb128 0x2
- 919 03d6 77       		.byte	0x77
- 920 03d7 00       		.sleb128 0
- 921 03d8 08       		.uleb128 0x8
- 922 03d9 01       		.uleb128 0x1
- 923 03da 52       		.byte	0x52
- 924 03db 01       		.uleb128 0x1
- 925 03dc 31       		.byte	0x31
- 926 03dd 00       		.byte	0
- 927 03de 07       		.uleb128 0x7
- 928 03df 42000000 		.4byte	.LVL40
- 929 03e3 6B020000 		.4byte	0x26b
- 930 03e7 FC030000 		.4byte	0x3fc
- 931 03eb 08       		.uleb128 0x8
- 932 03ec 01       		.uleb128 0x1
- 933 03ed 50       		.byte	0x50
- 934 03ee 01       		.uleb128 0x1
- 935 03ef 38       		.byte	0x38
- 936 03f0 08       		.uleb128 0x8
- 937 03f1 01       		.uleb128 0x1
- 938 03f2 51       		.byte	0x51
- 939 03f3 02       		.uleb128 0x2
- 940 03f4 76       		.byte	0x76
- 941 03f5 00       		.sleb128 0
- 942 03f6 08       		.uleb128 0x8
- 943 03f7 01       		.uleb128 0x1
- 944 03f8 52       		.byte	0x52
- 945 03f9 01       		.uleb128 0x1
- 946 03fa 31       		.byte	0x31
- 947 03fb 00       		.byte	0
- 948 03fc 07       		.uleb128 0x7
- 949 03fd 4C000000 		.4byte	.LVL41
- 950 0401 6B020000 		.4byte	0x26b
- 951 0405 1A040000 		.4byte	0x41a
- 952 0409 08       		.uleb128 0x8
- 953 040a 01       		.uleb128 0x1
- 954 040b 50       		.byte	0x50
- 955 040c 01       		.uleb128 0x1
- 956 040d 3A       		.byte	0x3a
- 957 040e 08       		.uleb128 0x8
- 958 040f 01       		.uleb128 0x1
- 959 0410 51       		.byte	0x51
- 960 0411 02       		.uleb128 0x2
- 961 0412 75       		.byte	0x75
- 962 0413 00       		.sleb128 0
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 20
+ 886 02f9 06       		.uleb128 0x6
+ 887 02fa 7C010000 		.4byte	.LASF27
+ 888 02fe 01       		.byte	0x1
+ 889 02ff 54       		.byte	0x54
+ 890 0300 00000000 		.4byte	.LFB39
+ 891 0304 34000000 		.4byte	.LFE39-.LFB39
+ 892 0308 01       		.uleb128 0x1
+ 893 0309 9C       		.byte	0x9c
+ 894 030a 8F030000 		.4byte	0x38f
+ 895 030e 07       		.uleb128 0x7
+ 896 030f E6000000 		.4byte	.LASF25
+ 897 0313 01       		.byte	0x1
+ 898 0314 54       		.byte	0x54
+ 899 0315 76000000 		.4byte	0x76
+ 900 0319 8F000000 		.4byte	.LLST4
+ 901 031d 07       		.uleb128 0x7
+ 902 031e A3000000 		.4byte	.LASF28
+ 903 0322 01       		.byte	0x1
+ 904 0323 54       		.byte	0x54
+ 905 0324 76000000 		.4byte	0x76
+ 906 0328 B0000000 		.4byte	.LLST5
+ 907 032c 07       		.uleb128 0x7
+ 908 032d 69000000 		.4byte	.LASF29
+ 909 0331 01       		.byte	0x1
+ 910 0332 54       		.byte	0x54
+ 911 0333 A4010000 		.4byte	0x1a4
+ 912 0337 D1000000 		.4byte	.LLST6
+ 913 033b 08       		.uleb128 0x8
+ 914 033c 0E000000 		.4byte	.LVL34
+ 915 0340 76010000 		.4byte	0x176
+ 916 0344 4E030000 		.4byte	0x34e
+ 917 0348 09       		.uleb128 0x9
+ 918 0349 01       		.uleb128 0x1
+ 919 034a 50       		.byte	0x50
+ 920 034b 01       		.uleb128 0x1
+ 921 034c 30       		.byte	0x30
+ 922 034d 00       		.byte	0
+ 923 034e 08       		.uleb128 0x8
+ 924 034f 1A000000 		.4byte	.LVL35
+ 925 0353 AB010000 		.4byte	0x1ab
+ 926 0357 62030000 		.4byte	0x362
+ 927 035b 09       		.uleb128 0x9
+ 928 035c 01       		.uleb128 0x1
+ 929 035d 50       		.byte	0x50
+ 930 035e 02       		.uleb128 0x2
+ 931 035f 74       		.byte	0x74
+ 932 0360 00       		.sleb128 0
+ 933 0361 00       		.byte	0
+ 934 0362 0B       		.uleb128 0xb
+ 935 0363 22000000 		.4byte	.LVL36
+ 936 0367 AB010000 		.4byte	0x1ab
+ 937 036b 08       		.uleb128 0x8
+ 938 036c 28000000 		.4byte	.LVL37
+ 939 0370 CB020000 		.4byte	0x2cb
+ 940 0374 7F030000 		.4byte	0x37f
+ 941 0378 09       		.uleb128 0x9
+ 942 0379 01       		.uleb128 0x1
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 20
 
 
- 963 0414 08       		.uleb128 0x8
- 964 0415 01       		.uleb128 0x1
- 965 0416 52       		.byte	0x52
- 966 0417 01       		.uleb128 0x1
- 967 0418 31       		.byte	0x31
- 968 0419 00       		.byte	0
- 969 041a 09       		.uleb128 0x9
- 970 041b 52000000 		.4byte	.LVL42
- 971 041f 31050000 		.4byte	0x531
- 972 0423 08       		.uleb128 0x8
- 973 0424 01       		.uleb128 0x1
- 974 0425 50       		.byte	0x50
- 975 0426 02       		.uleb128 0x2
- 976 0427 74       		.byte	0x74
- 977 0428 00       		.sleb128 0
- 978 0429 00       		.byte	0
- 979 042a 00       		.byte	0
- 980 042b 06       		.uleb128 0x6
- 981 042c 0E000000 		.4byte	.LASF32
- 982 0430 01       		.byte	0x1
- 983 0431 61       		.byte	0x61
- 984 0432 00000000 		.4byte	.LFB39
- 985 0436 3C000000 		.4byte	.LFE39-.LFB39
- 986 043a 01       		.uleb128 0x1
- 987 043b 9C       		.byte	0x9c
- 988 043c BD040000 		.4byte	0x4bd
- 989 0440 0C       		.uleb128 0xc
- 990 0441 63747800 		.ascii	"ctx\000"
- 991 0445 01       		.byte	0x1
- 992 0446 61       		.byte	0x61
- 993 0447 68000000 		.4byte	0x68
- 994 044b 55010000 		.4byte	.LLST10
- 995 044f 0A       		.uleb128 0xa
- 996 0450 4D000000 		.4byte	.LASF33
- 997 0454 01       		.byte	0x1
- 998 0455 61       		.byte	0x61
- 999 0456 76000000 		.4byte	0x76
- 1000 045a 81010000 		.4byte	.LLST11
- 1001 045e 07       		.uleb128 0x7
- 1002 045f 0C000000 		.4byte	.LVL46
- 1003 0463 E8000000 		.4byte	0xe8
- 1004 0467 71040000 		.4byte	0x471
- 1005 046b 08       		.uleb128 0x8
- 1006 046c 01       		.uleb128 0x1
- 1007 046d 50       		.byte	0x50
- 1008 046e 01       		.uleb128 0x1
- 1009 046f 30       		.byte	0x30
- 1010 0470 00       		.byte	0
- 1011 0471 07       		.uleb128 0x7
- 1012 0472 1E000000 		.4byte	.LVL47
- 1013 0476 1D010000 		.4byte	0x11d
- 1014 047a 85040000 		.4byte	0x485
- 1015 047e 08       		.uleb128 0x8
- 1016 047f 01       		.uleb128 0x1
- 1017 0480 50       		.byte	0x50
- 1018 0481 02       		.uleb128 0x2
- 1019 0482 09       		.byte	0x9
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 21
+ 943 037a 50       		.byte	0x50
+ 944 037b 02       		.uleb128 0x2
+ 945 037c 75       		.byte	0x75
+ 946 037d 00       		.sleb128 0
+ 947 037e 00       		.byte	0
+ 948 037f 0A       		.uleb128 0xa
+ 949 0380 2E000000 		.4byte	.LVL38
+ 950 0384 76010000 		.4byte	0x176
+ 951 0388 09       		.uleb128 0x9
+ 952 0389 01       		.uleb128 0x1
+ 953 038a 50       		.byte	0x50
+ 954 038b 01       		.uleb128 0x1
+ 955 038c 31       		.byte	0x31
+ 956 038d 00       		.byte	0
+ 957 038e 00       		.byte	0
+ 958 038f 06       		.uleb128 0x6
+ 959 0390 CE010000 		.4byte	.LASF30
+ 960 0394 01       		.byte	0x1
+ 961 0395 62       		.byte	0x62
+ 962 0396 00000000 		.4byte	.LFB40
+ 963 039a 58000000 		.4byte	.LFE40-.LFB40
+ 964 039e 01       		.uleb128 0x1
+ 965 039f 9C       		.byte	0x9c
+ 966 03a0 C6040000 		.4byte	0x4c6
+ 967 03a4 07       		.uleb128 0x7
+ 968 03a5 15020000 		.4byte	.LASF31
+ 969 03a9 01       		.byte	0x1
+ 970 03aa 62       		.byte	0x62
+ 971 03ab 76000000 		.4byte	0x76
+ 972 03af F2000000 		.4byte	.LLST7
+ 973 03b3 07       		.uleb128 0x7
+ 974 03b4 1A020000 		.4byte	.LASF32
+ 975 03b8 01       		.byte	0x1
+ 976 03b9 62       		.byte	0x62
+ 977 03ba 76000000 		.4byte	0x76
+ 978 03be 13010000 		.4byte	.LLST8
+ 979 03c2 07       		.uleb128 0x7
+ 980 03c3 1F020000 		.4byte	.LASF33
+ 981 03c7 01       		.byte	0x1
+ 982 03c8 62       		.byte	0x62
+ 983 03c9 76000000 		.4byte	0x76
+ 984 03cd 34010000 		.4byte	.LLST9
+ 985 03d1 07       		.uleb128 0x7
+ 986 03d2 62000000 		.4byte	.LASF21
+ 987 03d6 01       		.byte	0x1
+ 988 03d7 62       		.byte	0x62
+ 989 03d8 68000000 		.4byte	0x68
+ 990 03dc 55010000 		.4byte	.LLST10
+ 991 03e0 08       		.uleb128 0x8
+ 992 03e1 14000000 		.4byte	.LVL43
+ 993 03e5 F9020000 		.4byte	0x2f9
+ 994 03e9 FE030000 		.4byte	0x3fe
+ 995 03ed 09       		.uleb128 0x9
+ 996 03ee 01       		.uleb128 0x1
+ 997 03ef 50       		.byte	0x50
+ 998 03f0 01       		.uleb128 0x1
+ 999 03f1 36       		.byte	0x36
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 21
 
 
- 1020 0483 80       		.byte	0x80
- 1021 0484 00       		.byte	0
- 1022 0485 07       		.uleb128 0x7
- 1023 0486 26000000 		.4byte	.LVL48
- 1024 048a 1D010000 		.4byte	0x11d
- 1025 048e 99040000 		.4byte	0x499
- 1026 0492 08       		.uleb128 0x8
- 1027 0493 01       		.uleb128 0x1
- 1028 0494 50       		.byte	0x50
- 1029 0495 02       		.uleb128 0x2
- 1030 0496 09       		.byte	0x9
- 1031 0497 88       		.byte	0x88
- 1032 0498 00       		.byte	0
- 1033 0499 07       		.uleb128 0x7
- 1034 049a 34000000 		.4byte	.LVL49
- 1035 049e 1D010000 		.4byte	0x11d
- 1036 04a2 AD040000 		.4byte	0x4ad
- 1037 04a6 08       		.uleb128 0x8
- 1038 04a7 01       		.uleb128 0x1
- 1039 04a8 50       		.byte	0x50
- 1040 04a9 02       		.uleb128 0x2
- 1041 04aa 75       		.byte	0x75
- 1042 04ab 00       		.sleb128 0
- 1043 04ac 00       		.byte	0
- 1044 04ad 09       		.uleb128 0x9
- 1045 04ae 3A000000 		.4byte	.LVL50
- 1046 04b2 E8000000 		.4byte	0xe8
- 1047 04b6 08       		.uleb128 0x8
- 1048 04b7 01       		.uleb128 0x1
- 1049 04b8 50       		.byte	0x50
- 1050 04b9 01       		.uleb128 0x1
- 1051 04ba 31       		.byte	0x31
- 1052 04bb 00       		.byte	0
- 1053 04bc 00       		.byte	0
- 1054 04bd 0D       		.uleb128 0xd
- 1055 04be C8040000 		.4byte	0x4c8
- 1056 04c2 C8040000 		.4byte	0x4c8
- 1057 04c6 0E       		.uleb128 0xe
- 1058 04c7 00       		.byte	0
- 1059 04c8 0F       		.uleb128 0xf
- 1060 04c9 76000000 		.4byte	0x76
- 1061 04cd 10       		.uleb128 0x10
- 1062 04ce 63000000 		.4byte	.LASF34
- 1063 04d2 05       		.byte	0x5
- 1064 04d3 0A       		.byte	0xa
- 1065 04d4 D8040000 		.4byte	0x4d8
- 1066 04d8 0F       		.uleb128 0xf
- 1067 04d9 BD040000 		.4byte	0x4bd
- 1068 04dd 11       		.uleb128 0x11
- 1069 04de 2D010000 		.4byte	.LASF35
- 1070 04e2 01       		.byte	0x1
- 1071 04e3 0B       		.byte	0xb
- 1072 04e4 C8040000 		.4byte	0x4c8
- 1073 04e8 05       		.uleb128 0x5
- 1074 04e9 03       		.byte	0x3
- 1075 04ea 00000000 		.4byte	digit0Addr
- 1076 04ee 11       		.uleb128 0x11
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 22
+ 1000 03f2 09       		.uleb128 0x9
+ 1001 03f3 01       		.uleb128 0x1
+ 1002 03f4 51       		.byte	0x51
+ 1003 03f5 02       		.uleb128 0x2
+ 1004 03f6 77       		.byte	0x77
+ 1005 03f7 00       		.sleb128 0
+ 1006 03f8 09       		.uleb128 0x9
+ 1007 03f9 01       		.uleb128 0x1
+ 1008 03fa 52       		.byte	0x52
+ 1009 03fb 01       		.uleb128 0x1
+ 1010 03fc 30       		.byte	0x30
+ 1011 03fd 00       		.byte	0
+ 1012 03fe 08       		.uleb128 0x8
+ 1013 03ff 1E000000 		.4byte	.LVL44
+ 1014 0403 F9020000 		.4byte	0x2f9
+ 1015 0407 1C040000 		.4byte	0x41c
+ 1016 040b 09       		.uleb128 0x9
+ 1017 040c 01       		.uleb128 0x1
+ 1018 040d 50       		.byte	0x50
+ 1019 040e 01       		.uleb128 0x1
+ 1020 040f 38       		.byte	0x38
+ 1021 0410 09       		.uleb128 0x9
+ 1022 0411 01       		.uleb128 0x1
+ 1023 0412 51       		.byte	0x51
+ 1024 0413 02       		.uleb128 0x2
+ 1025 0414 76       		.byte	0x76
+ 1026 0415 00       		.sleb128 0
+ 1027 0416 09       		.uleb128 0x9
+ 1028 0417 01       		.uleb128 0x1
+ 1029 0418 52       		.byte	0x52
+ 1030 0419 01       		.uleb128 0x1
+ 1031 041a 30       		.byte	0x30
+ 1032 041b 00       		.byte	0
+ 1033 041c 08       		.uleb128 0x8
+ 1034 041d 28000000 		.4byte	.LVL45
+ 1035 0421 F9020000 		.4byte	0x2f9
+ 1036 0425 3A040000 		.4byte	0x43a
+ 1037 0429 09       		.uleb128 0x9
+ 1038 042a 01       		.uleb128 0x1
+ 1039 042b 50       		.byte	0x50
+ 1040 042c 01       		.uleb128 0x1
+ 1041 042d 3A       		.byte	0x3a
+ 1042 042e 09       		.uleb128 0x9
+ 1043 042f 01       		.uleb128 0x1
+ 1044 0430 51       		.byte	0x51
+ 1045 0431 02       		.uleb128 0x2
+ 1046 0432 75       		.byte	0x75
+ 1047 0433 00       		.sleb128 0
+ 1048 0434 09       		.uleb128 0x9
+ 1049 0435 01       		.uleb128 0x1
+ 1050 0436 52       		.byte	0x52
+ 1051 0437 01       		.uleb128 0x1
+ 1052 0438 30       		.byte	0x30
+ 1053 0439 00       		.byte	0
+ 1054 043a 08       		.uleb128 0x8
+ 1055 043b 2E000000 		.4byte	.LVL46
+ 1056 043f C7050000 		.4byte	0x5c7
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 22
 
 
- 1077 04ef AE010000 		.4byte	.LASF36
- 1078 04f3 01       		.byte	0x1
- 1079 04f4 0C       		.byte	0xc
- 1080 04f5 C8040000 		.4byte	0x4c8
- 1081 04f9 05       		.uleb128 0x5
- 1082 04fa 03       		.byte	0x3
- 1083 04fb 00000000 		.4byte	digit1Addr
- 1084 04ff 11       		.uleb128 0x11
- 1085 0500 A2020000 		.4byte	.LASF37
- 1086 0504 01       		.byte	0x1
- 1087 0505 0D       		.byte	0xd
- 1088 0506 C8040000 		.4byte	0x4c8
- 1089 050a 05       		.uleb128 0x5
- 1090 050b 03       		.byte	0x3
- 1091 050c 00000000 		.4byte	digit2Addr
- 1092 0510 12       		.uleb128 0x12
- 1093 0511 62010000 		.4byte	.LASF38
- 1094 0515 62010000 		.4byte	.LASF38
- 1095 0519 06       		.byte	0x6
- 1096 051a 33       		.byte	0x33
- 1097 051b 12       		.uleb128 0x12
- 1098 051c 1B010000 		.4byte	.LASF39
- 1099 0520 1B010000 		.4byte	.LASF39
- 1100 0524 07       		.byte	0x7
- 1101 0525 33       		.byte	0x33
- 1102 0526 12       		.uleb128 0x12
- 1103 0527 1A000000 		.4byte	.LASF40
- 1104 052b 1A000000 		.4byte	.LASF40
- 1105 052f 08       		.byte	0x8
- 1106 0530 33       		.byte	0x33
- 1107 0531 12       		.uleb128 0x12
- 1108 0532 AD020000 		.4byte	.LASF41
- 1109 0536 AD020000 		.4byte	.LASF41
- 1110 053a 09       		.byte	0x9
- 1111 053b EC       		.byte	0xec
- 1112 053c 00       		.byte	0
- 1113              		.section	.debug_abbrev,"",%progbits
- 1114              	.Ldebug_abbrev0:
- 1115 0000 01       		.uleb128 0x1
- 1116 0001 11       		.uleb128 0x11
- 1117 0002 01       		.byte	0x1
- 1118 0003 25       		.uleb128 0x25
- 1119 0004 0E       		.uleb128 0xe
- 1120 0005 13       		.uleb128 0x13
- 1121 0006 0B       		.uleb128 0xb
- 1122 0007 03       		.uleb128 0x3
- 1123 0008 0E       		.uleb128 0xe
- 1124 0009 1B       		.uleb128 0x1b
- 1125 000a 0E       		.uleb128 0xe
- 1126 000b 55       		.uleb128 0x55
- 1127 000c 17       		.uleb128 0x17
- 1128 000d 11       		.uleb128 0x11
- 1129 000e 01       		.uleb128 0x1
- 1130 000f 10       		.uleb128 0x10
- 1131 0010 17       		.uleb128 0x17
- 1132 0011 00       		.byte	0
- 1133 0012 00       		.byte	0
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 23
+ 1057 0443 4E040000 		.4byte	0x44e
+ 1058 0447 09       		.uleb128 0x9
+ 1059 0448 01       		.uleb128 0x1
+ 1060 0449 50       		.byte	0x50
+ 1061 044a 02       		.uleb128 0x2
+ 1062 044b 74       		.byte	0x74
+ 1063 044c 00       		.sleb128 0
+ 1064 044d 00       		.byte	0
+ 1065 044e 08       		.uleb128 0x8
+ 1066 044f 38000000 		.4byte	.LVL47
+ 1067 0453 F9020000 		.4byte	0x2f9
+ 1068 0457 6C040000 		.4byte	0x46c
+ 1069 045b 09       		.uleb128 0x9
+ 1070 045c 01       		.uleb128 0x1
+ 1071 045d 50       		.byte	0x50
+ 1072 045e 01       		.uleb128 0x1
+ 1073 045f 36       		.byte	0x36
+ 1074 0460 09       		.uleb128 0x9
+ 1075 0461 01       		.uleb128 0x1
+ 1076 0462 51       		.byte	0x51
+ 1077 0463 02       		.uleb128 0x2
+ 1078 0464 77       		.byte	0x77
+ 1079 0465 00       		.sleb128 0
+ 1080 0466 09       		.uleb128 0x9
+ 1081 0467 01       		.uleb128 0x1
+ 1082 0468 52       		.byte	0x52
+ 1083 0469 01       		.uleb128 0x1
+ 1084 046a 31       		.byte	0x31
+ 1085 046b 00       		.byte	0
+ 1086 046c 08       		.uleb128 0x8
+ 1087 046d 42000000 		.4byte	.LVL48
+ 1088 0471 F9020000 		.4byte	0x2f9
+ 1089 0475 8A040000 		.4byte	0x48a
+ 1090 0479 09       		.uleb128 0x9
+ 1091 047a 01       		.uleb128 0x1
+ 1092 047b 50       		.byte	0x50
+ 1093 047c 01       		.uleb128 0x1
+ 1094 047d 38       		.byte	0x38
+ 1095 047e 09       		.uleb128 0x9
+ 1096 047f 01       		.uleb128 0x1
+ 1097 0480 51       		.byte	0x51
+ 1098 0481 02       		.uleb128 0x2
+ 1099 0482 76       		.byte	0x76
+ 1100 0483 00       		.sleb128 0
+ 1101 0484 09       		.uleb128 0x9
+ 1102 0485 01       		.uleb128 0x1
+ 1103 0486 52       		.byte	0x52
+ 1104 0487 01       		.uleb128 0x1
+ 1105 0488 31       		.byte	0x31
+ 1106 0489 00       		.byte	0
+ 1107 048a 08       		.uleb128 0x8
+ 1108 048b 4C000000 		.4byte	.LVL49
+ 1109 048f F9020000 		.4byte	0x2f9
+ 1110 0493 A8040000 		.4byte	0x4a8
+ 1111 0497 09       		.uleb128 0x9
+ 1112 0498 01       		.uleb128 0x1
+ 1113 0499 50       		.byte	0x50
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 23
 
 
- 1134 0013 02       		.uleb128 0x2
- 1135 0014 24       		.uleb128 0x24
- 1136 0015 00       		.byte	0
- 1137 0016 0B       		.uleb128 0xb
- 1138 0017 0B       		.uleb128 0xb
- 1139 0018 3E       		.uleb128 0x3e
- 1140 0019 0B       		.uleb128 0xb
- 1141 001a 03       		.uleb128 0x3
- 1142 001b 0E       		.uleb128 0xe
- 1143 001c 00       		.byte	0
- 1144 001d 00       		.byte	0
- 1145 001e 03       		.uleb128 0x3
- 1146 001f 16       		.uleb128 0x16
- 1147 0020 00       		.byte	0
- 1148 0021 03       		.uleb128 0x3
- 1149 0022 0E       		.uleb128 0xe
- 1150 0023 3A       		.uleb128 0x3a
- 1151 0024 0B       		.uleb128 0xb
- 1152 0025 3B       		.uleb128 0x3b
- 1153 0026 0B       		.uleb128 0xb
- 1154 0027 49       		.uleb128 0x49
- 1155 0028 13       		.uleb128 0x13
- 1156 0029 00       		.byte	0
- 1157 002a 00       		.byte	0
- 1158 002b 04       		.uleb128 0x4
- 1159 002c 24       		.uleb128 0x24
- 1160 002d 00       		.byte	0
- 1161 002e 0B       		.uleb128 0xb
- 1162 002f 0B       		.uleb128 0xb
- 1163 0030 3E       		.uleb128 0x3e
- 1164 0031 0B       		.uleb128 0xb
- 1165 0032 03       		.uleb128 0x3
- 1166 0033 08       		.uleb128 0x8
- 1167 0034 00       		.byte	0
- 1168 0035 00       		.byte	0
- 1169 0036 05       		.uleb128 0x5
- 1170 0037 16       		.uleb128 0x16
- 1171 0038 00       		.byte	0
- 1172 0039 03       		.uleb128 0x3
- 1173 003a 0E       		.uleb128 0xe
- 1174 003b 3A       		.uleb128 0x3a
- 1175 003c 0B       		.uleb128 0xb
- 1176 003d 3B       		.uleb128 0x3b
- 1177 003e 05       		.uleb128 0x5
- 1178 003f 49       		.uleb128 0x49
- 1179 0040 13       		.uleb128 0x13
- 1180 0041 00       		.byte	0
- 1181 0042 00       		.byte	0
- 1182 0043 06       		.uleb128 0x6
- 1183 0044 2E       		.uleb128 0x2e
- 1184 0045 01       		.byte	0x1
- 1185 0046 3F       		.uleb128 0x3f
- 1186 0047 19       		.uleb128 0x19
- 1187 0048 03       		.uleb128 0x3
- 1188 0049 0E       		.uleb128 0xe
- 1189 004a 3A       		.uleb128 0x3a
- 1190 004b 0B       		.uleb128 0xb
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 24
+ 1114 049a 01       		.uleb128 0x1
+ 1115 049b 3A       		.byte	0x3a
+ 1116 049c 09       		.uleb128 0x9
+ 1117 049d 01       		.uleb128 0x1
+ 1118 049e 51       		.byte	0x51
+ 1119 049f 02       		.uleb128 0x2
+ 1120 04a0 75       		.byte	0x75
+ 1121 04a1 00       		.sleb128 0
+ 1122 04a2 09       		.uleb128 0x9
+ 1123 04a3 01       		.uleb128 0x1
+ 1124 04a4 52       		.byte	0x52
+ 1125 04a5 01       		.uleb128 0x1
+ 1126 04a6 31       		.byte	0x31
+ 1127 04a7 00       		.byte	0
+ 1128 04a8 08       		.uleb128 0x8
+ 1129 04a9 52000000 		.4byte	.LVL50
+ 1130 04ad C7050000 		.4byte	0x5c7
+ 1131 04b1 BC040000 		.4byte	0x4bc
+ 1132 04b5 09       		.uleb128 0x9
+ 1133 04b6 01       		.uleb128 0x1
+ 1134 04b7 50       		.byte	0x50
+ 1135 04b8 02       		.uleb128 0x2
+ 1136 04b9 74       		.byte	0x74
+ 1137 04ba 00       		.sleb128 0
+ 1138 04bb 00       		.byte	0
+ 1139 04bc 0B       		.uleb128 0xb
+ 1140 04bd 56000000 		.4byte	.LVL51
+ 1141 04c1 1F010000 		.4byte	0x11f
+ 1142 04c5 00       		.byte	0
+ 1143 04c6 06       		.uleb128 0x6
+ 1144 04c7 0E000000 		.4byte	.LASF34
+ 1145 04cb 01       		.byte	0x1
+ 1146 04cc 75       		.byte	0x75
+ 1147 04cd 00000000 		.4byte	.LFB41
+ 1148 04d1 3C000000 		.4byte	.LFE41-.LFB41
+ 1149 04d5 01       		.uleb128 0x1
+ 1150 04d6 9C       		.byte	0x9c
+ 1151 04d7 58050000 		.4byte	0x558
+ 1152 04db 0C       		.uleb128 0xc
+ 1153 04dc 63747800 		.ascii	"ctx\000"
+ 1154 04e0 01       		.byte	0x1
+ 1155 04e1 75       		.byte	0x75
+ 1156 04e2 68000000 		.4byte	0x68
+ 1157 04e6 81010000 		.4byte	.LLST11
+ 1158 04ea 07       		.uleb128 0x7
+ 1159 04eb 5C000000 		.4byte	.LASF35
+ 1160 04ef 01       		.byte	0x1
+ 1161 04f0 75       		.byte	0x75
+ 1162 04f1 76000000 		.4byte	0x76
+ 1163 04f5 AD010000 		.4byte	.LLST12
+ 1164 04f9 08       		.uleb128 0x8
+ 1165 04fa 0C000000 		.4byte	.LVL55
+ 1166 04fe 76010000 		.4byte	0x176
+ 1167 0502 0C050000 		.4byte	0x50c
+ 1168 0506 09       		.uleb128 0x9
+ 1169 0507 01       		.uleb128 0x1
+ 1170 0508 50       		.byte	0x50
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 24
 
 
- 1191 004c 3B       		.uleb128 0x3b
- 1192 004d 0B       		.uleb128 0xb
- 1193 004e 27       		.uleb128 0x27
- 1194 004f 19       		.uleb128 0x19
- 1195 0050 11       		.uleb128 0x11
- 1196 0051 01       		.uleb128 0x1
- 1197 0052 12       		.uleb128 0x12
- 1198 0053 06       		.uleb128 0x6
- 1199 0054 40       		.uleb128 0x40
- 1200 0055 18       		.uleb128 0x18
- 1201 0056 9742     		.uleb128 0x2117
- 1202 0058 19       		.uleb128 0x19
- 1203 0059 01       		.uleb128 0x1
- 1204 005a 13       		.uleb128 0x13
- 1205 005b 00       		.byte	0
- 1206 005c 00       		.byte	0
- 1207 005d 07       		.uleb128 0x7
- 1208 005e 898201   		.uleb128 0x4109
- 1209 0061 01       		.byte	0x1
- 1210 0062 11       		.uleb128 0x11
- 1211 0063 01       		.uleb128 0x1
- 1212 0064 31       		.uleb128 0x31
- 1213 0065 13       		.uleb128 0x13
- 1214 0066 01       		.uleb128 0x1
- 1215 0067 13       		.uleb128 0x13
- 1216 0068 00       		.byte	0
- 1217 0069 00       		.byte	0
- 1218 006a 08       		.uleb128 0x8
- 1219 006b 8A8201   		.uleb128 0x410a
- 1220 006e 00       		.byte	0
- 1221 006f 02       		.uleb128 0x2
- 1222 0070 18       		.uleb128 0x18
- 1223 0071 9142     		.uleb128 0x2111
- 1224 0073 18       		.uleb128 0x18
- 1225 0074 00       		.byte	0
- 1226 0075 00       		.byte	0
- 1227 0076 09       		.uleb128 0x9
- 1228 0077 898201   		.uleb128 0x4109
- 1229 007a 01       		.byte	0x1
- 1230 007b 11       		.uleb128 0x11
- 1231 007c 01       		.uleb128 0x1
- 1232 007d 31       		.uleb128 0x31
- 1233 007e 13       		.uleb128 0x13
- 1234 007f 00       		.byte	0
- 1235 0080 00       		.byte	0
- 1236 0081 0A       		.uleb128 0xa
- 1237 0082 05       		.uleb128 0x5
- 1238 0083 00       		.byte	0
- 1239 0084 03       		.uleb128 0x3
- 1240 0085 0E       		.uleb128 0xe
- 1241 0086 3A       		.uleb128 0x3a
- 1242 0087 0B       		.uleb128 0xb
- 1243 0088 3B       		.uleb128 0x3b
- 1244 0089 0B       		.uleb128 0xb
- 1245 008a 49       		.uleb128 0x49
- 1246 008b 13       		.uleb128 0x13
- 1247 008c 02       		.uleb128 0x2
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 25
+ 1171 0509 01       		.uleb128 0x1
+ 1172 050a 30       		.byte	0x30
+ 1173 050b 00       		.byte	0
+ 1174 050c 08       		.uleb128 0x8
+ 1175 050d 1E000000 		.4byte	.LVL56
+ 1176 0511 AB010000 		.4byte	0x1ab
+ 1177 0515 20050000 		.4byte	0x520
+ 1178 0519 09       		.uleb128 0x9
+ 1179 051a 01       		.uleb128 0x1
+ 1180 051b 50       		.byte	0x50
+ 1181 051c 02       		.uleb128 0x2
+ 1182 051d 09       		.byte	0x9
+ 1183 051e 80       		.byte	0x80
+ 1184 051f 00       		.byte	0
+ 1185 0520 08       		.uleb128 0x8
+ 1186 0521 26000000 		.4byte	.LVL57
+ 1187 0525 AB010000 		.4byte	0x1ab
+ 1188 0529 34050000 		.4byte	0x534
+ 1189 052d 09       		.uleb128 0x9
+ 1190 052e 01       		.uleb128 0x1
+ 1191 052f 50       		.byte	0x50
+ 1192 0530 02       		.uleb128 0x2
+ 1193 0531 09       		.byte	0x9
+ 1194 0532 88       		.byte	0x88
+ 1195 0533 00       		.byte	0
+ 1196 0534 08       		.uleb128 0x8
+ 1197 0535 34000000 		.4byte	.LVL58
+ 1198 0539 AB010000 		.4byte	0x1ab
+ 1199 053d 48050000 		.4byte	0x548
+ 1200 0541 09       		.uleb128 0x9
+ 1201 0542 01       		.uleb128 0x1
+ 1202 0543 50       		.byte	0x50
+ 1203 0544 02       		.uleb128 0x2
+ 1204 0545 75       		.byte	0x75
+ 1205 0546 00       		.sleb128 0
+ 1206 0547 00       		.byte	0
+ 1207 0548 0A       		.uleb128 0xa
+ 1208 0549 3A000000 		.4byte	.LVL59
+ 1209 054d 76010000 		.4byte	0x176
+ 1210 0551 09       		.uleb128 0x9
+ 1211 0552 01       		.uleb128 0x1
+ 1212 0553 50       		.byte	0x50
+ 1213 0554 01       		.uleb128 0x1
+ 1214 0555 31       		.byte	0x31
+ 1215 0556 00       		.byte	0
+ 1216 0557 00       		.byte	0
+ 1217 0558 0D       		.uleb128 0xd
+ 1218 0559 63050000 		.4byte	0x563
+ 1219 055d 63050000 		.4byte	0x563
+ 1220 0561 0E       		.uleb128 0xe
+ 1221 0562 00       		.byte	0
+ 1222 0563 0F       		.uleb128 0xf
+ 1223 0564 76000000 		.4byte	0x76
+ 1224 0568 10       		.uleb128 0x10
+ 1225 0569 72000000 		.4byte	.LASF36
+ 1226 056d 05       		.byte	0x5
+ 1227 056e 0A       		.byte	0xa
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 25
 
 
- 1248 008d 17       		.uleb128 0x17
- 1249 008e 00       		.byte	0
- 1250 008f 00       		.byte	0
- 1251 0090 0B       		.uleb128 0xb
- 1252 0091 898201   		.uleb128 0x4109
- 1253 0094 00       		.byte	0
- 1254 0095 11       		.uleb128 0x11
- 1255 0096 01       		.uleb128 0x1
- 1256 0097 31       		.uleb128 0x31
- 1257 0098 13       		.uleb128 0x13
- 1258 0099 00       		.byte	0
- 1259 009a 00       		.byte	0
- 1260 009b 0C       		.uleb128 0xc
- 1261 009c 05       		.uleb128 0x5
- 1262 009d 00       		.byte	0
- 1263 009e 03       		.uleb128 0x3
- 1264 009f 08       		.uleb128 0x8
- 1265 00a0 3A       		.uleb128 0x3a
- 1266 00a1 0B       		.uleb128 0xb
- 1267 00a2 3B       		.uleb128 0x3b
- 1268 00a3 0B       		.uleb128 0xb
- 1269 00a4 49       		.uleb128 0x49
- 1270 00a5 13       		.uleb128 0x13
- 1271 00a6 02       		.uleb128 0x2
- 1272 00a7 17       		.uleb128 0x17
- 1273 00a8 00       		.byte	0
- 1274 00a9 00       		.byte	0
- 1275 00aa 0D       		.uleb128 0xd
- 1276 00ab 01       		.uleb128 0x1
- 1277 00ac 01       		.byte	0x1
- 1278 00ad 49       		.uleb128 0x49
- 1279 00ae 13       		.uleb128 0x13
- 1280 00af 01       		.uleb128 0x1
- 1281 00b0 13       		.uleb128 0x13
- 1282 00b1 00       		.byte	0
- 1283 00b2 00       		.byte	0
- 1284 00b3 0E       		.uleb128 0xe
- 1285 00b4 21       		.uleb128 0x21
- 1286 00b5 00       		.byte	0
- 1287 00b6 00       		.byte	0
- 1288 00b7 00       		.byte	0
- 1289 00b8 0F       		.uleb128 0xf
- 1290 00b9 26       		.uleb128 0x26
- 1291 00ba 00       		.byte	0
- 1292 00bb 49       		.uleb128 0x49
- 1293 00bc 13       		.uleb128 0x13
- 1294 00bd 00       		.byte	0
- 1295 00be 00       		.byte	0
- 1296 00bf 10       		.uleb128 0x10
- 1297 00c0 34       		.uleb128 0x34
- 1298 00c1 00       		.byte	0
- 1299 00c2 03       		.uleb128 0x3
- 1300 00c3 0E       		.uleb128 0xe
- 1301 00c4 3A       		.uleb128 0x3a
- 1302 00c5 0B       		.uleb128 0xb
- 1303 00c6 3B       		.uleb128 0x3b
- 1304 00c7 0B       		.uleb128 0xb
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 26
+ 1228 056f 73050000 		.4byte	0x573
+ 1229 0573 0F       		.uleb128 0xf
+ 1230 0574 58050000 		.4byte	0x558
+ 1231 0578 11       		.uleb128 0x11
+ 1232 0579 54010000 		.4byte	.LASF37
+ 1233 057d 01       		.byte	0x1
+ 1234 057e 0B       		.byte	0xb
+ 1235 057f 63050000 		.4byte	0x563
+ 1236 0583 05       		.uleb128 0x5
+ 1237 0584 03       		.byte	0x3
+ 1238 0585 00000000 		.4byte	digit0Addr
+ 1239 0589 11       		.uleb128 0x11
+ 1240 058a F1010000 		.4byte	.LASF38
+ 1241 058e 01       		.byte	0x1
+ 1242 058f 0C       		.byte	0xc
+ 1243 0590 63050000 		.4byte	0x563
+ 1244 0594 05       		.uleb128 0x5
+ 1245 0595 03       		.byte	0x3
+ 1246 0596 00000000 		.4byte	digit1Addr
+ 1247 059a 11       		.uleb128 0x11
+ 1248 059b E5020000 		.4byte	.LASF39
+ 1249 059f 01       		.byte	0x1
+ 1250 05a0 0D       		.byte	0xd
+ 1251 05a1 63050000 		.4byte	0x563
+ 1252 05a5 05       		.uleb128 0x5
+ 1253 05a6 03       		.byte	0x3
+ 1254 05a7 00000000 		.4byte	digit2Addr
+ 1255 05ab 11       		.uleb128 0x11
+ 1256 05ac DF010000 		.4byte	.LASF40
+ 1257 05b0 01       		.byte	0x1
+ 1258 05b1 0F       		.byte	0xf
+ 1259 05b2 A4010000 		.4byte	0x1a4
+ 1260 05b6 05       		.uleb128 0x5
+ 1261 05b7 03       		.byte	0x3
+ 1262 05b8 00000000 		.4byte	curState
+ 1263 05bc 12       		.uleb128 0x12
+ 1264 05bd 1A000000 		.4byte	.LASF41
+ 1265 05c1 1A000000 		.4byte	.LASF41
+ 1266 05c5 06       		.byte	0x6
+ 1267 05c6 33       		.byte	0x33
+ 1268 05c7 12       		.uleb128 0x12
+ 1269 05c8 F0020000 		.4byte	.LASF42
+ 1270 05cc F0020000 		.4byte	.LASF42
+ 1271 05d0 07       		.byte	0x7
+ 1272 05d1 EC       		.byte	0xec
+ 1273 05d2 12       		.uleb128 0x12
+ 1274 05d3 9C010000 		.4byte	.LASF43
+ 1275 05d7 9C010000 		.4byte	.LASF43
+ 1276 05db 08       		.byte	0x8
+ 1277 05dc 33       		.byte	0x33
+ 1278 05dd 12       		.uleb128 0x12
+ 1279 05de 42010000 		.4byte	.LASF44
+ 1280 05e2 42010000 		.4byte	.LASF44
+ 1281 05e6 09       		.byte	0x9
+ 1282 05e7 33       		.byte	0x33
+ 1283 05e8 12       		.uleb128 0x12
+ 1284 05e9 D4000000 		.4byte	.LASF45
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 26
 
 
- 1305 00c8 49       		.uleb128 0x49
- 1306 00c9 13       		.uleb128 0x13
- 1307 00ca 3F       		.uleb128 0x3f
- 1308 00cb 19       		.uleb128 0x19
- 1309 00cc 3C       		.uleb128 0x3c
- 1310 00cd 19       		.uleb128 0x19
- 1311 00ce 00       		.byte	0
- 1312 00cf 00       		.byte	0
- 1313 00d0 11       		.uleb128 0x11
- 1314 00d1 34       		.uleb128 0x34
- 1315 00d2 00       		.byte	0
- 1316 00d3 03       		.uleb128 0x3
- 1317 00d4 0E       		.uleb128 0xe
- 1318 00d5 3A       		.uleb128 0x3a
- 1319 00d6 0B       		.uleb128 0xb
- 1320 00d7 3B       		.uleb128 0x3b
- 1321 00d8 0B       		.uleb128 0xb
- 1322 00d9 49       		.uleb128 0x49
- 1323 00da 13       		.uleb128 0x13
- 1324 00db 3F       		.uleb128 0x3f
- 1325 00dc 19       		.uleb128 0x19
- 1326 00dd 02       		.uleb128 0x2
- 1327 00de 18       		.uleb128 0x18
- 1328 00df 00       		.byte	0
- 1329 00e0 00       		.byte	0
- 1330 00e1 12       		.uleb128 0x12
- 1331 00e2 2E       		.uleb128 0x2e
- 1332 00e3 00       		.byte	0
- 1333 00e4 3F       		.uleb128 0x3f
- 1334 00e5 19       		.uleb128 0x19
- 1335 00e6 3C       		.uleb128 0x3c
- 1336 00e7 19       		.uleb128 0x19
- 1337 00e8 6E       		.uleb128 0x6e
- 1338 00e9 0E       		.uleb128 0xe
- 1339 00ea 03       		.uleb128 0x3
- 1340 00eb 0E       		.uleb128 0xe
- 1341 00ec 3A       		.uleb128 0x3a
- 1342 00ed 0B       		.uleb128 0xb
- 1343 00ee 3B       		.uleb128 0x3b
- 1344 00ef 0B       		.uleb128 0xb
- 1345 00f0 00       		.byte	0
- 1346 00f1 00       		.byte	0
- 1347 00f2 00       		.byte	0
- 1348              		.section	.debug_loc,"",%progbits
- 1349              	.Ldebug_loc0:
- 1350              	.LLST0:
- 1351 0000 00000000 		.4byte	.LVL2
- 1352 0004 05000000 		.4byte	.LVL3-1
- 1353 0008 0100     		.2byte	0x1
- 1354 000a 50       		.byte	0x50
- 1355 000b 05000000 		.4byte	.LVL3-1
- 1356 000f 08000000 		.4byte	.LFE34
- 1357 0013 0400     		.2byte	0x4
- 1358 0015 F3       		.byte	0xf3
- 1359 0016 01       		.uleb128 0x1
- 1360 0017 50       		.byte	0x50
- 1361 0018 9F       		.byte	0x9f
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 27
+ 1285 05ed D4000000 		.4byte	.LASF45
+ 1286 05f1 0A       		.byte	0xa
+ 1287 05f2 33       		.byte	0x33
+ 1288 05f3 00       		.byte	0
+ 1289              		.section	.debug_abbrev,"",%progbits
+ 1290              	.Ldebug_abbrev0:
+ 1291 0000 01       		.uleb128 0x1
+ 1292 0001 11       		.uleb128 0x11
+ 1293 0002 01       		.byte	0x1
+ 1294 0003 25       		.uleb128 0x25
+ 1295 0004 0E       		.uleb128 0xe
+ 1296 0005 13       		.uleb128 0x13
+ 1297 0006 0B       		.uleb128 0xb
+ 1298 0007 03       		.uleb128 0x3
+ 1299 0008 0E       		.uleb128 0xe
+ 1300 0009 1B       		.uleb128 0x1b
+ 1301 000a 0E       		.uleb128 0xe
+ 1302 000b 55       		.uleb128 0x55
+ 1303 000c 17       		.uleb128 0x17
+ 1304 000d 11       		.uleb128 0x11
+ 1305 000e 01       		.uleb128 0x1
+ 1306 000f 10       		.uleb128 0x10
+ 1307 0010 17       		.uleb128 0x17
+ 1308 0011 00       		.byte	0
+ 1309 0012 00       		.byte	0
+ 1310 0013 02       		.uleb128 0x2
+ 1311 0014 24       		.uleb128 0x24
+ 1312 0015 00       		.byte	0
+ 1313 0016 0B       		.uleb128 0xb
+ 1314 0017 0B       		.uleb128 0xb
+ 1315 0018 3E       		.uleb128 0x3e
+ 1316 0019 0B       		.uleb128 0xb
+ 1317 001a 03       		.uleb128 0x3
+ 1318 001b 0E       		.uleb128 0xe
+ 1319 001c 00       		.byte	0
+ 1320 001d 00       		.byte	0
+ 1321 001e 03       		.uleb128 0x3
+ 1322 001f 16       		.uleb128 0x16
+ 1323 0020 00       		.byte	0
+ 1324 0021 03       		.uleb128 0x3
+ 1325 0022 0E       		.uleb128 0xe
+ 1326 0023 3A       		.uleb128 0x3a
+ 1327 0024 0B       		.uleb128 0xb
+ 1328 0025 3B       		.uleb128 0x3b
+ 1329 0026 0B       		.uleb128 0xb
+ 1330 0027 49       		.uleb128 0x49
+ 1331 0028 13       		.uleb128 0x13
+ 1332 0029 00       		.byte	0
+ 1333 002a 00       		.byte	0
+ 1334 002b 04       		.uleb128 0x4
+ 1335 002c 24       		.uleb128 0x24
+ 1336 002d 00       		.byte	0
+ 1337 002e 0B       		.uleb128 0xb
+ 1338 002f 0B       		.uleb128 0xb
+ 1339 0030 3E       		.uleb128 0x3e
+ 1340 0031 0B       		.uleb128 0xb
+ 1341 0032 03       		.uleb128 0x3
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 27
 
 
- 1362 0019 00000000 		.4byte	0
- 1363 001d 00000000 		.4byte	0
- 1364              	.LLST1:
- 1365 0021 00000000 		.4byte	.LVL4
- 1366 0025 06000000 		.4byte	.LVL5
- 1367 0029 0100     		.2byte	0x1
- 1368 002b 50       		.byte	0x50
- 1369 002c 06000000 		.4byte	.LVL5
- 1370 0030 68000000 		.4byte	.LFE35
- 1371 0034 0400     		.2byte	0x4
- 1372 0036 F3       		.byte	0xf3
- 1373 0037 01       		.uleb128 0x1
- 1374 0038 50       		.byte	0x50
- 1375 0039 9F       		.byte	0x9f
- 1376 003a 00000000 		.4byte	0
- 1377 003e 00000000 		.4byte	0
- 1378              	.LLST2:
- 1379 0042 00000000 		.4byte	.LVL22
- 1380 0046 05000000 		.4byte	.LVL23-1
- 1381 004a 0100     		.2byte	0x1
- 1382 004c 50       		.byte	0x50
- 1383 004d 05000000 		.4byte	.LVL23-1
- 1384 0051 08000000 		.4byte	.LFE36
- 1385 0055 0400     		.2byte	0x4
- 1386 0057 F3       		.byte	0xf3
- 1387 0058 01       		.uleb128 0x1
- 1388 0059 50       		.byte	0x50
- 1389 005a 9F       		.byte	0x9f
- 1390 005b 00000000 		.4byte	0
- 1391 005f 00000000 		.4byte	0
- 1392              	.LLST3:
- 1393 0063 00000000 		.4byte	.LVL24
- 1394 0067 0A000000 		.4byte	.LVL25
- 1395 006b 0100     		.2byte	0x1
- 1396 006d 50       		.byte	0x50
- 1397 006e 0A000000 		.4byte	.LVL25
- 1398 0072 34000000 		.4byte	.LFE37
- 1399 0076 0400     		.2byte	0x4
- 1400 0078 F3       		.byte	0xf3
- 1401 0079 01       		.uleb128 0x1
- 1402 007a 50       		.byte	0x50
- 1403 007b 9F       		.byte	0x9f
- 1404 007c 00000000 		.4byte	0
- 1405 0080 00000000 		.4byte	0
- 1406              	.LLST4:
- 1407 0084 00000000 		.4byte	.LVL24
- 1408 0088 0D000000 		.4byte	.LVL26-1
- 1409 008c 0100     		.2byte	0x1
- 1410 008e 51       		.byte	0x51
- 1411 008f 0D000000 		.4byte	.LVL26-1
- 1412 0093 34000000 		.4byte	.LFE37
- 1413 0097 0400     		.2byte	0x4
- 1414 0099 F3       		.byte	0xf3
- 1415 009a 01       		.uleb128 0x1
- 1416 009b 51       		.byte	0x51
- 1417 009c 9F       		.byte	0x9f
- 1418 009d 00000000 		.4byte	0
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 28
+ 1342 0033 08       		.uleb128 0x8
+ 1343 0034 00       		.byte	0
+ 1344 0035 00       		.byte	0
+ 1345 0036 05       		.uleb128 0x5
+ 1346 0037 16       		.uleb128 0x16
+ 1347 0038 00       		.byte	0
+ 1348 0039 03       		.uleb128 0x3
+ 1349 003a 0E       		.uleb128 0xe
+ 1350 003b 3A       		.uleb128 0x3a
+ 1351 003c 0B       		.uleb128 0xb
+ 1352 003d 3B       		.uleb128 0x3b
+ 1353 003e 05       		.uleb128 0x5
+ 1354 003f 49       		.uleb128 0x49
+ 1355 0040 13       		.uleb128 0x13
+ 1356 0041 00       		.byte	0
+ 1357 0042 00       		.byte	0
+ 1358 0043 06       		.uleb128 0x6
+ 1359 0044 2E       		.uleb128 0x2e
+ 1360 0045 01       		.byte	0x1
+ 1361 0046 3F       		.uleb128 0x3f
+ 1362 0047 19       		.uleb128 0x19
+ 1363 0048 03       		.uleb128 0x3
+ 1364 0049 0E       		.uleb128 0xe
+ 1365 004a 3A       		.uleb128 0x3a
+ 1366 004b 0B       		.uleb128 0xb
+ 1367 004c 3B       		.uleb128 0x3b
+ 1368 004d 0B       		.uleb128 0xb
+ 1369 004e 27       		.uleb128 0x27
+ 1370 004f 19       		.uleb128 0x19
+ 1371 0050 11       		.uleb128 0x11
+ 1372 0051 01       		.uleb128 0x1
+ 1373 0052 12       		.uleb128 0x12
+ 1374 0053 06       		.uleb128 0x6
+ 1375 0054 40       		.uleb128 0x40
+ 1376 0055 18       		.uleb128 0x18
+ 1377 0056 9742     		.uleb128 0x2117
+ 1378 0058 19       		.uleb128 0x19
+ 1379 0059 01       		.uleb128 0x1
+ 1380 005a 13       		.uleb128 0x13
+ 1381 005b 00       		.byte	0
+ 1382 005c 00       		.byte	0
+ 1383 005d 07       		.uleb128 0x7
+ 1384 005e 05       		.uleb128 0x5
+ 1385 005f 00       		.byte	0
+ 1386 0060 03       		.uleb128 0x3
+ 1387 0061 0E       		.uleb128 0xe
+ 1388 0062 3A       		.uleb128 0x3a
+ 1389 0063 0B       		.uleb128 0xb
+ 1390 0064 3B       		.uleb128 0x3b
+ 1391 0065 0B       		.uleb128 0xb
+ 1392 0066 49       		.uleb128 0x49
+ 1393 0067 13       		.uleb128 0x13
+ 1394 0068 02       		.uleb128 0x2
+ 1395 0069 17       		.uleb128 0x17
+ 1396 006a 00       		.byte	0
+ 1397 006b 00       		.byte	0
+ 1398 006c 08       		.uleb128 0x8
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 28
 
 
- 1419 00a1 00000000 		.4byte	0
- 1420              	.LLST5:
- 1421 00a5 00000000 		.4byte	.LVL24
- 1422 00a9 0D000000 		.4byte	.LVL26-1
- 1423 00ad 0100     		.2byte	0x1
- 1424 00af 52       		.byte	0x52
- 1425 00b0 0D000000 		.4byte	.LVL26-1
- 1426 00b4 34000000 		.4byte	.LFE37
- 1427 00b8 0400     		.2byte	0x4
- 1428 00ba F3       		.byte	0xf3
- 1429 00bb 01       		.uleb128 0x1
- 1430 00bc 52       		.byte	0x52
- 1431 00bd 9F       		.byte	0x9f
- 1432 00be 00000000 		.4byte	0
- 1433 00c2 00000000 		.4byte	0
- 1434              	.LLST6:
- 1435 00c6 00000000 		.4byte	.LVL31
- 1436 00ca 10000000 		.4byte	.LVL34
- 1437 00ce 0100     		.2byte	0x1
- 1438 00d0 50       		.byte	0x50
- 1439 00d1 10000000 		.4byte	.LVL34
- 1440 00d5 54000000 		.4byte	.LFE38
- 1441 00d9 0400     		.2byte	0x4
- 1442 00db F3       		.byte	0xf3
- 1443 00dc 01       		.uleb128 0x1
- 1444 00dd 50       		.byte	0x50
- 1445 00de 9F       		.byte	0x9f
- 1446 00df 00000000 		.4byte	0
- 1447 00e3 00000000 		.4byte	0
- 1448              	.LLST7:
- 1449 00e7 00000000 		.4byte	.LVL31
- 1450 00eb 0E000000 		.4byte	.LVL33
- 1451 00ef 0100     		.2byte	0x1
- 1452 00f1 51       		.byte	0x51
- 1453 00f2 0E000000 		.4byte	.LVL33
- 1454 00f6 54000000 		.4byte	.LFE38
- 1455 00fa 0400     		.2byte	0x4
- 1456 00fc F3       		.byte	0xf3
- 1457 00fd 01       		.uleb128 0x1
- 1458 00fe 51       		.byte	0x51
- 1459 00ff 9F       		.byte	0x9f
- 1460 0100 00000000 		.4byte	0
- 1461 0104 00000000 		.4byte	0
- 1462              	.LLST8:
- 1463 0108 00000000 		.4byte	.LVL31
- 1464 010c 0C000000 		.4byte	.LVL32
- 1465 0110 0100     		.2byte	0x1
- 1466 0112 52       		.byte	0x52
- 1467 0113 0C000000 		.4byte	.LVL32
- 1468 0117 54000000 		.4byte	.LFE38
- 1469 011b 0400     		.2byte	0x4
- 1470 011d F3       		.byte	0xf3
- 1471 011e 01       		.uleb128 0x1
- 1472 011f 52       		.byte	0x52
- 1473 0120 9F       		.byte	0x9f
- 1474 0121 00000000 		.4byte	0
- 1475 0125 00000000 		.4byte	0
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 29
+ 1399 006d 898201   		.uleb128 0x4109
+ 1400 0070 01       		.byte	0x1
+ 1401 0071 11       		.uleb128 0x11
+ 1402 0072 01       		.uleb128 0x1
+ 1403 0073 31       		.uleb128 0x31
+ 1404 0074 13       		.uleb128 0x13
+ 1405 0075 01       		.uleb128 0x1
+ 1406 0076 13       		.uleb128 0x13
+ 1407 0077 00       		.byte	0
+ 1408 0078 00       		.byte	0
+ 1409 0079 09       		.uleb128 0x9
+ 1410 007a 8A8201   		.uleb128 0x410a
+ 1411 007d 00       		.byte	0
+ 1412 007e 02       		.uleb128 0x2
+ 1413 007f 18       		.uleb128 0x18
+ 1414 0080 9142     		.uleb128 0x2111
+ 1415 0082 18       		.uleb128 0x18
+ 1416 0083 00       		.byte	0
+ 1417 0084 00       		.byte	0
+ 1418 0085 0A       		.uleb128 0xa
+ 1419 0086 898201   		.uleb128 0x4109
+ 1420 0089 01       		.byte	0x1
+ 1421 008a 11       		.uleb128 0x11
+ 1422 008b 01       		.uleb128 0x1
+ 1423 008c 31       		.uleb128 0x31
+ 1424 008d 13       		.uleb128 0x13
+ 1425 008e 00       		.byte	0
+ 1426 008f 00       		.byte	0
+ 1427 0090 0B       		.uleb128 0xb
+ 1428 0091 898201   		.uleb128 0x4109
+ 1429 0094 00       		.byte	0
+ 1430 0095 11       		.uleb128 0x11
+ 1431 0096 01       		.uleb128 0x1
+ 1432 0097 31       		.uleb128 0x31
+ 1433 0098 13       		.uleb128 0x13
+ 1434 0099 00       		.byte	0
+ 1435 009a 00       		.byte	0
+ 1436 009b 0C       		.uleb128 0xc
+ 1437 009c 05       		.uleb128 0x5
+ 1438 009d 00       		.byte	0
+ 1439 009e 03       		.uleb128 0x3
+ 1440 009f 08       		.uleb128 0x8
+ 1441 00a0 3A       		.uleb128 0x3a
+ 1442 00a1 0B       		.uleb128 0xb
+ 1443 00a2 3B       		.uleb128 0x3b
+ 1444 00a3 0B       		.uleb128 0xb
+ 1445 00a4 49       		.uleb128 0x49
+ 1446 00a5 13       		.uleb128 0x13
+ 1447 00a6 02       		.uleb128 0x2
+ 1448 00a7 17       		.uleb128 0x17
+ 1449 00a8 00       		.byte	0
+ 1450 00a9 00       		.byte	0
+ 1451 00aa 0D       		.uleb128 0xd
+ 1452 00ab 01       		.uleb128 0x1
+ 1453 00ac 01       		.byte	0x1
+ 1454 00ad 49       		.uleb128 0x49
+ 1455 00ae 13       		.uleb128 0x13
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 29
 
 
- 1476              	.LLST9:
- 1477 0129 00000000 		.4byte	.LVL31
- 1478 012d 13000000 		.4byte	.LVL35-1
- 1479 0131 0100     		.2byte	0x1
- 1480 0133 53       		.byte	0x53
- 1481 0134 13000000 		.4byte	.LVL35-1
- 1482 0138 52000000 		.4byte	.LVL43
- 1483 013c 0100     		.2byte	0x1
- 1484 013e 54       		.byte	0x54
- 1485 013f 52000000 		.4byte	.LVL43
- 1486 0143 54000000 		.4byte	.LFE38
- 1487 0147 0400     		.2byte	0x4
- 1488 0149 F3       		.byte	0xf3
- 1489 014a 01       		.uleb128 0x1
- 1490 014b 53       		.byte	0x53
- 1491 014c 9F       		.byte	0x9f
- 1492 014d 00000000 		.4byte	0
- 1493 0151 00000000 		.4byte	0
- 1494              	.LLST10:
- 1495 0155 00000000 		.4byte	.LVL44
- 1496 0159 08000000 		.4byte	.LVL45
- 1497 015d 0100     		.2byte	0x1
- 1498 015f 50       		.byte	0x50
- 1499 0160 08000000 		.4byte	.LVL45
- 1500 0164 3A000000 		.4byte	.LVL51
- 1501 0168 0100     		.2byte	0x1
- 1502 016a 54       		.byte	0x54
- 1503 016b 3A000000 		.4byte	.LVL51
- 1504 016f 3C000000 		.4byte	.LFE39
- 1505 0173 0400     		.2byte	0x4
- 1506 0175 F3       		.byte	0xf3
- 1507 0176 01       		.uleb128 0x1
- 1508 0177 50       		.byte	0x50
- 1509 0178 9F       		.byte	0x9f
- 1510 0179 00000000 		.4byte	0
- 1511 017d 00000000 		.4byte	0
- 1512              	.LLST11:
- 1513 0181 00000000 		.4byte	.LVL44
- 1514 0185 0B000000 		.4byte	.LVL46-1
- 1515 0189 0100     		.2byte	0x1
- 1516 018b 51       		.byte	0x51
- 1517 018c 0B000000 		.4byte	.LVL46-1
- 1518 0190 3C000000 		.4byte	.LFE39
- 1519 0194 0400     		.2byte	0x4
- 1520 0196 F3       		.byte	0xf3
- 1521 0197 01       		.uleb128 0x1
- 1522 0198 51       		.byte	0x51
- 1523 0199 9F       		.byte	0x9f
- 1524 019a 00000000 		.4byte	0
- 1525 019e 00000000 		.4byte	0
- 1526              		.section	.debug_aranges,"",%progbits
- 1527 0000 4C000000 		.4byte	0x4c
- 1528 0004 0200     		.2byte	0x2
- 1529 0006 00000000 		.4byte	.Ldebug_info0
- 1530 000a 04       		.byte	0x4
- 1531 000b 00       		.byte	0
- 1532 000c 0000     		.2byte	0
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 30
+ 1456 00af 01       		.uleb128 0x1
+ 1457 00b0 13       		.uleb128 0x13
+ 1458 00b1 00       		.byte	0
+ 1459 00b2 00       		.byte	0
+ 1460 00b3 0E       		.uleb128 0xe
+ 1461 00b4 21       		.uleb128 0x21
+ 1462 00b5 00       		.byte	0
+ 1463 00b6 00       		.byte	0
+ 1464 00b7 00       		.byte	0
+ 1465 00b8 0F       		.uleb128 0xf
+ 1466 00b9 26       		.uleb128 0x26
+ 1467 00ba 00       		.byte	0
+ 1468 00bb 49       		.uleb128 0x49
+ 1469 00bc 13       		.uleb128 0x13
+ 1470 00bd 00       		.byte	0
+ 1471 00be 00       		.byte	0
+ 1472 00bf 10       		.uleb128 0x10
+ 1473 00c0 34       		.uleb128 0x34
+ 1474 00c1 00       		.byte	0
+ 1475 00c2 03       		.uleb128 0x3
+ 1476 00c3 0E       		.uleb128 0xe
+ 1477 00c4 3A       		.uleb128 0x3a
+ 1478 00c5 0B       		.uleb128 0xb
+ 1479 00c6 3B       		.uleb128 0x3b
+ 1480 00c7 0B       		.uleb128 0xb
+ 1481 00c8 49       		.uleb128 0x49
+ 1482 00c9 13       		.uleb128 0x13
+ 1483 00ca 3F       		.uleb128 0x3f
+ 1484 00cb 19       		.uleb128 0x19
+ 1485 00cc 3C       		.uleb128 0x3c
+ 1486 00cd 19       		.uleb128 0x19
+ 1487 00ce 00       		.byte	0
+ 1488 00cf 00       		.byte	0
+ 1489 00d0 11       		.uleb128 0x11
+ 1490 00d1 34       		.uleb128 0x34
+ 1491 00d2 00       		.byte	0
+ 1492 00d3 03       		.uleb128 0x3
+ 1493 00d4 0E       		.uleb128 0xe
+ 1494 00d5 3A       		.uleb128 0x3a
+ 1495 00d6 0B       		.uleb128 0xb
+ 1496 00d7 3B       		.uleb128 0x3b
+ 1497 00d8 0B       		.uleb128 0xb
+ 1498 00d9 49       		.uleb128 0x49
+ 1499 00da 13       		.uleb128 0x13
+ 1500 00db 3F       		.uleb128 0x3f
+ 1501 00dc 19       		.uleb128 0x19
+ 1502 00dd 02       		.uleb128 0x2
+ 1503 00de 18       		.uleb128 0x18
+ 1504 00df 00       		.byte	0
+ 1505 00e0 00       		.byte	0
+ 1506 00e1 12       		.uleb128 0x12
+ 1507 00e2 2E       		.uleb128 0x2e
+ 1508 00e3 00       		.byte	0
+ 1509 00e4 3F       		.uleb128 0x3f
+ 1510 00e5 19       		.uleb128 0x19
+ 1511 00e6 3C       		.uleb128 0x3c
+ 1512 00e7 19       		.uleb128 0x19
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 30
 
 
- 1533 000e 0000     		.2byte	0
- 1534 0010 00000000 		.4byte	.LFB33
- 1535 0014 10000000 		.4byte	.LFE33-.LFB33
- 1536 0018 00000000 		.4byte	.LFB34
- 1537 001c 08000000 		.4byte	.LFE34-.LFB34
- 1538 0020 00000000 		.4byte	.LFB35
- 1539 0024 68000000 		.4byte	.LFE35-.LFB35
- 1540 0028 00000000 		.4byte	.LFB36
- 1541 002c 08000000 		.4byte	.LFE36-.LFB36
- 1542 0030 00000000 		.4byte	.LFB37
- 1543 0034 34000000 		.4byte	.LFE37-.LFB37
- 1544 0038 00000000 		.4byte	.LFB38
- 1545 003c 54000000 		.4byte	.LFE38-.LFB38
- 1546 0040 00000000 		.4byte	.LFB39
- 1547 0044 3C000000 		.4byte	.LFE39-.LFB39
- 1548 0048 00000000 		.4byte	0
- 1549 004c 00000000 		.4byte	0
- 1550              		.section	.debug_ranges,"",%progbits
- 1551              	.Ldebug_ranges0:
- 1552 0000 00000000 		.4byte	.LFB33
- 1553 0004 10000000 		.4byte	.LFE33
- 1554 0008 00000000 		.4byte	.LFB34
- 1555 000c 08000000 		.4byte	.LFE34
- 1556 0010 00000000 		.4byte	.LFB35
- 1557 0014 68000000 		.4byte	.LFE35
- 1558 0018 00000000 		.4byte	.LFB36
- 1559 001c 08000000 		.4byte	.LFE36
- 1560 0020 00000000 		.4byte	.LFB37
- 1561 0024 34000000 		.4byte	.LFE37
- 1562 0028 00000000 		.4byte	.LFB38
- 1563 002c 54000000 		.4byte	.LFE38
- 1564 0030 00000000 		.4byte	.LFB39
- 1565 0034 3C000000 		.4byte	.LFE39
- 1566 0038 00000000 		.4byte	0
- 1567 003c 00000000 		.4byte	0
- 1568              		.section	.debug_line,"",%progbits
- 1569              	.Ldebug_line0:
- 1570 0000 39020000 		.section	.debug_str,"MS",%progbits,1
- 1570      02009701 
- 1570      00000201 
- 1570      FB0E0D00 
- 1570      01010101 
- 1571              	.LASF6:
- 1572 0000 6C6F6E67 		.ascii	"long long int\000"
- 1572      206C6F6E 
- 1572      6720696E 
- 1572      7400
- 1573              	.LASF32:
- 1574 000e 6374726C 		.ascii	"ctrlDisplay\000"
- 1574      44697370 
- 1574      6C617900 
- 1575              	.LASF40:
- 1576 001a 53656744 		.ascii	"SegDispData_Write\000"
- 1576      69737044 
- 1576      6174615F 
- 1576      57726974 
- 1576      6500
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 31
+ 1513 00e8 6E       		.uleb128 0x6e
+ 1514 00e9 0E       		.uleb128 0xe
+ 1515 00ea 03       		.uleb128 0x3
+ 1516 00eb 0E       		.uleb128 0xe
+ 1517 00ec 3A       		.uleb128 0x3a
+ 1518 00ed 0B       		.uleb128 0xb
+ 1519 00ee 3B       		.uleb128 0x3b
+ 1520 00ef 0B       		.uleb128 0xb
+ 1521 00f0 00       		.byte	0
+ 1522 00f1 00       		.byte	0
+ 1523 00f2 00       		.byte	0
+ 1524              		.section	.debug_loc,"",%progbits
+ 1525              	.Ldebug_loc0:
+ 1526              	.LLST0:
+ 1527 0000 00000000 		.4byte	.LVL0
+ 1528 0004 06000000 		.4byte	.LVL1
+ 1529 0008 0100     		.2byte	0x1
+ 1530 000a 50       		.byte	0x50
+ 1531 000b 06000000 		.4byte	.LVL1
+ 1532 000f 1C000000 		.4byte	.LVL6
+ 1533 0013 0100     		.2byte	0x1
+ 1534 0015 54       		.byte	0x54
+ 1535 0016 1C000000 		.4byte	.LVL6
+ 1536 001a 1E000000 		.4byte	.LFE33
+ 1537 001e 0400     		.2byte	0x4
+ 1538 0020 F3       		.byte	0xf3
+ 1539 0021 01       		.uleb128 0x1
+ 1540 0022 50       		.byte	0x50
+ 1541 0023 9F       		.byte	0x9f
+ 1542 0024 00000000 		.4byte	0
+ 1543 0028 00000000 		.4byte	0
+ 1544              	.LLST1:
+ 1545 002c 00000000 		.4byte	.LVL10
+ 1546 0030 05000000 		.4byte	.LVL11-1
+ 1547 0034 0100     		.2byte	0x1
+ 1548 0036 50       		.byte	0x50
+ 1549 0037 05000000 		.4byte	.LVL11-1
+ 1550 003b 08000000 		.4byte	.LFE36
+ 1551 003f 0400     		.2byte	0x4
+ 1552 0041 F3       		.byte	0xf3
+ 1553 0042 01       		.uleb128 0x1
+ 1554 0043 50       		.byte	0x50
+ 1555 0044 9F       		.byte	0x9f
+ 1556 0045 00000000 		.4byte	0
+ 1557 0049 00000000 		.4byte	0
+ 1558              	.LLST2:
+ 1559 004d 00000000 		.4byte	.LVL12
+ 1560 0051 06000000 		.4byte	.LVL13
+ 1561 0055 0100     		.2byte	0x1
+ 1562 0057 50       		.byte	0x50
+ 1563 0058 06000000 		.4byte	.LVL13
+ 1564 005c 68000000 		.4byte	.LFE37
+ 1565 0060 0400     		.2byte	0x4
+ 1566 0062 F3       		.byte	0xf3
+ 1567 0063 01       		.uleb128 0x1
+ 1568 0064 50       		.byte	0x50
+ 1569 0065 9F       		.byte	0x9f
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 31
 
 
- 1577              	.LASF9:
- 1578 002c 5F5F7569 		.ascii	"__uint8_t\000"
- 1578      6E74385F 
- 1578      7400
- 1579              	.LASF21:
- 1580 0036 73746174 		.ascii	"state\000"
- 1580      6500
- 1581              	.LASF19:
- 1582 003c 5F426F6F 		.ascii	"_Bool\000"
- 1582      6C00
- 1583              	.LASF17:
- 1584 0042 6379636C 		.ascii	"cycleClock\000"
- 1584      65436C6F 
- 1584      636B00
- 1585              	.LASF33:
- 1586 004d 76616C75 		.ascii	"value\000"
- 1586      6500
- 1587              	.LASF31:
- 1588 0053 70657269 		.ascii	"period\000"
- 1588      6F6400
- 1589              	.LASF26:
- 1590 005a 6C656453 		.ascii	"ledState\000"
- 1590      74617465 
- 1590      00
- 1591              	.LASF34:
- 1592 0063 63686172 		.ascii	"characterTable\000"
- 1592      61637465 
- 1592      72546162 
- 1592      6C6500
- 1593              	.LASF23:
- 1594 0072 77726974 		.ascii	"writeBit\000"
- 1594      65426974 
- 1594      00
- 1595              	.LASF13:
- 1596 007b 646F7562 		.ascii	"double\000"
- 1596      6C6500
- 1597              	.LASF11:
- 1598 0082 75696E74 		.ascii	"uint8\000"
- 1598      3800
- 1599              	.LASF12:
- 1600 0088 666C6F61 		.ascii	"float\000"
- 1600      7400
- 1601              	.LASF25:
- 1602 008e 64617461 		.ascii	"data\000"
- 1602      00
- 1603              	.LASF0:
- 1604 0093 7369676E 		.ascii	"signed char\000"
- 1604      65642063 
- 1604      68617200 
- 1605              	.LASF1:
- 1606 009f 756E7369 		.ascii	"unsigned char\000"
- 1606      676E6564 
- 1606      20636861 
- 1606      7200
- 1607              	.LASF5:
- 1608 00ad 6C6F6E67 		.ascii	"long unsigned int\000"
- 1608      20756E73 
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 32
+ 1570 0066 00000000 		.4byte	0
+ 1571 006a 00000000 		.4byte	0
+ 1572              	.LLST3:
+ 1573 006e 00000000 		.4byte	.LVL30
+ 1574 0072 05000000 		.4byte	.LVL31-1
+ 1575 0076 0100     		.2byte	0x1
+ 1576 0078 50       		.byte	0x50
+ 1577 0079 05000000 		.4byte	.LVL31-1
+ 1578 007d 08000000 		.4byte	.LFE38
+ 1579 0081 0400     		.2byte	0x4
+ 1580 0083 F3       		.byte	0xf3
+ 1581 0084 01       		.uleb128 0x1
+ 1582 0085 50       		.byte	0x50
+ 1583 0086 9F       		.byte	0x9f
+ 1584 0087 00000000 		.4byte	0
+ 1585 008b 00000000 		.4byte	0
+ 1586              	.LLST4:
+ 1587 008f 00000000 		.4byte	.LVL32
+ 1588 0093 0A000000 		.4byte	.LVL33
+ 1589 0097 0100     		.2byte	0x1
+ 1590 0099 50       		.byte	0x50
+ 1591 009a 0A000000 		.4byte	.LVL33
+ 1592 009e 34000000 		.4byte	.LFE39
+ 1593 00a2 0400     		.2byte	0x4
+ 1594 00a4 F3       		.byte	0xf3
+ 1595 00a5 01       		.uleb128 0x1
+ 1596 00a6 50       		.byte	0x50
+ 1597 00a7 9F       		.byte	0x9f
+ 1598 00a8 00000000 		.4byte	0
+ 1599 00ac 00000000 		.4byte	0
+ 1600              	.LLST5:
+ 1601 00b0 00000000 		.4byte	.LVL32
+ 1602 00b4 0D000000 		.4byte	.LVL34-1
+ 1603 00b8 0100     		.2byte	0x1
+ 1604 00ba 51       		.byte	0x51
+ 1605 00bb 0D000000 		.4byte	.LVL34-1
+ 1606 00bf 34000000 		.4byte	.LFE39
+ 1607 00c3 0400     		.2byte	0x4
+ 1608 00c5 F3       		.byte	0xf3
+ 1609 00c6 01       		.uleb128 0x1
+ 1610 00c7 51       		.byte	0x51
+ 1611 00c8 9F       		.byte	0x9f
+ 1612 00c9 00000000 		.4byte	0
+ 1613 00cd 00000000 		.4byte	0
+ 1614              	.LLST6:
+ 1615 00d1 00000000 		.4byte	.LVL32
+ 1616 00d5 0D000000 		.4byte	.LVL34-1
+ 1617 00d9 0100     		.2byte	0x1
+ 1618 00db 52       		.byte	0x52
+ 1619 00dc 0D000000 		.4byte	.LVL34-1
+ 1620 00e0 34000000 		.4byte	.LFE39
+ 1621 00e4 0400     		.2byte	0x4
+ 1622 00e6 F3       		.byte	0xf3
+ 1623 00e7 01       		.uleb128 0x1
+ 1624 00e8 52       		.byte	0x52
+ 1625 00e9 9F       		.byte	0x9f
+ 1626 00ea 00000000 		.4byte	0
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 32
 
 
- 1608      69676E65 
- 1608      6420696E 
- 1608      7400
- 1609              	.LASF22:
- 1610 00bf 61646472 		.ascii	"addr\000"
- 1610      00
- 1611              	.LASF44:
- 1612 00c4 433A5C55 		.ascii	"C:\\Users\\doita\\OneDrive\\Documents\\PSoC Creator"
- 1612      73657273 
- 1612      5C646F69 
- 1612      74615C4F 
- 1612      6E654472 
- 1613 00f2 5C474541 		.ascii	"\\GEA-Hacking\\laundry-captouch-demo.cydsn\000"
- 1613      2D486163 
- 1613      6B696E67 
- 1613      5C6C6175 
- 1613      6E647279 
- 1614              	.LASF39:
- 1615 011b 53656744 		.ascii	"SegDispStb1_Write\000"
- 1615      69737053 
- 1615      7462315F 
- 1615      57726974 
- 1615      6500
- 1616              	.LASF35:
- 1617 012d 64696769 		.ascii	"digit0Addr\000"
- 1617      74304164 
- 1617      647200
- 1618              	.LASF2:
- 1619 0138 73686F72 		.ascii	"short int\000"
- 1619      7420696E 
- 1619      7400
- 1620              	.LASF24:
- 1621 0142 77726974 		.ascii	"writeToSingleDigit\000"
- 1621      65546F53 
- 1621      696E676C 
- 1621      65446967 
- 1621      697400
- 1622              	.LASF8:
- 1623 0155 756E7369 		.ascii	"unsigned int\000"
- 1623      676E6564 
- 1623      20696E74 
- 1623      00
- 1624              	.LASF38:
- 1625 0162 53656744 		.ascii	"SegDispClock_Write\000"
- 1625      69737043 
- 1625      6C6F636B 
- 1625      5F577269 
- 1625      746500
- 1626              	.LASF7:
- 1627 0175 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1627      206C6F6E 
- 1627      6720756E 
- 1627      7369676E 
- 1627      65642069 
- 1628              	.LASF10:
- 1629 018c 75696E74 		.ascii	"uint8_t\000"
- 1629      385F7400 
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 33
+ 1627 00ee 00000000 		.4byte	0
+ 1628              	.LLST7:
+ 1629 00f2 00000000 		.4byte	.LVL39
+ 1630 00f6 10000000 		.4byte	.LVL42
+ 1631 00fa 0100     		.2byte	0x1
+ 1632 00fc 50       		.byte	0x50
+ 1633 00fd 10000000 		.4byte	.LVL42
+ 1634 0101 58000000 		.4byte	.LFE40
+ 1635 0105 0400     		.2byte	0x4
+ 1636 0107 F3       		.byte	0xf3
+ 1637 0108 01       		.uleb128 0x1
+ 1638 0109 50       		.byte	0x50
+ 1639 010a 9F       		.byte	0x9f
+ 1640 010b 00000000 		.4byte	0
+ 1641 010f 00000000 		.4byte	0
+ 1642              	.LLST8:
+ 1643 0113 00000000 		.4byte	.LVL39
+ 1644 0117 0E000000 		.4byte	.LVL41
+ 1645 011b 0100     		.2byte	0x1
+ 1646 011d 51       		.byte	0x51
+ 1647 011e 0E000000 		.4byte	.LVL41
+ 1648 0122 58000000 		.4byte	.LFE40
+ 1649 0126 0400     		.2byte	0x4
+ 1650 0128 F3       		.byte	0xf3
+ 1651 0129 01       		.uleb128 0x1
+ 1652 012a 51       		.byte	0x51
+ 1653 012b 9F       		.byte	0x9f
+ 1654 012c 00000000 		.4byte	0
+ 1655 0130 00000000 		.4byte	0
+ 1656              	.LLST9:
+ 1657 0134 00000000 		.4byte	.LVL39
+ 1658 0138 0C000000 		.4byte	.LVL40
+ 1659 013c 0100     		.2byte	0x1
+ 1660 013e 52       		.byte	0x52
+ 1661 013f 0C000000 		.4byte	.LVL40
+ 1662 0143 58000000 		.4byte	.LFE40
+ 1663 0147 0400     		.2byte	0x4
+ 1664 0149 F3       		.byte	0xf3
+ 1665 014a 01       		.uleb128 0x1
+ 1666 014b 52       		.byte	0x52
+ 1667 014c 9F       		.byte	0x9f
+ 1668 014d 00000000 		.4byte	0
+ 1669 0151 00000000 		.4byte	0
+ 1670              	.LLST10:
+ 1671 0155 00000000 		.4byte	.LVL39
+ 1672 0159 13000000 		.4byte	.LVL43-1
+ 1673 015d 0100     		.2byte	0x1
+ 1674 015f 53       		.byte	0x53
+ 1675 0160 13000000 		.4byte	.LVL43-1
+ 1676 0164 56000000 		.4byte	.LVL52
+ 1677 0168 0100     		.2byte	0x1
+ 1678 016a 54       		.byte	0x54
+ 1679 016b 56000000 		.4byte	.LVL52
+ 1680 016f 58000000 		.4byte	.LFE40
+ 1681 0173 0400     		.2byte	0x4
+ 1682 0175 F3       		.byte	0xf3
+ 1683 0176 01       		.uleb128 0x1
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 33
 
 
- 1630              	.LASF27:
- 1631 0194 77726974 		.ascii	"writeToAllDigits\000"
- 1631      65546F41 
- 1631      6C6C4469 
- 1631      67697473 
- 1631      00
- 1632              	.LASF16:
- 1633 01a5 73697A65 		.ascii	"sizetype\000"
- 1633      74797065 
- 1633      00
- 1634              	.LASF36:
- 1635 01ae 64696769 		.ascii	"digit1Addr\000"
- 1635      74314164 
- 1635      647200
- 1636              	.LASF14:
- 1637 01b9 63686172 		.ascii	"char\000"
- 1637      00
- 1638              	.LASF20:
- 1639 01be 77726974 		.ascii	"writeByte\000"
- 1639      65427974 
- 1639      6500
- 1640              	.LASF43:
- 1641 01c8 44697370 		.ascii	"Display.c\000"
- 1641      6C61792E 
- 1641      6300
- 1642              	.LASF28:
- 1643 01d2 64696731 		.ascii	"dig1\000"
- 1643      00
- 1644              	.LASF29:
- 1645 01d7 64696732 		.ascii	"dig2\000"
- 1645      00
- 1646              	.LASF30:
- 1647 01dc 64696733 		.ascii	"dig3\000"
- 1647      00
- 1648              	.LASF4:
- 1649 01e1 6C6F6E67 		.ascii	"long int\000"
- 1649      20696E74 
- 1649      00
- 1650              	.LASF15:
- 1651 01ea 6C6F6E67 		.ascii	"long double\000"
- 1651      20646F75 
- 1651      626C6500 
- 1652              	.LASF42:
- 1653 01f6 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 1653      43313120 
- 1653      352E342E 
- 1653      31203230 
- 1653      31363036 
- 1654 0229 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
- 1654      20726576 
- 1654      6973696F 
- 1654      6E203233 
- 1654      37373135 
- 1655 025c 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
- 1655      67202D66 
- 1655      66756E63 
- 1655      74696F6E 
-ARM GAS  C:\Users\doita\AppData\Local\Temp\cc5NUR7b.s 			page 34
+ 1684 0177 53       		.byte	0x53
+ 1685 0178 9F       		.byte	0x9f
+ 1686 0179 00000000 		.4byte	0
+ 1687 017d 00000000 		.4byte	0
+ 1688              	.LLST11:
+ 1689 0181 00000000 		.4byte	.LVL53
+ 1690 0185 08000000 		.4byte	.LVL54
+ 1691 0189 0100     		.2byte	0x1
+ 1692 018b 50       		.byte	0x50
+ 1693 018c 08000000 		.4byte	.LVL54
+ 1694 0190 3A000000 		.4byte	.LVL60
+ 1695 0194 0100     		.2byte	0x1
+ 1696 0196 54       		.byte	0x54
+ 1697 0197 3A000000 		.4byte	.LVL60
+ 1698 019b 3C000000 		.4byte	.LFE41
+ 1699 019f 0400     		.2byte	0x4
+ 1700 01a1 F3       		.byte	0xf3
+ 1701 01a2 01       		.uleb128 0x1
+ 1702 01a3 50       		.byte	0x50
+ 1703 01a4 9F       		.byte	0x9f
+ 1704 01a5 00000000 		.4byte	0
+ 1705 01a9 00000000 		.4byte	0
+ 1706              	.LLST12:
+ 1707 01ad 00000000 		.4byte	.LVL53
+ 1708 01b1 0B000000 		.4byte	.LVL55-1
+ 1709 01b5 0100     		.2byte	0x1
+ 1710 01b7 51       		.byte	0x51
+ 1711 01b8 0B000000 		.4byte	.LVL55-1
+ 1712 01bc 3C000000 		.4byte	.LFE41
+ 1713 01c0 0400     		.2byte	0x4
+ 1714 01c2 F3       		.byte	0xf3
+ 1715 01c3 01       		.uleb128 0x1
+ 1716 01c4 51       		.byte	0x51
+ 1717 01c5 9F       		.byte	0x9f
+ 1718 01c6 00000000 		.4byte	0
+ 1719 01ca 00000000 		.4byte	0
+ 1720              		.section	.debug_aranges,"",%progbits
+ 1721 0000 5C000000 		.4byte	0x5c
+ 1722 0004 0200     		.2byte	0x2
+ 1723 0006 00000000 		.4byte	.Ldebug_info0
+ 1724 000a 04       		.byte	0x4
+ 1725 000b 00       		.byte	0
+ 1726 000c 0000     		.2byte	0
+ 1727 000e 0000     		.2byte	0
+ 1728 0010 00000000 		.4byte	.LFB33
+ 1729 0014 1E000000 		.4byte	.LFE33-.LFB33
+ 1730 0018 00000000 		.4byte	.LFB34
+ 1731 001c 18000000 		.4byte	.LFE34-.LFB34
+ 1732 0020 00000000 		.4byte	.LFB35
+ 1733 0024 10000000 		.4byte	.LFE35-.LFB35
+ 1734 0028 00000000 		.4byte	.LFB36
+ 1735 002c 08000000 		.4byte	.LFE36-.LFB36
+ 1736 0030 00000000 		.4byte	.LFB37
+ 1737 0034 68000000 		.4byte	.LFE37-.LFB37
+ 1738 0038 00000000 		.4byte	.LFB38
+ 1739 003c 08000000 		.4byte	.LFE38-.LFB38
+ 1740 0040 00000000 		.4byte	.LFB39
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 34
 
 
- 1655      2D736563 
- 1656              	.LASF3:
- 1657 0288 73686F72 		.ascii	"short unsigned int\000"
- 1657      7420756E 
- 1657      7369676E 
- 1657      65642069 
- 1657      6E7400
- 1658              	.LASF18:
- 1659 029b 7374726F 		.ascii	"strobe\000"
- 1659      626500
- 1660              	.LASF37:
- 1661 02a2 64696769 		.ascii	"digit2Addr\000"
- 1661      74324164 
- 1661      647200
- 1662              	.LASF41:
- 1663 02ad 43794465 		.ascii	"CyDelay\000"
- 1663      6C617900 
- 1664              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ 1741 0044 34000000 		.4byte	.LFE39-.LFB39
+ 1742 0048 00000000 		.4byte	.LFB40
+ 1743 004c 58000000 		.4byte	.LFE40-.LFB40
+ 1744 0050 00000000 		.4byte	.LFB41
+ 1745 0054 3C000000 		.4byte	.LFE41-.LFB41
+ 1746 0058 00000000 		.4byte	0
+ 1747 005c 00000000 		.4byte	0
+ 1748              		.section	.debug_ranges,"",%progbits
+ 1749              	.Ldebug_ranges0:
+ 1750 0000 00000000 		.4byte	.LFB33
+ 1751 0004 1E000000 		.4byte	.LFE33
+ 1752 0008 00000000 		.4byte	.LFB34
+ 1753 000c 18000000 		.4byte	.LFE34
+ 1754 0010 00000000 		.4byte	.LFB35
+ 1755 0014 10000000 		.4byte	.LFE35
+ 1756 0018 00000000 		.4byte	.LFB36
+ 1757 001c 08000000 		.4byte	.LFE36
+ 1758 0020 00000000 		.4byte	.LFB37
+ 1759 0024 68000000 		.4byte	.LFE37
+ 1760 0028 00000000 		.4byte	.LFB38
+ 1761 002c 08000000 		.4byte	.LFE38
+ 1762 0030 00000000 		.4byte	.LFB39
+ 1763 0034 34000000 		.4byte	.LFE39
+ 1764 0038 00000000 		.4byte	.LFB40
+ 1765 003c 58000000 		.4byte	.LFE40
+ 1766 0040 00000000 		.4byte	.LFB41
+ 1767 0044 3C000000 		.4byte	.LFE41
+ 1768 0048 00000000 		.4byte	0
+ 1769 004c 00000000 		.4byte	0
+ 1770              		.section	.debug_line,"",%progbits
+ 1771              	.Ldebug_line0:
+ 1772 0000 73020000 		.section	.debug_str,"MS",%progbits,1
+ 1772      0200A901 
+ 1772      00000201 
+ 1772      FB0E0D00 
+ 1772      01010101 
+ 1773              	.LASF6:
+ 1774 0000 6C6F6E67 		.ascii	"long long int\000"
+ 1774      206C6F6E 
+ 1774      6720696E 
+ 1774      7400
+ 1775              	.LASF34:
+ 1776 000e 6374726C 		.ascii	"ctrlDisplay\000"
+ 1776      44697370 
+ 1776      6C617900 
+ 1777              	.LASF41:
+ 1778 001a 48656172 		.ascii	"HeartbeatLed_Write\000"
+ 1778      74626561 
+ 1778      744C6564 
+ 1778      5F577269 
+ 1778      746500
+ 1779              	.LASF9:
+ 1780 002d 5F5F7569 		.ascii	"__uint8_t\000"
+ 1780      6E74385F 
+ 1780      7400
+ 1781              	.LASF18:
+ 1782 0037 48656172 		.ascii	"HeartbeatLed_Toggle\000"
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 35
+
+
+ 1782      74626561 
+ 1782      744C6564 
+ 1782      5F546F67 
+ 1782      676C6500 
+ 1783              	.LASF23:
+ 1784 004b 5F426F6F 		.ascii	"_Bool\000"
+ 1784      6C00
+ 1785              	.LASF19:
+ 1786 0051 6379636C 		.ascii	"cycleClock\000"
+ 1786      65436C6F 
+ 1786      636B00
+ 1787              	.LASF35:
+ 1788 005c 76616C75 		.ascii	"value\000"
+ 1788      6500
+ 1789              	.LASF21:
+ 1790 0062 70657269 		.ascii	"period\000"
+ 1790      6F6400
+ 1791              	.LASF29:
+ 1792 0069 6C656453 		.ascii	"ledState\000"
+ 1792      74617465 
+ 1792      00
+ 1793              	.LASF36:
+ 1794 0072 63686172 		.ascii	"characterTable\000"
+ 1794      61637465 
+ 1794      72546162 
+ 1794      6C6500
+ 1795              	.LASF26:
+ 1796 0081 77726974 		.ascii	"writeBit\000"
+ 1796      65426974 
+ 1796      00
+ 1797              	.LASF13:
+ 1798 008a 646F7562 		.ascii	"double\000"
+ 1798      6C6500
+ 1799              	.LASF11:
+ 1800 0091 75696E74 		.ascii	"uint8\000"
+ 1800      3800
+ 1801              	.LASF22:
+ 1802 0097 73746174 		.ascii	"state\000"
+ 1802      6500
+ 1803              	.LASF12:
+ 1804 009d 666C6F61 		.ascii	"float\000"
+ 1804      7400
+ 1805              	.LASF28:
+ 1806 00a3 64617461 		.ascii	"data\000"
+ 1806      00
+ 1807              	.LASF0:
+ 1808 00a8 7369676E 		.ascii	"signed char\000"
+ 1808      65642063 
+ 1808      68617200 
+ 1809              	.LASF1:
+ 1810 00b4 756E7369 		.ascii	"unsigned char\000"
+ 1810      676E6564 
+ 1810      20636861 
+ 1810      7200
+ 1811              	.LASF5:
+ 1812 00c2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1812      20756E73 
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 36
+
+
+ 1812      69676E65 
+ 1812      6420696E 
+ 1812      7400
+ 1813              	.LASF45:
+ 1814 00d4 53656744 		.ascii	"SegDispData_Write\000"
+ 1814      69737044 
+ 1814      6174615F 
+ 1814      57726974 
+ 1814      6500
+ 1815              	.LASF25:
+ 1816 00e6 61646472 		.ascii	"addr\000"
+ 1816      00
+ 1817              	.LASF48:
+ 1818 00eb 433A5C55 		.ascii	"C:\\Users\\doita\\OneDrive\\Documents\\PSoC Creator"
+ 1818      73657273 
+ 1818      5C646F69 
+ 1818      74615C4F 
+ 1818      6E654472 
+ 1819 0119 5C474541 		.ascii	"\\GEA-Hacking\\laundry-captouch-demo.cydsn\000"
+ 1819      2D486163 
+ 1819      6B696E67 
+ 1819      5C6C6175 
+ 1819      6E647279 
+ 1820              	.LASF44:
+ 1821 0142 53656744 		.ascii	"SegDispStb1_Write\000"
+ 1821      69737053 
+ 1821      7462315F 
+ 1821      57726974 
+ 1821      6500
+ 1822              	.LASF37:
+ 1823 0154 64696769 		.ascii	"digit0Addr\000"
+ 1823      74304164 
+ 1823      647200
+ 1824              	.LASF2:
+ 1825 015f 73686F72 		.ascii	"short int\000"
+ 1825      7420696E 
+ 1825      7400
+ 1826              	.LASF17:
+ 1827 0169 48656172 		.ascii	"HeartbeatLed_Blink\000"
+ 1827      74626561 
+ 1827      744C6564 
+ 1827      5F426C69 
+ 1827      6E6B00
+ 1828              	.LASF27:
+ 1829 017c 77726974 		.ascii	"writeToSingleDigit\000"
+ 1829      65546F53 
+ 1829      696E676C 
+ 1829      65446967 
+ 1829      697400
+ 1830              	.LASF8:
+ 1831 018f 756E7369 		.ascii	"unsigned int\000"
+ 1831      676E6564 
+ 1831      20696E74 
+ 1831      00
+ 1832              	.LASF43:
+ 1833 019c 53656744 		.ascii	"SegDispClock_Write\000"
+ 1833      69737043 
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 37
+
+
+ 1833      6C6F636B 
+ 1833      5F577269 
+ 1833      746500
+ 1834              	.LASF7:
+ 1835 01af 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1835      206C6F6E 
+ 1835      6720756E 
+ 1835      7369676E 
+ 1835      65642069 
+ 1836              	.LASF10:
+ 1837 01c6 75696E74 		.ascii	"uint8_t\000"
+ 1837      385F7400 
+ 1838              	.LASF30:
+ 1839 01ce 77726974 		.ascii	"writeToAllDigits\000"
+ 1839      65546F41 
+ 1839      6C6C4469 
+ 1839      67697473 
+ 1839      00
+ 1840              	.LASF40:
+ 1841 01df 63757253 		.ascii	"curState\000"
+ 1841      74617465 
+ 1841      00
+ 1842              	.LASF16:
+ 1843 01e8 73697A65 		.ascii	"sizetype\000"
+ 1843      74797065 
+ 1843      00
+ 1844              	.LASF38:
+ 1845 01f1 64696769 		.ascii	"digit1Addr\000"
+ 1845      74314164 
+ 1845      647200
+ 1846              	.LASF14:
+ 1847 01fc 63686172 		.ascii	"char\000"
+ 1847      00
+ 1848              	.LASF24:
+ 1849 0201 77726974 		.ascii	"writeByte\000"
+ 1849      65427974 
+ 1849      6500
+ 1850              	.LASF47:
+ 1851 020b 44697370 		.ascii	"Display.c\000"
+ 1851      6C61792E 
+ 1851      6300
+ 1852              	.LASF31:
+ 1853 0215 64696731 		.ascii	"dig1\000"
+ 1853      00
+ 1854              	.LASF32:
+ 1855 021a 64696732 		.ascii	"dig2\000"
+ 1855      00
+ 1856              	.LASF33:
+ 1857 021f 64696733 		.ascii	"dig3\000"
+ 1857      00
+ 1858              	.LASF4:
+ 1859 0224 6C6F6E67 		.ascii	"long int\000"
+ 1859      20696E74 
+ 1859      00
+ 1860              	.LASF15:
+ 1861 022d 6C6F6E67 		.ascii	"long double\000"
+ 1861      20646F75 
+ARM GAS  C:\Users\doita\AppData\Local\Temp\ccfZJKUc.s 			page 38
+
+
+ 1861      626C6500 
+ 1862              	.LASF46:
+ 1863 0239 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1863      43313120 
+ 1863      352E342E 
+ 1863      31203230 
+ 1863      31363036 
+ 1864 026c 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 1864      20726576 
+ 1864      6973696F 
+ 1864      6E203233 
+ 1864      37373135 
+ 1865 029f 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 1865      67202D66 
+ 1865      66756E63 
+ 1865      74696F6E 
+ 1865      2D736563 
+ 1866              	.LASF3:
+ 1867 02cb 73686F72 		.ascii	"short unsigned int\000"
+ 1867      7420756E 
+ 1867      7369676E 
+ 1867      65642069 
+ 1867      6E7400
+ 1868              	.LASF20:
+ 1869 02de 7374726F 		.ascii	"strobe\000"
+ 1869      626500
+ 1870              	.LASF39:
+ 1871 02e5 64696769 		.ascii	"digit2Addr\000"
+ 1871      74324164 
+ 1871      647200
+ 1872              	.LASF42:
+ 1873 02f0 43794465 		.ascii	"CyDelay\000"
+ 1873      6C617900 
+ 1874              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

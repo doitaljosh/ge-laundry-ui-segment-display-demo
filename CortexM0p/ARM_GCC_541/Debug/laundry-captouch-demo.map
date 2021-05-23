@@ -7,7 +7,7 @@ Archive member included to satisfy reference by file (symbol)
 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispData.o)
                               .\CortexM0p\ARM_GCC_541\Debug\main.o (SegDispData_Write)
 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(HeartbeatLed.o)
-                              .\CortexM0p\ARM_GCC_541\Debug\main.o (HeartbeatLed_Write)
+                              .\CortexM0p\ARM_GCC_541\Debug\Display.o (HeartbeatLed_Write)
 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLib.o)
                               .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o (CyIntEnable)
 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLFClk.o)
@@ -48,11 +48,11 @@ Discarded input sections
  .ARM.exidx     0x00000000        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
  .text          0x00000000        0x0 .\CortexM0p\ARM_GCC_541\Debug\main.o
  .data          0x00000000        0x0 .\CortexM0p\ARM_GCC_541\Debug\main.o
- .text.HeartbeatLed_Blink
-                0x00000000       0x20 .\CortexM0p\ARM_GCC_541\Debug\main.o
+ .bss           0x00000000        0x0 .\CortexM0p\ARM_GCC_541\Debug\main.o
  .text          0x00000000        0x0 .\CortexM0p\ARM_GCC_541\Debug\Display.o
  .data          0x00000000        0x0 .\CortexM0p\ARM_GCC_541\Debug\Display.o
- .bss           0x00000000        0x0 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+ .text.HeartbeatLed_Blink
+                0x00000000       0x20 .\CortexM0p\ARM_GCC_541\Debug\Display.o
  .rodata        0x00000000        0x3 .\CortexM0p\ARM_GCC_541\Debug\Display.o
  .text          0x00000000        0x0 .\CortexM0p\ARM_GCC_541\Debug\SsdCharacterTable.o
  .data          0x00000000        0x0 .\CortexM0p\ARM_GCC_541\Debug\SsdCharacterTable.o
@@ -460,31 +460,31 @@ END GROUP
                 0x0000018c                . = MAX (., 0x100)
  *(.text .text.* .gnu.linkonce.t.*)
  .text          0x0000018c       0x60 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
- .text.HeartbeatLed_Toggle
-                0x000001ec       0x18 .\CortexM0p\ARM_GCC_541\Debug\main.o
-                0x000001ec                HeartbeatLed_Toggle
  .text.helloWorld
-                0x00000204       0xbc .\CortexM0p\ARM_GCC_541\Debug\main.o
-                0x00000204                helloWorld
- .text.main     0x000002c0       0x38 .\CortexM0p\ARM_GCC_541\Debug\main.o
-                0x000002c0                main
+                0x000001ec       0xb8 .\CortexM0p\ARM_GCC_541\Debug\main.o
+                0x000001ec                helloWorld
+ .text.main     0x000002a4       0x38 .\CortexM0p\ARM_GCC_541\Debug\main.o
+                0x000002a4                main
+ .text.HeartbeatLed_Toggle
+                0x000002dc       0x18 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+                0x000002dc                HeartbeatLed_Toggle
  .text.cycleClock
-                0x000002f8       0x10 .\CortexM0p\ARM_GCC_541\Debug\Display.o
-                0x000002f8                cycleClock
- .text.strobe   0x00000308        0x8 .\CortexM0p\ARM_GCC_541\Debug\Display.o
-                0x00000308                strobe
+                0x000002f4       0x10 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+                0x000002f4                cycleClock
+ .text.strobe   0x00000304        0x8 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+                0x00000304                strobe
  .text.writeByte
-                0x00000310       0x68 .\CortexM0p\ARM_GCC_541\Debug\Display.o
-                0x00000310                writeByte
+                0x0000030c       0x68 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+                0x0000030c                writeByte
  .text.writeBit
-                0x00000378        0x8 .\CortexM0p\ARM_GCC_541\Debug\Display.o
-                0x00000378                writeBit
+                0x00000374        0x8 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+                0x00000374                writeBit
  .text.writeToSingleDigit
-                0x00000380       0x34 .\CortexM0p\ARM_GCC_541\Debug\Display.o
-                0x00000380                writeToSingleDigit
+                0x0000037c       0x34 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+                0x0000037c                writeToSingleDigit
  .text.writeToAllDigits
-                0x000003b4       0x54 .\CortexM0p\ARM_GCC_541\Debug\Display.o
-                0x000003b4                writeToAllDigits
+                0x000003b0       0x58 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+                0x000003b0                writeToAllDigits
  .text.ctrlDisplay
                 0x00000408       0x3c .\CortexM0p\ARM_GCC_541\Debug\Display.o
                 0x00000408                ctrlDisplay
@@ -699,7 +699,7 @@ END GROUP
  *(.shbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
  .bss           0x20000130       0x1c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
- .bss           0x2000014c        0x1 .\CortexM0p\ARM_GCC_541\Debug\main.o
+ .bss           0x2000014c        0x1 .\CortexM0p\ARM_GCC_541\Debug\Display.o
                 0x2000014c                curState
  *fill*         0x2000014d        0x3 
  .bss           0x20000150       0x18 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLFClk.o)
@@ -778,9 +778,9 @@ END GROUP
 .debug_aranges  0x00000000      0x698
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x38 .\CortexM0p\ARM_GCC_541\Debug\main.o
+                0x00000000       0x28 .\CortexM0p\ARM_GCC_541\Debug\main.o
  .debug_aranges
-                0x00000038       0x50 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+                0x00000028       0x60 .\CortexM0p\ARM_GCC_541\Debug\Display.o
  .debug_aranges
                 0x00000088       0x18 .\CortexM0p\ARM_GCC_541\Debug\SsdCharacterTable.o
  .debug_aranges
@@ -809,61 +809,61 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x3f5c
+.debug_info     0x00000000     0x3f4d
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x4f1 .\CortexM0p\ARM_GCC_541\Debug\main.o
- .debug_info    0x000004f1      0x53d .\CortexM0p\ARM_GCC_541\Debug\Display.o
- .debug_info    0x00000a2e       0xac .\CortexM0p\ARM_GCC_541\Debug\SsdCharacterTable.o
- .debug_info    0x00000ada      0x1c3 .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_info    0x00000c9d       0xf8 .\CortexM0p\ARM_GCC_541\Debug\cymetadata.o
- .debug_info    0x00000d95      0x3a5 .\CortexM0p\ARM_GCC_541\Debug\Cm0plusStart.o
- .debug_info    0x0000113a      0x19d .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispStb1.o)
- .debug_info    0x000012d7      0x19d .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispClock.o)
- .debug_info    0x00001474      0x19d .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispData.o)
- .debug_info    0x00001611      0x19d .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(HeartbeatLed.o)
- .debug_info    0x000017ae     0x15ea .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLib.o)
- .debug_info    0x00002d98      0xd06 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLFClk.o)
- .debug_info    0x00003a9e       0xa5 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyBootAsmGnu.o)
- .debug_info    0x00003b43      0x419 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyFlash.o)
+ .debug_info    0x00000000      0x42b .\CortexM0p\ARM_GCC_541\Debug\main.o
+ .debug_info    0x0000042b      0x5f4 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+ .debug_info    0x00000a1f       0xac .\CortexM0p\ARM_GCC_541\Debug\SsdCharacterTable.o
+ .debug_info    0x00000acb      0x1c3 .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_info    0x00000c8e       0xf8 .\CortexM0p\ARM_GCC_541\Debug\cymetadata.o
+ .debug_info    0x00000d86      0x3a5 .\CortexM0p\ARM_GCC_541\Debug\Cm0plusStart.o
+ .debug_info    0x0000112b      0x19d .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispStb1.o)
+ .debug_info    0x000012c8      0x19d .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispClock.o)
+ .debug_info    0x00001465      0x19d .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispData.o)
+ .debug_info    0x00001602      0x19d .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(HeartbeatLed.o)
+ .debug_info    0x0000179f     0x15ea .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLib.o)
+ .debug_info    0x00002d89      0xd06 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLFClk.o)
+ .debug_info    0x00003a8f       0xa5 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyBootAsmGnu.o)
+ .debug_info    0x00003b34      0x419 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyFlash.o)
 
-.debug_abbrev   0x00000000      0xe9e
+.debug_abbrev   0x00000000      0xe75
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0xfb .\CortexM0p\ARM_GCC_541\Debug\main.o
- .debug_abbrev  0x000000fb       0xf3 .\CortexM0p\ARM_GCC_541\Debug\Display.o
- .debug_abbrev  0x000001ee       0x5d .\CortexM0p\ARM_GCC_541\Debug\SsdCharacterTable.o
- .debug_abbrev  0x0000024b       0xe8 .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_abbrev  0x00000333       0x5d .\CortexM0p\ARM_GCC_541\Debug\cymetadata.o
- .debug_abbrev  0x00000390      0x1d0 .\CortexM0p\ARM_GCC_541\Debug\Cm0plusStart.o
- .debug_abbrev  0x00000560       0xc8 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispStb1.o)
- .debug_abbrev  0x00000628       0xc8 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispClock.o)
- .debug_abbrev  0x000006f0       0xc8 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispData.o)
- .debug_abbrev  0x000007b8       0xc8 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(HeartbeatLed.o)
- .debug_abbrev  0x00000880      0x265 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLib.o)
- .debug_abbrev  0x00000ae5      0x207 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLFClk.o)
- .debug_abbrev  0x00000cec       0x14 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyBootAsmGnu.o)
- .debug_abbrev  0x00000d00      0x19e .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyFlash.o)
+ .debug_abbrev  0x00000000       0xd2 .\CortexM0p\ARM_GCC_541\Debug\main.o
+ .debug_abbrev  0x000000d2       0xf3 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+ .debug_abbrev  0x000001c5       0x5d .\CortexM0p\ARM_GCC_541\Debug\SsdCharacterTable.o
+ .debug_abbrev  0x00000222       0xe8 .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_abbrev  0x0000030a       0x5d .\CortexM0p\ARM_GCC_541\Debug\cymetadata.o
+ .debug_abbrev  0x00000367      0x1d0 .\CortexM0p\ARM_GCC_541\Debug\Cm0plusStart.o
+ .debug_abbrev  0x00000537       0xc8 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispStb1.o)
+ .debug_abbrev  0x000005ff       0xc8 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispClock.o)
+ .debug_abbrev  0x000006c7       0xc8 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispData.o)
+ .debug_abbrev  0x0000078f       0xc8 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(HeartbeatLed.o)
+ .debug_abbrev  0x00000857      0x265 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLib.o)
+ .debug_abbrev  0x00000abc      0x207 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLFClk.o)
+ .debug_abbrev  0x00000cc3       0x14 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyBootAsmGnu.o)
+ .debug_abbrev  0x00000cd7      0x19e .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyFlash.o)
 
-.debug_line     0x00000000     0x1d18
+.debug_line     0x00000000     0x1d0b
  *(.debug_line)
- .debug_line    0x00000000      0x1f9 .\CortexM0p\ARM_GCC_541\Debug\main.o
- .debug_line    0x000001f9      0x23d .\CortexM0p\ARM_GCC_541\Debug\Display.o
- .debug_line    0x00000436      0x131 .\CortexM0p\ARM_GCC_541\Debug\SsdCharacterTable.o
- .debug_line    0x00000567       0xda .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_line    0x00000641      0x141 .\CortexM0p\ARM_GCC_541\Debug\cymetadata.o
- .debug_line    0x00000782      0x247 .\CortexM0p\ARM_GCC_541\Debug\Cm0plusStart.o
- .debug_line    0x000009c9       0xc3 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispStb1.o)
- .debug_line    0x00000a8c       0xc4 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispClock.o)
- .debug_line    0x00000b50       0xc3 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispData.o)
- .debug_line    0x00000c13       0xc4 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(HeartbeatLed.o)
- .debug_line    0x00000cd7      0x837 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLib.o)
- .debug_line    0x0000150e      0x5c1 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLFClk.o)
- .debug_line    0x00001acf       0x68 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyBootAsmGnu.o)
- .debug_line    0x00001b37      0x1e1 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyFlash.o)
+ .debug_line    0x00000000      0x1b2 .\CortexM0p\ARM_GCC_541\Debug\main.o
+ .debug_line    0x000001b2      0x277 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+ .debug_line    0x00000429      0x131 .\CortexM0p\ARM_GCC_541\Debug\SsdCharacterTable.o
+ .debug_line    0x0000055a       0xda .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_line    0x00000634      0x141 .\CortexM0p\ARM_GCC_541\Debug\cymetadata.o
+ .debug_line    0x00000775      0x247 .\CortexM0p\ARM_GCC_541\Debug\Cm0plusStart.o
+ .debug_line    0x000009bc       0xc3 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispStb1.o)
+ .debug_line    0x00000a7f       0xc4 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispClock.o)
+ .debug_line    0x00000b43       0xc3 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispData.o)
+ .debug_line    0x00000c06       0xc4 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(HeartbeatLed.o)
+ .debug_line    0x00000cca      0x837 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLib.o)
+ .debug_line    0x00001501      0x5c1 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyLFClk.o)
+ .debug_line    0x00001ac2       0x68 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyBootAsmGnu.o)
+ .debug_line    0x00001b2a      0x1e1 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(CyFlash.o)
 
 .debug_frame    0x00000000     0x10fc
  *(.debug_frame)
- .debug_frame   0x00000000       0x80 .\CortexM0p\ARM_GCC_541\Debug\main.o
- .debug_frame   0x00000080       0xe8 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+ .debug_frame   0x00000000       0x48 .\CortexM0p\ARM_GCC_541\Debug\main.o
+ .debug_frame   0x00000048      0x120 .\CortexM0p\ARM_GCC_541\Debug\Display.o
  .debug_frame   0x00000168       0x78 .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o
  .debug_frame   0x000001e0       0xbc .\CortexM0p\ARM_GCC_541\Debug\Cm0plusStart.o
  .debug_frame   0x0000029c       0x70 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispStb1.o)
@@ -883,10 +883,10 @@ END GROUP
 
 .debug_str      0x00000000     0x1781
  *(.debug_str)
- .debug_str     0x00000000      0x222 .\CortexM0p\ARM_GCC_541\Debug\main.o
-                                0x26a (size before relaxing)
- .debug_str     0x00000222       0xa6 .\CortexM0p\ARM_GCC_541\Debug\Display.o
-                                0x2b5 (size before relaxing)
+ .debug_str     0x00000000      0x1d3 .\CortexM0p\ARM_GCC_541\Debug\main.o
+                                0x21b (size before relaxing)
+ .debug_str     0x000001d3       0xf5 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+                                0x2f8 (size before relaxing)
  .debug_str     0x000002c8       0x14 .\CortexM0p\ARM_GCC_541\Debug\SsdCharacterTable.o
                                 0x1ab (size before relaxing)
  .debug_str     0x000002dc       0xca .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o
@@ -912,8 +912,8 @@ END GROUP
 
 .debug_loc      0x00000000     0x2881
  *(.debug_loc)
- .debug_loc     0x00000000       0x63 .\CortexM0p\ARM_GCC_541\Debug\main.o
- .debug_loc     0x00000063      0x1a2 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+ .debug_loc     0x00000000       0x37 .\CortexM0p\ARM_GCC_541\Debug\main.o
+ .debug_loc     0x00000037      0x1ce .\CortexM0p\ARM_GCC_541\Debug\Display.o
  .debug_loc     0x00000205       0x35 .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o
  .debug_loc     0x0000023a      0x14f .\CortexM0p\ARM_GCC_541\Debug\Cm0plusStart.o
  .debug_loc     0x00000389       0xa2 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispStb1.o)
@@ -929,8 +929,8 @@ END GROUP
 
 .debug_ranges   0x00000000      0x598
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x28 .\CortexM0p\ARM_GCC_541\Debug\main.o
- .debug_ranges  0x00000028       0x40 .\CortexM0p\ARM_GCC_541\Debug\Display.o
+ .debug_ranges  0x00000000       0x18 .\CortexM0p\ARM_GCC_541\Debug\main.o
+ .debug_ranges  0x00000018       0x50 .\CortexM0p\ARM_GCC_541\Debug\Display.o
  .debug_ranges  0x00000068       0x28 .\CortexM0p\ARM_GCC_541\Debug\cyfitter_cfg.o
  .debug_ranges  0x00000090       0x38 .\CortexM0p\ARM_GCC_541\Debug\Cm0plusStart.o
  .debug_ranges  0x000000c8       0x38 .\CortexM0p\ARM_GCC_541\Debug\laundry-captouch-demo.a(SegDispStb1.o)
